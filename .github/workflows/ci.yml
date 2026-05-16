@@ -10,11 +10,25 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '22'
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run check
+      - name: Validate root deployment artifact
+        run: |
+          npm run build
+          npm run validate:deploy-base
+        env:
+          EXPECTED_BASE_PATH: /
+      - name: Validate GitHub Pages deployment artifact
+        run: |
+          npm run build
+          npm run validate:deploy-base
+        env:
+          SITE_BASE_PATH: /stellartail.cn/
+          VITE_PUBLIC_SITE_URL: https://rustella.github.io/stellartail.cn/
+          EXPECTED_BASE_PATH: /stellartail.cn/

@@ -62,7 +62,7 @@ export const enUS = {
   },
   footer: {
     tagline: 'StellarTrail',
-    domain: 'stellartail.cn',
+    domainFallback: 'Current deployment URL',
     rights: 'All rights reserved.'
   },
   language: {
