@@ -1,0 +1,39 @@
+topics:
+  architecture:
+    docs:
+      - .agent/knowledge/architecture.md
+      - .agent/knowledge/codebase_map.md
+  brand-content:
+    docs:
+      - .agent/knowledge/brand-and-content.md
+  validation:
+    docs:
+      - .agent/commands.yaml
+      - .agent/checklists/self-review.md
+tasks:
+  feature-change:
+    docs:
+      - .agent/knowledge/architecture.md
+      - .agent/knowledge/codebase_map.md
+      - .agent/checklists/preflight.md
+      - .agent/checklists/self-review.md
+  i18n-copy:
+    docs:
+      - .agent/knowledge/brand-and-content.md
+      - src/i18n/locales/zh-CN.ts
+      - src/i18n/locales/en-US.ts
+      - scripts/validate-i18n.mjs
+  visual-update:
+    docs:
+      - .agent/knowledge/brand-and-content.md
+      - .agent/agents/visual-reviewer.md
+      - tests/official-site.spec.ts
+  screenshot-refresh:
+    docs:
+      - .agent/knowledge/brand-and-content.md
+      - src/content/screenshots.ts
+      - public/assets/screenshots
+  deploy-domain:
+    docs:
+      - README.md
+      - .agent/commands.yaml

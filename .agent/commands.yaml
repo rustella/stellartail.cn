@@ -1,0 +1,46 @@
+commands:
+  - name: install
+    cwd: .
+    command: npm install
+    when_to_run: after package.json or package-lock.json changes
+    side_effects: writes node_modules and package-lock.json
+  - name: dev
+    cwd: .
+    command: npm run dev
+    when_to_run: local browser development
+    side_effects: starts a local Vite server
+  - name: validate-i18n
+    cwd: .
+    command: npm run validate:i18n
+    when_to_run: after copy or locale changes
+    side_effects: none
+  - name: validate-no-backend
+    cwd: .
+    command: npm run validate:no-backend
+    when_to_run: before commit
+    side_effects: none
+  - name: validate-no-unavailable-feature-copy
+    cwd: .
+    command: npm run validate:no-routes-copy
+    when_to_run: before commit
+    side_effects: none
+  - name: typecheck
+    cwd: .
+    command: npm run typecheck
+    when_to_run: before commit
+    side_effects: none
+  - name: build
+    cwd: .
+    command: npm run build
+    when_to_run: before commit or deploy
+    side_effects: writes dist
+  - name: e2e
+    cwd: .
+    command: npm run test:e2e
+    when_to_run: before commit or after visual/i18n changes
+    side_effects: writes test-results on failure
+  - name: check
+    cwd: .
+    command: npm run check
+    when_to_run: final verification
+    side_effects: writes dist and may write test-results on failure

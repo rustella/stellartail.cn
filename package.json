@@ -1,0 +1,24 @@
+{
+  "name": "stellartail-official-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Official static website for StellarTrail / 寻径星野.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "validate:i18n": "node scripts/validate-i18n.mjs",
+    "validate:no-backend": "node scripts/validate-no-backend-deps.mjs",
+    "validate:no-routes-copy": "node scripts/validate-no-routes-copy.mjs",
+    "test:e2e": "playwright test",
+    "check": "npm run validate:i18n && npm run validate:no-backend && npm run validate:no-routes-copy && npm run typecheck && npm run build && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.60.0",
+    "@types/node": "^25.8.0",
+    "typescript": "6.0.3",
+    "vite": "8.0.13"
+  }
+}

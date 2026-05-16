@@ -1,0 +1,44 @@
+project:
+  name: stellartail.cn
+  repository: https://github.com/rustella/stellartail.cn
+  type: static-official-website
+  domains:
+    - stellartail.cn
+    - www.stellartail.cn
+stack:
+  runtime: node22
+  framework: vite
+  language: typescript
+  styles: css
+  testing: playwright
+source_roots:
+  - src
+  - public
+  - scripts
+  - tests
+config_paths:
+  - package.json
+  - tsconfig.json
+  - vite.config.ts
+  - playwright.config.ts
+generated_paths:
+  - node_modules
+  - dist
+  - coverage
+  - test-results
+  - playwright-report
+entrypoints:
+  app: src/main.ts
+  html: index.html
+policies:
+  comments_language: english
+  i18n_required: true
+  static_only: true
+  backend_dependency_allowed: false
+  unavailable_feature_marketing_allowed: false
+  reduced_motion_required: true
+validation:
+  canonical: npm run check
+freshness:
+  last_updated: 2026-05-17
+  source: implementation from Hermes plan 2026-05-17_025426-official-site-i18n-agent-static-effects.md
