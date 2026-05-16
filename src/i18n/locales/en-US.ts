@@ -14,28 +14,28 @@ export const enUS = {
   hero: {
     eyebrow: 'StellarTrail',
     title: 'Prepare gear and knot skills before you head out',
-    subtitle: 'A lightweight companion for outdoor preparation: organize gear lists, learn practical knot skills, and keep a bright day-mode experience across WeChat and Web.',
+    subtitle: 'A lightweight companion for outdoor preparation: organize gear lists, learn practical knot skills, and keep a consistent experience across WeChat and Web.',
     primaryCta: 'View mini program entry',
     secondaryCta: 'Explore product',
-    note: 'This site only presents currently available gear and outdoor skill capabilities.',
+    note: 'Gear library and outdoor skill features are available now.',
     statGear: 'Gear lists',
     statSkill: 'Knot skills',
-    statMode: 'Day-mode shots'
+    statMode: 'Product views'
   },
   product: {
     eyebrow: 'Product focus',
     title: 'Designed for the preparation phase before going outdoors',
-    body: 'StellarTrail brings gear preparation, skill learning, and entry information into a calm, clear interface. The official site is fully static, loads fast, and stays simple to deploy and maintain.',
+    body: 'StellarTrail gathers gear preparation, skill learning, and entry information into a calm, clear interface so you can quickly confirm what to pack and which key skills to review before leaving.',
     cards: {
-      fast: { title: 'Lightweight and honest', body: 'The site only promises capabilities that can be shown today, without inflating expectations.' },
-      bilingual: { title: 'Bilingual by default', body: 'It detects the system language on first visit and lets people switch and persist their preference.' },
-      polished: { title: 'Polished motion', body: 'Morning light, contour lines, and gentle floating details create an outdoor brand feeling.' }
+      fast: { title: 'Prepare with structure', body: 'Organize lists by gear use case and scenario to reduce last-minute checking stress.' },
+      bilingual: { title: 'Check it anywhere', body: 'Use WeChat for quick checks before heading out, and Web for browsing on a larger screen.' },
+      polished: { title: 'Learn useful skills first', body: 'Start with common knots, clear steps, and practical field scenarios for quick review.' }
     }
   },
   gear: {
     eyebrow: 'Gear library',
     title: 'Turn preparation into a practical checklist',
-    body: 'The gear library introduces basic backpacking templates, categories, and preparation thinking. The official site focuses on understanding what to prepare rather than complex operations.',
+    body: 'The gear library introduces basic backpacking templates, categories, and preparation thinking. It helps people understand what to prepare before their first deeper look at the product.',
     bullets: ['Understand gear categories by use case', 'Start from templates for preparation lists', 'Browse clearly on mobile and desktop']
   },
   skills: {
@@ -46,23 +46,27 @@ export const enUS = {
   },
   screenshots: {
     eyebrow: 'Product screenshots',
-    title: 'WeChat and Web views in day mode',
-    body: 'All official-site materials use day mode. If the final runtime is unavailable, the asset names stay stable so real captures can replace them later.',
-    wechatGearAlt: 'WeChat gear page screenshot in day mode',
-    wechatKnotsAlt: 'WeChat knot skill page screenshot in day mode',
-    webGearAlt: 'Web gear showcase screenshot in day mode',
-    webSkillsAlt: 'Web knot skill showcase screenshot in day mode'
+    title: 'WeChat and Web views',
+    body: 'WeChat works well for quick checks before heading out, while Web gives more room for browsing and organizing on desktop.',
+    wechatTitle: 'WeChat',
+    wechatBody: 'Check gear lists and knot steps on the go.',
+    webTitle: 'Web',
+    webBody: 'Browse gear categories and skill content on a larger screen.',
+    wechatGearAlt: 'WeChat gear page screenshot',
+    wechatKnotsAlt: 'WeChat knot skill page screenshot',
+    webGearAlt: 'Web gear showcase screenshot',
+    webSkillsAlt: 'Web knot skill showcase screenshot'
   },
   entry: {
     eyebrow: 'Download / mini program entry',
     title: 'WeChat mini program entry is being prepared',
-    body: 'The official mini program QR code will be placed here once published. For now, the site explains the entry status instead of showing an unusable or fake code.',
+    body: 'The official mini program QR code will be placed here once published. For now, this section explains the entry status instead of showing an unusable or fake code.',
     badge: 'Coming soon',
     hint: 'Search StellarTrail in WeChat or wait for the official QR code release.'
   },
   footer: {
     tagline: 'StellarTrail',
-    domainFallback: 'Current deployment URL',
+    caption: 'Outdoor preparation starts with checklists and knots',
     rights: 'All rights reserved.'
   },
   language: {
