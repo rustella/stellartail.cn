@@ -8,7 +8,6 @@ import { initReveal } from './effects/reveal';
 import { initStarfield } from './effects/starfield';
 import { getMessages, nextLocale, persistLocale, resolveInitialLocale, type Locale } from './i18n';
 import { screenshotAssets } from './content/screenshots';
-import { deploymentConfig } from './config/deployment';
 import { assetPath } from './utils/asset';
 
 let activeLocale: Locale = resolveInitialLocale();
@@ -17,16 +16,11 @@ const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('Missing app root');
 
 const listItems = (items: readonly string[]): string => items.map((item) => `<li>${item}</li>`).join('');
-const escapeHtml = (value: string): string =>
-  value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char] ?? char);
-
 const render = (): void => {
   const m = getMessages(activeLocale);
   document.title = m.seo.title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', m.seo.description);
   persistLocale(activeLocale);
-  const siteUrlLabel = escapeHtml(deploymentConfig.publicSiteUrl || m.footer.domainFallback);
-
   app.innerHTML = `
     <div class="site-shell">
       <nav class="nav" aria-label="${m.nav.language}">
@@ -121,11 +115,27 @@ const render = (): void => {
             <p class="eyebrow">${m.screenshots.eyebrow}</p>
             <h2 class="section__title">${m.screenshots.title}</h2>
             <p class="section__body">${m.screenshots.body}</p>
-            <div class="screenshot-grid">
-              <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.wechatGear)}" alt="${m.screenshots.wechatGearAlt}" /></figure>
-              <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.wechatKnots)}" alt="${m.screenshots.wechatKnotsAlt}" /></figure>
-              <figure class="screenshot-card screenshot-card--wide"><img src="${assetPath(screenshotAssets.webGear)}" alt="${m.screenshots.webGearAlt}" /></figure>
-              <figure class="screenshot-card screenshot-card--wide"><img src="${assetPath(screenshotAssets.webSkills)}" alt="${m.screenshots.webSkillsAlt}" /></figure>
+            <div class="screenshot-groups">
+              <article class="screenshot-group">
+                <div class="screenshot-group__heading">
+                  <h3>${m.screenshots.wechatTitle}</h3>
+                  <p>${m.screenshots.wechatBody}</p>
+                </div>
+                <div class="screenshot-grid screenshot-grid--mobile">
+                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.wechatGear)}" alt="${m.screenshots.wechatGearAlt}" /></figure>
+                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.wechatKnots)}" alt="${m.screenshots.wechatKnotsAlt}" /></figure>
+                </div>
+              </article>
+              <article class="screenshot-group">
+                <div class="screenshot-group__heading">
+                  <h3>${m.screenshots.webTitle}</h3>
+                  <p>${m.screenshots.webBody}</p>
+                </div>
+                <div class="screenshot-grid screenshot-grid--web">
+                  <figure class="screenshot-card screenshot-card--wide"><img src="${assetPath(screenshotAssets.webGear)}" alt="${m.screenshots.webGearAlt}" /></figure>
+                  <figure class="screenshot-card screenshot-card--wide"><img src="${assetPath(screenshotAssets.webSkills)}" alt="${m.screenshots.webSkillsAlt}" /></figure>
+                </div>
+              </article>
             </div>
           </div>
         </section>
@@ -149,7 +159,7 @@ const render = (): void => {
       <footer class="footer">
         <div class="container footer__inner">
           <strong>${m.footer.tagline}</strong>
-          <span>${siteUrlLabel} · © ${new Date().getFullYear()} ${m.footer.rights}</span>
+          <span>${m.footer.caption} · © ${new Date().getFullYear()} ${m.footer.rights}</span>
         </div>
       </footer>
     </div>

@@ -58,3 +58,27 @@ test('reduced motion preference keeps content visible and minimizes animation', 
   expect(animationDurationMs).toBeLessThanOrEqual(0.002);
   await context.close();
 });
+
+test('homepage copy stays user-facing and separates screenshot platforms', async ({ page }) => {
+  await page.goto('/?lang=zh-CN');
+  const zhBodyText = await page.locator('body').innerText();
+  for (const forbidden of ['官网不依赖后端', '静态方式交付', '部署简单', '后续易维护', '白天模式']) {
+    expect(zhBodyText).not.toContain(forbidden);
+  }
+
+  const screenshotGroups = page.locator('.screenshot-group');
+  await expect(screenshotGroups).toHaveCount(2);
+  await expect(screenshotGroups.nth(0).getByRole('heading', { name: '微信端', exact: true })).toBeVisible();
+  await expect(screenshotGroups.nth(0).locator('img')).toHaveCount(2);
+  await expect(screenshotGroups.nth(1).getByRole('heading', { name: 'Web 端', exact: true })).toBeVisible();
+  await expect(screenshotGroups.nth(1).locator('img')).toHaveCount(2);
+
+  await page.goto('/?lang=en-US');
+  const enBodyText = await page.locator('body').innerText();
+  for (const forbidden of ['day mode', 'day-mode', 'official site is fully static', 'asset names', 'final runtime']) {
+    expect(enBodyText.toLowerCase()).not.toContain(forbidden);
+  }
+  const imageAlts = await page.locator('img[alt]').evaluateAll((images) => images.map((image) => image.getAttribute('alt') ?? '').join(' '));
+  expect(imageAlts.toLowerCase()).not.toContain('day mode');
+  expect(imageAlts.toLowerCase()).not.toContain('day-mode');
+});
