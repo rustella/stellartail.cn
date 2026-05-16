@@ -8,6 +8,8 @@ import { initReveal } from './effects/reveal';
 import { initStarfield } from './effects/starfield';
 import { getMessages, nextLocale, persistLocale, resolveInitialLocale, type Locale } from './i18n';
 import { screenshotAssets } from './content/screenshots';
+import { deploymentConfig } from './config/deployment';
+import { assetPath } from './utils/asset';
 
 let activeLocale: Locale = resolveInitialLocale();
 
@@ -15,19 +17,22 @@ const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('Missing app root');
 
 const listItems = (items: readonly string[]): string => items.map((item) => `<li>${item}</li>`).join('');
+const escapeHtml = (value: string): string =>
+  value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char] ?? char);
 
 const render = (): void => {
   const m = getMessages(activeLocale);
   document.title = m.seo.title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', m.seo.description);
   persistLocale(activeLocale);
+  const siteUrlLabel = escapeHtml(deploymentConfig.publicSiteUrl || m.footer.domainFallback);
 
   app.innerHTML = `
     <div class="site-shell">
       <nav class="nav" aria-label="${m.nav.language}">
         <div class="container nav__inner">
           <a class="nav__brand" href="#top" aria-label="${m.footer.tagline}">
-            <img src="/assets/brand/logo.svg" alt="" />
+            <img src="${assetPath('assets/brand/logo.svg')}" alt="" />
             <span>${m.footer.tagline}</span>
           </a>
           <div class="nav__links">
@@ -57,7 +62,7 @@ const render = (): void => {
           <div class="hero-card float-soft" data-reveal>
             <div class="phone-mock" aria-hidden="true">
               <div class="phone-mock__screen">
-                <img src="${screenshotAssets.wechatGear}" alt="" />
+                <img src="${assetPath(screenshotAssets.wechatGear)}" alt="" />
               </div>
             </div>
             <div class="metric-row">
@@ -92,7 +97,7 @@ const render = (): void => {
               <ul class="bullet-list">${listItems(m.gear.bullets)}</ul>
             </div>
             <div class="feature-panel float-soft" data-reveal>
-              <img src="${screenshotAssets.webGear}" alt="${m.screenshots.webGearAlt}" />
+              <img src="${assetPath(screenshotAssets.webGear)}" alt="${m.screenshots.webGearAlt}" />
             </div>
           </div>
         </section>
@@ -100,7 +105,7 @@ const render = (): void => {
         <section class="section" id="skills">
           <div class="container two-column">
             <div class="feature-panel float-soft" data-reveal>
-              <img src="${screenshotAssets.webSkills}" alt="${m.screenshots.webSkillsAlt}" />
+              <img src="${assetPath(screenshotAssets.webSkills)}" alt="${m.screenshots.webSkillsAlt}" />
             </div>
             <div data-reveal>
               <p class="eyebrow">${m.skills.eyebrow}</p>
@@ -117,10 +122,10 @@ const render = (): void => {
             <h2 class="section__title">${m.screenshots.title}</h2>
             <p class="section__body">${m.screenshots.body}</p>
             <div class="screenshot-grid">
-              <figure class="screenshot-card"><img src="${screenshotAssets.wechatGear}" alt="${m.screenshots.wechatGearAlt}" /></figure>
-              <figure class="screenshot-card"><img src="${screenshotAssets.wechatKnots}" alt="${m.screenshots.wechatKnotsAlt}" /></figure>
-              <figure class="screenshot-card screenshot-card--wide"><img src="${screenshotAssets.webGear}" alt="${m.screenshots.webGearAlt}" /></figure>
-              <figure class="screenshot-card screenshot-card--wide"><img src="${screenshotAssets.webSkills}" alt="${m.screenshots.webSkillsAlt}" /></figure>
+              <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.wechatGear)}" alt="${m.screenshots.wechatGearAlt}" /></figure>
+              <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.wechatKnots)}" alt="${m.screenshots.wechatKnotsAlt}" /></figure>
+              <figure class="screenshot-card screenshot-card--wide"><img src="${assetPath(screenshotAssets.webGear)}" alt="${m.screenshots.webGearAlt}" /></figure>
+              <figure class="screenshot-card screenshot-card--wide"><img src="${assetPath(screenshotAssets.webSkills)}" alt="${m.screenshots.webSkillsAlt}" /></figure>
             </div>
           </div>
         </section>
@@ -135,7 +140,7 @@ const render = (): void => {
                 <p class="section__body">${m.entry.body}</p>
                 <p>${m.entry.hint}</p>
               </div>
-              <img class="entry-placeholder" src="/assets/entry/miniprogram-placeholder.png" alt="${m.entry.title}" />
+              <img class="entry-placeholder" src="${assetPath('assets/entry/miniprogram-placeholder.png')}" alt="${m.entry.title}" />
             </div>
           </div>
         </section>
@@ -144,7 +149,7 @@ const render = (): void => {
       <footer class="footer">
         <div class="container footer__inner">
           <strong>${m.footer.tagline}</strong>
-          <span>${m.footer.domain} · © ${new Date().getFullYear()} ${m.footer.rights}</span>
+          <span>${siteUrlLabel} · © ${new Date().getFullYear()} ${m.footer.rights}</span>
         </div>
       </footer>
     </div>

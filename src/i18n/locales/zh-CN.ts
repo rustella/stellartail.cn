@@ -62,7 +62,7 @@ export const zhCN = {
   },
   footer: {
     tagline: 'StellarTrail / 寻径星野',
-    domain: 'stellartail.cn',
+    domainFallback: '以当前部署地址为准',
     rights: '保留所有权利。'
   },
   language: {

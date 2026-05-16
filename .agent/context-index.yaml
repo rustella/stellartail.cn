@@ -6,6 +6,12 @@ topics:
   brand-content:
     docs:
       - .agent/knowledge/brand-and-content.md
+  deployment:
+    docs:
+      - .agent/knowledge/deployment.md
+      - .github/workflows/deploy-pages.yml
+      - vite.config.ts
+      - scripts/validate-deploy-base.mjs
   validation:
     docs:
       - .agent/commands.yaml
@@ -33,7 +39,9 @@ tasks:
       - .agent/knowledge/brand-and-content.md
       - src/content/screenshots.ts
       - public/assets/screenshots
-  deploy-domain:
+  deploy-static-host:
     docs:
       - README.md
-      - .agent/commands.yaml
+      - .agent/knowledge/deployment.md
+      - .github/workflows/deploy-pages.yml
+      - scripts/validate-deploy-base.mjs

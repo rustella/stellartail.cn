@@ -1,10 +1,15 @@
 project:
   name: stellartail.cn
   repository: https://github.com/rustella/stellartail.cn
+  visibility: public
   type: static-official-website
-  domains:
-    - stellartail.cn
-    - www.stellartail.cn
+  deploy_targets:
+    - name: github-pages-default
+      url: https://rustella.github.io/stellartail.cn/
+      base_path_env: SITE_BASE_PATH
+    - name: configurable-static-host
+      url: external deployment-specific URL
+      base_path_env: SITE_BASE_PATH
 stack:
   runtime: node22
   framework: vite
@@ -21,6 +26,8 @@ config_paths:
   - tsconfig.json
   - vite.config.ts
   - playwright.config.ts
+  - .github/workflows/ci.yml
+  - .github/workflows/deploy-pages.yml
 generated_paths:
   - node_modules
   - dist
@@ -37,8 +44,11 @@ policies:
   backend_dependency_allowed: false
   unavailable_feature_marketing_allowed: false
   reduced_motion_required: true
+  custom_domain_configured: false
+  deployment_base_must_be_configurable: true
 validation:
   canonical: npm run check
+  deploy_base: npm run validate:deploy-base
 freshness:
   last_updated: 2026-05-17
-  source: implementation from Hermes plan 2026-05-17_025426-official-site-i18n-agent-static-effects.md
+  source: implementation from Hermes plan 2026-05-17_040401-configurable-base-multi-target-pages-deploy.md
