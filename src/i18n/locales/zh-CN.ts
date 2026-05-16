@@ -47,15 +47,15 @@ export const zhCN = {
   screenshots: {
     eyebrow: '产品截图',
     title: '微信端与 Web 端展示',
-    body: '微信端适合出门前随手查看，Web 端适合在桌面上整理和浏览。',
+    body: '从当前产品页面中挑选代表功能：装备管理、添加装备和绳结技能。',
     wechatTitle: '微信端',
-    wechatBody: '随身查看装备清单与绳结步骤。',
+    wechatBody: '随身查看装备管理和绳结技能。',
     webTitle: 'Web 端',
-    webBody: '在大屏上浏览装备分类和技能内容。',
-    wechatGearAlt: '微信端装备页截图',
-    wechatKnotsAlt: '微信端绳结技能页截图',
-    webGearAlt: 'Web 端装备展示截图',
-    webSkillsAlt: 'Web 端绳结技能展示截图'
+    webBody: '在大屏上管理装备列表和添加装备信息。',
+    wechatGearAlt: '微信端装备管理实际运行截图',
+    wechatKnotsAlt: '微信端绳结技能实际运行截图',
+    webGearAlt: 'Web 端装备管理实际运行截图',
+    webGearFormAlt: 'Web 端添加装备表单实际运行截图'
   },
   entry: {
     eyebrow: '下载 / 小程序入口',

@@ -72,6 +72,13 @@ test('homepage copy stays user-facing and separates screenshot platforms', async
   await expect(screenshotGroups.nth(0).locator('img')).toHaveCount(2);
   await expect(screenshotGroups.nth(1).getByRole('heading', { name: 'Web 端', exact: true })).toBeVisible();
   await expect(screenshotGroups.nth(1).locator('img')).toHaveCount(2);
+  const imageSources = await page.locator('img').evaluateAll((images) => images.map((image) => image.getAttribute('src') ?? '').join(' '));
+  for (const expected of ['wechat-gear-management-zh.png', 'wechat-knot-skills-zh.png', 'web-gear-management-zh.png', 'web-gear-form-zh.png']) {
+    expect(imageSources).toContain(expected);
+  }
+  for (const oldMockAsset of ['wechat-gear-light-zh.png', 'wechat-knots-light-zh.png', 'web-gear-light-zh.png', 'web-skills-light-zh.png']) {
+    expect(imageSources).not.toContain(oldMockAsset);
+  }
 
   await page.goto('/?lang=en-US');
   const enBodyText = await page.locator('body').innerText();
