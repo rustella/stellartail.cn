@@ -27,9 +27,9 @@ export const enUS = {
     title: 'Designed for the preparation phase before going outdoors',
     body: 'StellarTrail gathers gear preparation, skill learning, and entry information into a calm, clear interface so you can quickly confirm what to pack and which key skills to review before leaving.',
     cards: {
-      fast: { title: 'Prepare with structure', body: 'Organize lists by gear use case and scenario to reduce last-minute checking stress.' },
-      bilingual: { title: 'Check it anywhere', body: 'Use WeChat for quick checks before heading out, and Web for browsing on a larger screen.' },
-      polished: { title: 'Learn useful skills first', body: 'Start with common knots, clear steps, and practical field scenarios for quick review.' }
+      fast: { title: 'Gear library', body: 'Organize gear categories, preparation templates, and checklists by trip scenario so you can confirm what to pack faster.' },
+      bilingual: { title: 'Knot skills', body: 'Start with common knots such as the adjustable tent-line knot, with use cases, steps, and practical reminders.' },
+      polished: { title: 'Multi-device access', body: 'Use WeChat for quick checks before heading out, and Web for browsing and organizing preparation content on desktop.' }
     }
   },
   gear: {
