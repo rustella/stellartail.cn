@@ -99,7 +99,7 @@ const render = (): void => {
         <section class="section" id="skills">
           <div class="container two-column">
             <div class="feature-panel float-soft" data-reveal>
-              <img src="${assetPath(screenshotAssets.webSkills)}" alt="${m.screenshots.webSkillsAlt}" />
+              <img src="${assetPath(screenshotAssets.wechatKnots)}" alt="${m.screenshots.wechatKnotsAlt}" />
             </div>
             <div data-reveal>
               <p class="eyebrow">${m.skills.eyebrow}</p>
@@ -133,7 +133,7 @@ const render = (): void => {
                 </div>
                 <div class="screenshot-grid screenshot-grid--web">
                   <figure class="screenshot-card screenshot-card--wide"><img src="${assetPath(screenshotAssets.webGear)}" alt="${m.screenshots.webGearAlt}" /></figure>
-                  <figure class="screenshot-card screenshot-card--wide"><img src="${assetPath(screenshotAssets.webSkills)}" alt="${m.screenshots.webSkillsAlt}" /></figure>
+                  <figure class="screenshot-card screenshot-card--wide"><img src="${assetPath(screenshotAssets.webGearForm)}" alt="${m.screenshots.webGearFormAlt}" /></figure>
                 </div>
               </article>
             </div>

@@ -47,15 +47,15 @@ export const enUS = {
   screenshots: {
     eyebrow: 'Product screenshots',
     title: 'WeChat and Web views',
-    body: 'WeChat works well for quick checks before heading out, while Web gives more room for browsing and organizing on desktop.',
+    body: 'Representative product views from the current pages: gear management, adding gear, and knot skills.',
     wechatTitle: 'WeChat',
-    wechatBody: 'Check gear lists and knot steps on the go.',
+    wechatBody: 'Check gear management and knot skills on the go.',
     webTitle: 'Web',
-    webBody: 'Browse gear categories and skill content on a larger screen.',
-    wechatGearAlt: 'WeChat gear page screenshot',
-    wechatKnotsAlt: 'WeChat knot skill page screenshot',
-    webGearAlt: 'Web gear showcase screenshot',
-    webSkillsAlt: 'Web knot skill showcase screenshot'
+    webBody: 'Manage gear lists and add detailed gear information on a larger screen.',
+    wechatGearAlt: 'Actual WeChat gear management screenshot',
+    wechatKnotsAlt: 'Actual WeChat knot skills screenshot',
+    webGearAlt: 'Actual Web gear management screenshot',
+    webGearFormAlt: 'Actual Web add-gear form screenshot'
   },
   entry: {
     eyebrow: 'Download / mini program entry',
