@@ -20,11 +20,22 @@ test('persists language switch preference', async ({ page }) => {
   expect(stored).toBe('en-US');
 });
 
-test('homepage top bar exposes docs entry', async ({ page }) => {
+test('homepage top bar keeps only docs and language controls and sticks on scroll', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
-  const zhDocsLink = page.locator('.nav').getByRole('link', { name: 'Docs', exact: true });
+  const nav = page.locator('.nav');
+  const zhDocsLink = nav.getByRole('link', { name: 'Docs', exact: true });
   await expect(zhDocsLink).toBeVisible();
   await expect(zhDocsLink).toHaveAttribute('href', '/docs/?lang=zh-CN');
+  await expect(nav.getByRole('button', { name: /Switch to English/ })).toBeVisible();
+  for (const anchor of ['#product', '#gear', '#skills', '#screenshots', '#entry']) {
+    await expect(nav.locator(`a[href="${anchor}"]`)).toHaveCount(0);
+  }
+
+  await page.evaluate(() => window.scrollTo(0, 980));
+  await expect(nav).toBeVisible();
+  await expect
+    .poll(async () => Math.round(await nav.evaluate((element) => element.getBoundingClientRect().top)))
+    .toBe(0);
 
   await page.evaluate(() => window.localStorage.clear());
   await page.goto('/?lang=en-US');
@@ -34,8 +45,7 @@ test('homepage top bar exposes docs entry', async ({ page }) => {
 });
 
 
-
-test('right floating breadcrumb reveals jump links on hover', async ({ page }, testInfo) => {
+test('right floating breadcrumb pins in-page jump links on click', async ({ page }, testInfo) => {
   await page.goto('/?lang=zh-CN');
   const floatingNav = page.getByRole('navigation', { name: '页面快捷跳转' });
   if (testInfo.project.name.includes('mobile')) {
@@ -45,14 +55,40 @@ test('right floating breadcrumb reveals jump links on hover', async ({ page }, t
 
   await expect(floatingNav).toBeVisible();
   const panel = floatingNav.locator('.floating-breadcrumb__panel');
+  const trigger = floatingNav.getByRole('button', { name: '展开页面快捷跳转' });
+  await expect(panel).toBeHidden();
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+
+  await trigger.hover();
+  await expect(panel).toBeVisible();
+  await page.mouse.move(24, 24);
   await expect(panel).toBeHidden();
 
-  await floatingNav.getByRole('button', { name: '展开页面快捷跳转' }).hover();
+  await trigger.click();
+  await expect(trigger).toHaveAttribute('aria-expanded', 'true');
   await expect(panel).toBeVisible();
-  for (const item of ['首页', '产品', '装备', '技能', '截图', '入口', 'Docs']) {
-    await expect(floatingNav.getByRole('link', { name: item, exact: true })).toBeVisible();
+  await page.mouse.move(24, 24);
+  await expect(panel).toBeVisible();
+
+  const zhJumpLinks = [
+    ['首页', '#top'],
+    ['产品', '#product'],
+    ['装备', '#gear'],
+    ['技能', '#skills'],
+    ['截图', '#screenshots'],
+    ['入口', '#entry']
+  ] as const;
+  for (const [item, href] of zhJumpLinks) {
+    const link = floatingNav.getByRole('link', { name: item, exact: true });
+    await expect(link).toBeVisible();
+    await expect(link).toHaveAttribute('href', href);
   }
-  await expect(floatingNav.getByRole('link', { name: 'Docs', exact: true })).toHaveAttribute('href', '/docs/?lang=zh-CN');
+  await expect(floatingNav.getByRole('link', { name: 'Docs', exact: true })).toHaveCount(0);
+
+  await page.mouse.click(24, 24);
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  await expect(panel).toBeHidden();
+  await trigger.click();
 
   await floatingNav.getByRole('link', { name: '入口', exact: true }).click();
   await expect(page).toHaveURL(/#entry$/);
@@ -60,9 +96,13 @@ test('right floating breadcrumb reveals jump links on hover', async ({ page }, t
   await page.evaluate(() => window.localStorage.clear());
   await page.goto('/?lang=en-US');
   const enFloatingNav = page.getByRole('navigation', { name: 'Page quick jumps' });
-  await enFloatingNav.getByRole('button', { name: 'Expand page quick jumps' }).hover();
-  await expect(enFloatingNav.getByRole('link', { name: 'Home', exact: true })).toBeVisible();
-  await expect(enFloatingNav.getByRole('link', { name: 'Docs', exact: true })).toHaveAttribute('href', '/docs/?lang=en-US');
+  const enTrigger = enFloatingNav.getByRole('button', { name: 'Expand page quick jumps' });
+  await enTrigger.click();
+  await expect(enTrigger).toHaveAttribute('aria-expanded', 'true');
+  const enHomeLink = enFloatingNav.getByRole('link', { name: 'Home', exact: true });
+  await expect(enHomeLink).toBeVisible();
+  await expect(enHomeLink).toHaveAttribute('href', '#top');
+  await expect(enFloatingNav.getByRole('link', { name: 'Docs', exact: true })).toHaveCount(0);
 });
 
 test('homepage communicates Web Android and mini program support', async ({ page }) => {

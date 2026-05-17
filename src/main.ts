@@ -11,12 +11,45 @@ import { screenshotAssets } from './content/screenshots';
 import { assetPath, sitePath } from './utils/asset';
 
 let activeLocale: Locale = resolveInitialLocale();
+let teardownFloatingBreadcrumb: (() => void) | null = null;
 
 const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('Missing app root');
 
 const listItems = (items: readonly string[]): string => items.map((item) => `<li>${item}</li>`).join('');
+
+const initFloatingBreadcrumb = (): (() => void) | null => {
+  const breadcrumb = app.querySelector<HTMLElement>('[data-floating-breadcrumb]');
+  const trigger = breadcrumb?.querySelector<HTMLButtonElement>('[data-breadcrumb-toggle]');
+  if (!breadcrumb || !trigger) return null;
+
+  const setPinned = (pinned: boolean): void => {
+    breadcrumb.dataset.pinned = pinned ? 'true' : 'false';
+    trigger.setAttribute('aria-expanded', String(pinned));
+  };
+  const togglePinned = (): void => setPinned(breadcrumb.dataset.pinned !== 'true');
+  const closeIfOutside = (event: MouseEvent): void => {
+    if (event.target instanceof Node && !breadcrumb.contains(event.target)) setPinned(false);
+  };
+  const closeOnEscape = (event: KeyboardEvent): void => {
+    if (event.key === 'Escape') setPinned(false);
+  };
+
+  setPinned(false);
+  trigger.addEventListener('click', togglePinned);
+  document.addEventListener('click', closeIfOutside);
+  document.addEventListener('keydown', closeOnEscape);
+
+  return () => {
+    trigger.removeEventListener('click', togglePinned);
+    document.removeEventListener('click', closeIfOutside);
+    document.removeEventListener('keydown', closeOnEscape);
+  };
+};
+
 const render = (): void => {
+  teardownFloatingBreadcrumb?.();
+  teardownFloatingBreadcrumb = null;
   const m = getMessages(activeLocale);
   const jumpLinks = [
     { label: m.jump.home, href: '#top' },
@@ -24,8 +57,7 @@ const render = (): void => {
     { label: m.nav.gear, href: '#gear' },
     { label: m.nav.skills, href: '#skills' },
     { label: m.nav.screenshots, href: '#screenshots' },
-    { label: m.nav.entry, href: '#entry' },
-    { label: m.nav.docs, href: sitePath(`docs/?lang=${activeLocale}`) }
+    { label: m.nav.entry, href: '#entry' }
   ];
   document.title = m.seo.title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', m.seo.description);
@@ -39,22 +71,17 @@ const render = (): void => {
             <span>${m.footer.tagline}</span>
           </a>
           <div class="nav__links">
-            <a href="#product">${m.nav.product}</a>
-            <a href="#gear">${m.nav.gear}</a>
-            <a href="#skills">${m.nav.skills}</a>
-            <a href="#screenshots">${m.nav.screenshots}</a>
-            <a href="#entry">${m.nav.entry}</a>
             <a class="nav__docs-link" href="${sitePath(`docs/?lang=${activeLocale}`)}">${m.nav.docs}</a>
             <button class="lang-button" type="button" data-language-toggle aria-label="${m.language.switchTo}">${m.language.current}</button>
           </div>
         </div>
       </nav>
 
-      <nav class="floating-breadcrumb" aria-label="${m.jump.label}">
-        <button class="floating-breadcrumb__trigger" type="button" aria-label="${m.jump.trigger}" aria-haspopup="true">
+      <nav class="floating-breadcrumb" aria-label="${m.jump.label}" data-floating-breadcrumb data-pinned="false">
+        <button class="floating-breadcrumb__trigger" type="button" aria-label="${m.jump.trigger}" aria-haspopup="true" aria-expanded="false" aria-controls="floating-breadcrumb-panel" data-breadcrumb-toggle>
           <span class="floating-breadcrumb__icon" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
-        <div class="floating-breadcrumb__panel">
+        <div class="floating-breadcrumb__panel" id="floating-breadcrumb-panel">
           <span class="floating-breadcrumb__title">${m.jump.title}</span>
           <ol>
             ${jumpLinks.map((link) => `<li><a href="${link.href}">${link.label}</a></li>`).join('')}
@@ -197,6 +224,7 @@ const render = (): void => {
     activeLocale = nextLocale(activeLocale);
     render();
   });
+  teardownFloatingBreadcrumb = initFloatingBreadcrumb();
   initReveal();
   initStarfield();
 };
