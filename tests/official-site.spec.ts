@@ -47,11 +47,8 @@ test('homepage top bar keeps only docs and language controls and sticks on scrol
 
 test('right floating breadcrumb pins in-page jump links on click', async ({ page }, testInfo) => {
   await page.goto('/?lang=zh-CN');
+  const isMobile = testInfo.project.name.includes('mobile');
   const floatingNav = page.getByRole('navigation', { name: '页面快捷跳转' });
-  if (testInfo.project.name.includes('mobile')) {
-    await expect(floatingNav).toBeHidden();
-    return;
-  }
 
   await expect(floatingNav).toBeVisible();
   const panel = floatingNav.locator('.floating-breadcrumb__panel');
@@ -59,14 +56,24 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
   await expect(panel).toBeHidden();
   await expect(trigger).toHaveAttribute('aria-expanded', 'false');
 
-  await trigger.hover();
-  await expect(panel).toBeVisible();
-  await page.mouse.move(24, 24);
-  await expect(panel).toBeHidden();
+  if (!isMobile) {
+    await trigger.hover();
+    await expect(panel).toBeVisible();
+    await page.mouse.move(24, 24);
+    await expect(panel).toBeHidden();
+  }
 
   await trigger.click();
   await expect(trigger).toHaveAttribute('aria-expanded', 'true');
   await expect(panel).toBeVisible();
+  if (isMobile) {
+    const panelBox = await panel.boundingBox();
+    expect(panelBox).not.toBeNull();
+    const viewport = page.viewportSize();
+    expect(viewport).not.toBeNull();
+    expect(panelBox!.x).toBeGreaterThanOrEqual(0);
+    expect(panelBox!.x + panelBox!.width).toBeLessThanOrEqual(viewport!.width + 1);
+  }
   await page.mouse.move(24, 24);
   await expect(panel).toBeVisible();
 
