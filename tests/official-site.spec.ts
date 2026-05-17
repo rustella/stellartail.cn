@@ -20,6 +20,19 @@ test('persists language switch preference', async ({ page }) => {
   expect(stored).toBe('en-US');
 });
 
+test('homepage top bar exposes docs entry', async ({ page }) => {
+  await page.goto('/?lang=zh-CN');
+  const zhDocsLink = page.locator('.nav').getByRole('link', { name: 'Docs', exact: true });
+  await expect(zhDocsLink).toBeVisible();
+  await expect(zhDocsLink).toHaveAttribute('href', '/docs/?lang=zh-CN');
+
+  await page.evaluate(() => window.localStorage.clear());
+  await page.goto('/?lang=en-US');
+  const enDocsLink = page.locator('.nav').getByRole('link', { name: 'Docs', exact: true });
+  await expect(enDocsLink).toBeVisible();
+  await expect(enDocsLink).toHaveAttribute('href', '/docs/?lang=en-US');
+});
+
 test('does not make backend API requests', async ({ page }) => {
   const blocked: string[] = [];
   page.on('request', (request) => {

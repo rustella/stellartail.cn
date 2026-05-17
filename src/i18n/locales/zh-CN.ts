@@ -9,6 +9,7 @@ export const zhCN = {
     skills: '技能',
     screenshots: '截图',
     entry: '入口',
+    docs: 'Docs',
     language: '语言'
   },
   hero: {
