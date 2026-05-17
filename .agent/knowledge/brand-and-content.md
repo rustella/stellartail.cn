@@ -10,7 +10,7 @@
 
 - Gear library and preparation checklists.
 - Outdoor skills focused on knots.
-- Highlighted skill: adjustable guyline hitch / 可调节帐绳结.
+- Knot content focus: adjustable guyline hitch / 可调节帐绳结.
 
 ## Copy rules
 
