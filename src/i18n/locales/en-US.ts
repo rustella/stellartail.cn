@@ -125,7 +125,7 @@ export const enUS = {
         title: 'Overview',
         body: 'This reference is synchronized from the backend Axum registration, request DTOs, response DTOs, and common error model. It covers service status, authentication, public content, knot skills, gear library, uploads, and feedback.',
         count: '{count} registered endpoints are listed.',
-        note: 'This is a static documentation page. It does not request the service from the browser.'
+        note: 'Page load does not request the service. A request is sent only after you enter a service origin and click send.'
       },
       authentication: {
         title: 'Authentication',
@@ -202,7 +202,35 @@ export const enUS = {
       headers: 'Headers',
       requestBody: 'Request body',
       responseBody: 'Response body',
-      noBody: 'No response body'
+      noBody: 'No response body',
+      tryRequest: 'Try request',
+      tryRequestNote: 'The request is sent only after you click send and only to the service origin you enter. The page does not save the origin, headers, or response.',
+      serviceOrigin: 'Service address',
+      serviceOriginPlaceholder: 'https://your-api.example.com',
+      serviceOriginHelp: 'Enter an http(s) service address. The documented path is appended to it.',
+      pathParams: 'Path parameters',
+      pathParamLabel: '{name} path parameter',
+      queryParams: 'Query parameter input',
+      queryParamLabel: '{name} query parameter',
+      extraQuery: 'Additional query string',
+      extraQueryPlaceholder: 'foo=bar&limit=20',
+      headersInput: 'Header input',
+      headersPlaceholder: 'Authorization: Bearer ...\nX-StellarTrail-Locale: en',
+      requestBodyInput: 'Request body input',
+      fileInput: 'File',
+      sendRequest: 'Send request',
+      sending: 'Sending…',
+      requestUrl: 'Request URL',
+      response: 'Response',
+      responseHeaders: 'Response headers',
+      responseBodyResult: 'Response body',
+      fillServiceOrigin: 'Fill in the service address first',
+      invalidServiceOrigin: 'Service address must be an http(s) URL without query string or fragment.',
+      fillPathParam: 'Fill in the {name} path parameter',
+      invalidHeader: 'Header format must be Name: value',
+      invalidJson: 'Request body must be valid JSON',
+      networkError: 'Request failed: {message}',
+      noResponseBody: 'No response body'
     }
   },
   footer: {

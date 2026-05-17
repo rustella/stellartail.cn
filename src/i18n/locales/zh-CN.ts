@@ -125,7 +125,7 @@ export const zhCN = {
         title: '概览',
         body: '本文档从后端源码中的 Axum 注册表、请求 DTO、响应 DTO 和统一错误模型同步而来，覆盖系统状态、登录账号、公开内容、绳结技能、装备库、上传与反馈。',
         count: '当前列出 {count} 个已注册接口。',
-        note: '本文档是静态说明页，不会从浏览器直接请求服务。'
+        note: '页面加载时不会请求服务；只有你填写服务地址并点击发送请求时才会发起请求。'
       },
       authentication: {
         title: '认证',
@@ -202,7 +202,35 @@ export const zhCN = {
       headers: '请求头',
       requestBody: '请求体',
       responseBody: '响应体',
-      noBody: '无响应体'
+      noBody: '无响应体',
+      tryRequest: '调试请求',
+      tryRequestNote: '仅在点击发送后请求你填写的服务地址；页面不会保存地址、请求头或响应。',
+      serviceOrigin: '服务地址',
+      serviceOriginPlaceholder: 'https://your-api.example.com',
+      serviceOriginHelp: '输入 http(s) 服务地址，页面会把接口路径拼接在后面。',
+      pathParams: '路径参数',
+      pathParamLabel: '{name} 路径参数',
+      queryParams: '查询参数输入',
+      queryParamLabel: '{name} 查询参数',
+      extraQuery: '附加查询参数',
+      extraQueryPlaceholder: 'foo=bar&limit=20',
+      headersInput: '请求头输入',
+      headersPlaceholder: 'Authorization: Bearer ...\nX-StellarTrail-Locale: zh-CN',
+      requestBodyInput: '请求体输入',
+      fileInput: '文件',
+      sendRequest: '发送请求',
+      sending: '发送中…',
+      requestUrl: '请求地址',
+      response: '响应',
+      responseHeaders: '响应头',
+      responseBodyResult: '响应内容',
+      fillServiceOrigin: '请先填写服务地址',
+      invalidServiceOrigin: '服务地址必须是 http(s) URL，且不能包含查询串或片段。',
+      fillPathParam: '请填写 {name} 路径参数',
+      invalidHeader: '请求头格式应为 Name: value',
+      invalidJson: '请求体必须是合法 JSON',
+      networkError: '请求失败：{message}',
+      noResponseBody: '无响应内容'
     }
   },
   footer: {

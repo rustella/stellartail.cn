@@ -51,7 +51,7 @@ policies:
   custom_domain_configured: false
   deployment_base_must_be_configurable: true
   docs_origin_committed: false
-  docs_runtime_backend_requests_allowed: false
+  docs_runtime_backend_requests_allowed: user_initiated_only
 validation:
   canonical: npm run check
   deploy_base: npm run validate:deploy-base

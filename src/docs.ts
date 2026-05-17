@@ -20,6 +20,9 @@ if (!app) throw new Error('Missing docs app root');
 
 const endpointById = new Map<string, ApiDocEndpoint>(apiDocs.endpoints.map((endpoint) => [endpoint.id, endpoint]));
 
+type DocsMessages = ReturnType<typeof getMessages>['docs'];
+type DocsLabels = DocsMessages['labels'];
+
 const escapeHtml = (value: string): string =>
   value
     .replaceAll('&', '&amp;')
@@ -55,11 +58,125 @@ const renderOptionalSection = (label: string, value?: unknown): string => {
     </div>`;
 };
 
+const pathParamNames = (path: string): string[] => [...path.matchAll(/:([A-Za-z0-9_]+)/g)].map((match) => match[1]);
+
+const querySpec = (raw: string): { name: string; defaultValue: string } => {
+  const [name, ...rest] = raw.split('=');
+  return { name, defaultValue: rest.length ? rest.join('=') : '' };
+};
+
+const pathParamPlaceholder = (endpoint: ApiDocEndpoint, name: string): string => {
+  if (name === 'knot_id') return 'adjustable-grip-hitch-knot';
+  if (name === 'asset_id') return 'draw_gif';
+  if (endpoint.id === 'gearTemplatesDetail') return 'backpacking-basic';
+  if (endpoint.id === 'skillsKnotsDetail') return 'adjustable-grip-hitch-knot';
+  if (endpoint.groupKey === 'gear') return 'gear-id';
+  if (endpoint.groupKey === 'uploads') return 'upload-id';
+  return name;
+};
+
+const renderRequestField = (label: string, input: string, hint = ''): string => `
+  <label class="request-runner__field">
+    <span>${escapeHtml(label)}</span>
+    ${input}
+    ${hint ? `<small>${escapeHtml(hint)}</small>` : ''}
+  </label>`;
+
+const renderPathParamInputs = (endpoint: ApiDocEndpoint, labels: DocsLabels): string => {
+  const names = pathParamNames(endpoint.path);
+  if (!names.length) return '';
+  return `
+    <div class="request-runner__block">
+      <h4>${escapeHtml(labels.pathParams)}</h4>
+      <div class="request-runner__grid">
+        ${names
+          .map((name) =>
+            renderRequestField(
+              labels.pathParamLabel.replace('{name}', name),
+              `<input type="text" data-path-param="${escapeHtml(name)}" placeholder="${escapeHtml(pathParamPlaceholder(endpoint, name))}" />`
+            )
+          )
+          .join('')}
+      </div>
+    </div>`;
+};
+
+const renderQueryInputs = (endpoint: ApiDocEndpoint, labels: DocsLabels): string => {
+  const specs = endpoint.query?.map(querySpec) ?? [];
+  return `
+    <div class="request-runner__block">
+      <h4>${escapeHtml(labels.queryParams)}</h4>
+      ${
+        specs.length
+          ? `<div class="request-runner__grid">${specs
+              .map((spec) =>
+                renderRequestField(
+                  labels.queryParamLabel.replace('{name}', spec.name),
+                  `<input type="text" data-query-param="${escapeHtml(spec.name)}" value="${escapeHtml(spec.defaultValue)}" />`
+                )
+              )
+              .join('')}</div>`
+          : ''
+      }
+      ${renderRequestField(
+        labels.extraQuery,
+        `<input type="text" data-extra-query placeholder="${escapeHtml(labels.extraQueryPlaceholder)}" />`
+      )}
+    </div>`;
+};
+
+const renderBodyInput = (endpoint: ApiDocEndpoint, labels: DocsLabels): string => {
+  if (endpoint.requestBody === undefined) return '';
+  const body = codeValue(endpoint.requestBody);
+  const fileInput = endpoint.contentType === 'multipart/form-data'
+    ? renderRequestField(labels.fileInput, '<input type="file" data-request-file />')
+    : '';
+  return `
+    <div class="request-runner__block">
+      <h4>${escapeHtml(labels.requestBodyInput)}</h4>
+      ${fileInput}
+      <textarea data-request-body spellcheck="false">${body}</textarea>
+    </div>`;
+};
+
+const renderRequestRunner = (endpoint: ApiDocEndpoint, labels: DocsLabels): string => `
+  <form class="request-runner" data-request-form data-endpoint-id="${endpoint.id}">
+    <div class="request-runner__head">
+      <div>
+        <h3>${escapeHtml(labels.tryRequest)}</h3>
+        <p>${escapeHtml(labels.tryRequestNote)}</p>
+      </div>
+      <button class="request-runner__send" type="submit" data-send-request>${escapeHtml(labels.sendRequest)}</button>
+    </div>
+    ${renderRequestField(
+      labels.serviceOrigin,
+      `<input type="url" inputmode="url" autocomplete="off" data-request-base placeholder="${escapeHtml(labels.serviceOriginPlaceholder)}" />`,
+      labels.serviceOriginHelp
+    )}
+    ${renderPathParamInputs(endpoint, labels)}
+    ${renderQueryInputs(endpoint, labels)}
+    <div class="request-runner__block">
+      <h4>${escapeHtml(labels.headersInput)}</h4>
+      <textarea data-request-headers spellcheck="false" placeholder="${escapeHtml(labels.headersPlaceholder)}"></textarea>
+    </div>
+    ${renderBodyInput(endpoint, labels)}
+    <div class="request-runner__result" aria-live="polite">
+      <div class="request-runner__result-row"><strong>${escapeHtml(labels.requestUrl)}</strong><code data-request-url>—</code></div>
+      <div class="request-runner__result-row"><strong>${escapeHtml(labels.response)}</strong><span data-response-status>—</span></div>
+      <details>
+        <summary>${escapeHtml(labels.responseHeaders)}</summary>
+        <pre class="code-block"><code data-response-headers>—</code></pre>
+      </details>
+      <strong class="request-runner__body-title">${escapeHtml(labels.responseBodyResult)}</strong>
+      <pre class="code-block"><code data-response-body>${escapeHtml(labels.noResponseBody)}</code></pre>
+    </div>
+  </form>`;
+
 const renderEndpoint = (
   endpoint: ApiDocEndpoint,
   endpointLabels: Record<ApiDocEndpointId, string>,
   authLabels: Record<ApiDocEndpoint['auth'], string>,
-  labels: ReturnType<typeof getMessages>['docs']['labels']
+  labels: DocsLabels
 ): string => {
   const query = renderList(endpoint.query);
   const headers = renderList(endpoint.headers);
@@ -84,10 +201,11 @@ const renderEndpoint = (
         <h4>${labels.responseBody}</h4>
         ${renderCodeBlock(response)}
       </div>
+      ${renderRequestRunner(endpoint, labels)}
     </article>`;
 };
 
-const renderEndpointGroups = (docs: ReturnType<typeof getMessages>['docs']): string => {
+const renderEndpointGroups = (docs: DocsMessages): string => {
   const endpointLabels = docs.endpointSummaries as Record<ApiDocEndpointId, string>;
   const groupLabels = docs.groupTitles as Record<ApiDocEndpointGroupKey, string>;
   const authLabels = docs.authLabels as Record<ApiDocEndpoint['auth'], string>;
@@ -113,7 +231,7 @@ const renderEndpointGroups = (docs: ReturnType<typeof getMessages>['docs']): str
     .join('');
 };
 
-const renderErrors = (docs: ReturnType<typeof getMessages>['docs']): string =>
+const renderErrors = (docs: DocsMessages): string =>
   apiDocs.errors
     .map(
       (error) => `
@@ -123,6 +241,182 @@ const renderErrors = (docs: ReturnType<typeof getMessages>['docs']): string =>
         </article>`
     )
     .join('');
+
+const parseServiceOrigin = (raw: string, labels: DocsLabels): string => {
+  const trimmed = raw.trim();
+  if (!trimmed) throw new Error(labels.fillServiceOrigin);
+  let parsed: URL;
+  try {
+    parsed = new URL(trimmed);
+  } catch {
+    throw new Error(labels.invalidServiceOrigin);
+  }
+  if (!['http:', 'https:'].includes(parsed.protocol) || parsed.search || parsed.hash) {
+    throw new Error(labels.invalidServiceOrigin);
+  }
+  return parsed.href.replace(/\/+$/, '');
+};
+
+const buildPath = (endpoint: ApiDocEndpoint, form: HTMLFormElement, labels: DocsLabels): string =>
+  endpoint.path.replace(/:([A-Za-z0-9_]+)/g, (_full, name: string) => {
+    const input = form.querySelector<HTMLInputElement>(`[data-path-param="${CSS.escape(name)}"]`);
+    const value = input?.value.trim() ?? '';
+    if (!value) throw new Error(labels.fillPathParam.replace('{name}', name));
+    return encodeURIComponent(value);
+  });
+
+const appendQueryParams = (url: URL, form: HTMLFormElement): void => {
+  form.querySelectorAll<HTMLInputElement>('[data-query-param]').forEach((input) => {
+    const name = input.dataset.queryParam;
+    const value = input.value.trim();
+    if (name && value) url.searchParams.set(name, value);
+  });
+  const extraQuery = form.querySelector<HTMLInputElement>('[data-extra-query]')?.value.trim() ?? '';
+  if (!extraQuery) return;
+  const normalized = extraQuery.startsWith('?') ? extraQuery.slice(1) : extraQuery;
+  new URLSearchParams(normalized).forEach((value, key) => {
+    if (key) url.searchParams.append(key, value);
+  });
+};
+
+const parseHeaders = (form: HTMLFormElement, labels: DocsLabels): Headers => {
+  const headers = new Headers();
+  const raw = form.querySelector<HTMLTextAreaElement>('[data-request-headers]')?.value ?? '';
+  for (const line of raw.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    const index = trimmed.indexOf(':');
+    if (index <= 0) throw new Error(labels.invalidHeader);
+    const name = trimmed.slice(0, index).trim();
+    const value = trimmed.slice(index + 1).trim();
+    if (!name || !value) throw new Error(labels.invalidHeader);
+    headers.set(name, value);
+  }
+  return headers;
+};
+
+const parseRequestBody = (form: HTMLFormElement, labels: DocsLabels): unknown => {
+  const raw = form.querySelector<HTMLTextAreaElement>('[data-request-body]')?.value.trim() ?? '';
+  if (!raw) return undefined;
+  try {
+    return JSON.parse(raw) as unknown;
+  } catch {
+    throw new Error(labels.invalidJson);
+  }
+};
+
+const buildRequestBody = (endpoint: ApiDocEndpoint, form: HTMLFormElement, headers: Headers, labels: DocsLabels): BodyInit | undefined => {
+  if (endpoint.requestBody === undefined) return undefined;
+  const body = parseRequestBody(form, labels);
+  if (endpoint.contentType === 'multipart/form-data') {
+    const data = new FormData();
+    const file = form.querySelector<HTMLInputElement>('[data-request-file]')?.files?.[0];
+    if (file) data.set('file', file);
+    if (body && typeof body === 'object' && !Array.isArray(body)) {
+      for (const [key, value] of Object.entries(body as Record<string, unknown>)) {
+        if (key === 'file') continue;
+        if (value === null || value === undefined) continue;
+        data.set(key, typeof value === 'string' ? value : JSON.stringify(value));
+      }
+    }
+    return data;
+  }
+  if (!headers.has('Content-Type')) headers.set('Content-Type', 'application/json');
+  return JSON.stringify(body ?? {});
+};
+
+const responseHeadersText = (headers: Headers): string => {
+  const lines: string[] = [];
+  headers.forEach((value, key) => lines.push(`${key}: ${value}`));
+  return lines.length ? lines.join('\n') : '—';
+};
+
+const statusTextFallback = (status: number): string =>
+  ({
+    200: 'OK',
+    201: 'Created',
+    204: 'No Content',
+    400: 'Bad Request',
+    401: 'Unauthorized',
+    403: 'Forbidden',
+    404: 'Not Found',
+    413: 'Payload Too Large',
+    415: 'Unsupported Media Type',
+    422: 'Unprocessable Entity',
+    428: 'Precondition Required',
+    429: 'Too Many Requests',
+    500: 'Internal Server Error',
+    502: 'Bad Gateway'
+  })[status] ?? '';
+
+const formatResponseBody = async (response: Response, labels: DocsLabels): Promise<string> => {
+  const text = await response.text();
+  if (!text) return labels.noResponseBody;
+  const contentType = response.headers.get('content-type') ?? '';
+  if (contentType.includes('json')) {
+    try {
+      return JSON.stringify(JSON.parse(text), null, 2);
+    } catch {
+      return text;
+    }
+  }
+  return text;
+};
+
+const setText = (form: HTMLFormElement, selector: string, value: string): void => {
+  const node = form.querySelector<HTMLElement>(selector);
+  if (node) node.textContent = value;
+};
+
+const handleRequestSubmit = async (event: SubmitEvent, labels: DocsLabels): Promise<void> => {
+  event.preventDefault();
+  const form = event.currentTarget as HTMLFormElement;
+  const endpoint = endpointById.get(form.dataset.endpointId ?? '');
+  if (!endpoint) return;
+  const button = form.querySelector<HTMLButtonElement>('[data-send-request]');
+  try {
+    button?.setAttribute('disabled', 'true');
+    setText(form, '[data-response-status]', labels.sending);
+    setText(form, '[data-response-body]', '');
+    setText(form, '[data-response-headers]', '—');
+
+    const origin = parseServiceOrigin(form.querySelector<HTMLInputElement>('[data-request-base]')?.value ?? '', labels);
+    const path = buildPath(endpoint, form, labels);
+    const requestUrl = new URL(`${origin}${path.startsWith('/') ? '' : '/'}${path}`);
+    appendQueryParams(requestUrl, form);
+    setText(form, '[data-request-url]', requestUrl.href);
+
+    const headers = parseHeaders(form, labels);
+    const body = buildRequestBody(endpoint, form, headers, labels);
+    const response = await fetch(requestUrl.href, {
+      method: endpoint.method,
+      headers,
+      body,
+      credentials: 'omit'
+    });
+    const fallback = statusTextFallback(response.status);
+    setText(form, '[data-response-status]', `${response.status}${response.statusText || fallback ? ` ${response.statusText || fallback}` : ''}`);
+    setText(form, '[data-response-headers]', responseHeadersText(response.headers));
+    setText(form, '[data-response-body]', await formatResponseBody(response, labels));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const localized = message === labels.fillServiceOrigin || message === labels.invalidServiceOrigin || message === labels.invalidHeader || message === labels.invalidJson || message.startsWith(labels.fillPathParam.split('{name}')[0])
+      ? message
+      : labels.networkError.replace('{message}', message);
+    setText(form, '[data-response-status]', localized);
+    setText(form, '[data-response-body]', localized);
+  } finally {
+    button?.removeAttribute('disabled');
+  }
+};
+
+const bindRequestForms = (labels: DocsLabels): void => {
+  app.querySelectorAll<HTMLFormElement>('[data-request-form]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      void handleRequestSubmit(event, labels);
+    });
+  });
+};
 
 const renderDocs = (): void => {
   const m = getMessages(activeLocale);
@@ -218,6 +512,7 @@ const renderDocs = (): void => {
     activeLocale = nextLocale(activeLocale);
     renderDocs();
   });
+  bindRequestForms(docs.labels);
 };
 
 renderDocs();
