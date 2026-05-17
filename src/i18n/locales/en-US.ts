@@ -4,12 +4,12 @@ export const enUS = {
     description: 'StellarTrail helps you prepare gear lists and learn practical knot skills before heading outdoors across Web, Android, and WeChat Mini Program.'
   },
   nav: {
-    product: 'Product',
-    gear: 'Gear',
-    skills: 'Skills',
-    screenshots: 'Screenshots',
-    entry: 'Entry',
-    docs: 'Docs',
+    product: 'Product intro',
+    gear: 'Gear management',
+    skills: 'Outdoor skills',
+    screenshots: 'Product screenshots',
+    entry: 'Downloads',
+    docs: 'API Docs',
     language: 'Language'
   },
   jump: {

@@ -4,12 +4,12 @@ export const zhCN = {
     description: '寻径星野帮助你在出发前整理装备清单、学习关键绳结技能，并在 Web 端、Android 端和微信小程序端使用。'
   },
   nav: {
-    product: '产品',
-    gear: '装备',
-    skills: '技能',
-    screenshots: '截图',
-    entry: '入口',
-    docs: 'Docs',
+    product: '产品介绍',
+    gear: '装备管理',
+    skills: '户外技能',
+    screenshots: '产品截图',
+    entry: '下载入口',
+    docs: '接口文档',
     language: '语言'
   },
   jump: {
