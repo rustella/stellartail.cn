@@ -1,15 +1,9 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, normalize } from 'node:path';
 
-const roots = ['src', 'index.html', 'vite.config.ts'];
-const banned = [
-  /fetch\s*\(/i,
-  /\/api\//i,
-  /axios/i,
-  /VITE_API_BASE_URL/i,
-  /API_BASE_URL/i,
-  /localhost:\d+/i
-];
+const roots = ['src', 'docs', 'index.html', 'vite.config.ts'];
+const bannedEverywhere = [/fetch\s*\(/i, /axios/i, /VITE_API_BASE_URL/i, /API_BASE_URL/i, /localhost:\d+/i];
+const apiPathAllowedFiles = new Set([normalize('src/content/api-docs.ts')]);
 
 const files = [];
 const walk = (path) => {
@@ -26,8 +20,11 @@ roots.forEach(walk);
 const issues = [];
 for (const file of files) {
   const text = readFileSync(file, 'utf8');
-  for (const pattern of banned) {
+  for (const pattern of bannedEverywhere) {
     if (pattern.test(text)) issues.push(`${file}: ${pattern}`);
+  }
+  if (/\/api\//i.test(text) && !apiPathAllowedFiles.has(normalize(file))) {
+    issues.push(`${file}: /api/ is only allowed in static API documentation data`);
   }
 }
 

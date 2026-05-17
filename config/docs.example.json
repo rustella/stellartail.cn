@@ -1,0 +1,6 @@
+{
+  "docsPath": "/docs/",
+  "productionOrigin": "",
+  "indexing": false,
+  "notes": "Copy to config/docs.production.local.json for deployment-only values. Do not commit real origins."
+}

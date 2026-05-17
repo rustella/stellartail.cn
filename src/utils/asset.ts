@@ -5,3 +5,5 @@ export const assetPath = (path: string): string => {
   const normalizedBase = base.endsWith('/') ? base : `${base}/`;
   return `${normalizedBase}${trimLeadingSlashes(path)}`;
 };
+
+export const sitePath = (path = ''): string => assetPath(path);

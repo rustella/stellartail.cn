@@ -24,6 +24,11 @@ commands:
     command: npm run validate:no-routes-copy
     when_to_run: before commit
     side_effects: none
+  - name: validate-docs-config
+    cwd: .
+    command: npm run validate:docs-config
+    when_to_run: after docs page or docs deployment config changes
+    side_effects: none
   - name: typecheck
     cwd: .
     command: npm run typecheck

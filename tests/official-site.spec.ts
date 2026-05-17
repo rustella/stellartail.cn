@@ -62,7 +62,7 @@ test('reduced motion preference keeps content visible and minimizes animation', 
 test('homepage copy stays user-facing and separates screenshot platforms', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   const zhBodyText = await page.locator('body').innerText();
-  for (const forbidden of ['官网不依赖后端', '静态方式交付', '部署简单', '后续易维护', '白天模式', '轻量可信', '官网只承诺当前可展示能力', '中英双语', '根据系统语言默认展示', '从当前产品页面', '挑选代表功能', '代表功能', '代表内容', '给你的prompt', 'prompt']) {
+  for (const forbidden of ['官网不依赖后端', '静态方式交付', '部署简单', '后续易维护', '白天模式', '轻量可信', '官网只承诺当前可展示能力', '中英双语', '根据系统语言默认展示', '从当前产品页面', '挑选代表功能', '代表功能', '代表内容', '给你的prompt', 'prompt', '开发文档', '后端接口', 'API Reference']) {
     expect(zhBodyText).not.toContain(forbidden);
   }
 
@@ -82,12 +82,40 @@ test('homepage copy stays user-facing and separates screenshot platforms', async
 
   await page.goto('/?lang=en-US');
   const enBodyText = await page.locator('body').innerText();
-  for (const forbidden of ['day mode', 'day-mode', 'official site is fully static', 'asset names', 'final runtime', 'lightweight and honest', 'bilingual by default', 'system language', 'representative product views', 'current pages', 'highlighted skill', 'prompt']) {
+  for (const forbidden of ['day mode', 'day-mode', 'official site is fully static', 'asset names', 'final runtime', 'lightweight and honest', 'bilingual by default', 'system language', 'representative product views', 'current pages', 'highlighted skill', 'prompt', 'api reference', 'backend api']) {
     expect(enBodyText.toLowerCase()).not.toContain(forbidden);
   }
   const imageAlts = await page.locator('img[alt]').evaluateAll((images) => images.map((image) => image.getAttribute('alt') ?? '').join(' '));
   expect(imageAlts.toLowerCase()).not.toContain('day mode');
   expect(imageAlts.toLowerCase()).not.toContain('day-mode');
+});
+
+
+test('renders docs API reference page without backend requests', async ({ page }) => {
+  const backendRequests: string[] = [];
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (url.pathname.startsWith('/api/')) backendRequests.push(request.url());
+  });
+
+  await page.goto('/docs/?lang=zh-CN');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('开发文档');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
+  await expect(page.getByText('GET /healthz')).toBeVisible();
+  await expect(page.getByText('GET /api/meta')).toBeVisible();
+  await expect(page.getByText('database_kind')).toBeVisible();
+  const bodyText = await page.locator('body').innerText();
+  const forbiddenDocsOrigin = process.env.DOCS_PUBLIC_ORIGIN ?? '';
+  if (forbiddenDocsOrigin) expect(bodyText).not.toContain(forbiddenDocsOrigin);
+  expect(backendRequests).toEqual([]);
+});
+
+test('renders English docs API reference page', async ({ page }) => {
+  await page.goto('/docs/?lang=en-US');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('API Reference');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en-US');
+  await expect(page.getByText('GET /healthz')).toBeVisible();
+  await expect(page.getByText('GET /api/meta')).toBeVisible();
 });
 
 

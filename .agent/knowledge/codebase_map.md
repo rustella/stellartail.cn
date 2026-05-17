@@ -3,8 +3,10 @@
 ```text
 .
 ├── index.html
+├── docs/                    # Static API reference page entry
 ├── src/
-│   ├── main.ts                 # App rendering and language binding
+│   ├── main.ts                 # Homepage rendering and language binding
+│   ├── docs.ts                 # Docs page rendering and language binding
 │   ├── config/                 # Deployment-facing runtime config helpers
 │   ├── i18n/                   # Locale resolution and bilingual copy
 │   ├── content/                # Static product and screenshot metadata
