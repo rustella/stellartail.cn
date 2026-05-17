@@ -41,21 +41,21 @@ export const enUS = {
   skills: {
     eyebrow: 'Outdoor skills',
     title: 'Start with knots that are useful in the field',
-    body: 'Outdoor skills currently focus on knots. The highlighted skill is the adjustable guyline hitch, useful for tuning tent, tarp, and guyline tension after load is applied.',
+    body: 'Outdoor skills currently focus on knots. The adjustable guyline hitch helps tune tent, tarp, and guyline tension after load is applied.',
     bullets: ['Current capability: knot tutorials', 'Example skill: adjustable guyline hitch', 'Good for quick review before departure']
   },
   screenshots: {
     eyebrow: 'Product screenshots',
     title: 'WeChat and Web views',
-    body: 'Representative product views from the current pages: gear management, adding gear, and knot skills.',
+    body: 'Review gear and knot skills on WeChat, then organize lists and add gear details on Web.',
     wechatTitle: 'WeChat',
     wechatBody: 'Check gear management and knot skills on the go.',
     webTitle: 'Web',
     webBody: 'Manage gear lists and add detailed gear information on a larger screen.',
-    wechatGearAlt: 'Actual WeChat gear management screenshot',
-    wechatKnotsAlt: 'Actual WeChat knot skills screenshot',
-    webGearAlt: 'Actual Web gear management screenshot',
-    webGearFormAlt: 'Actual Web add-gear form screenshot'
+    wechatGearAlt: 'WeChat gear management interface',
+    wechatKnotsAlt: 'WeChat knot skills interface',
+    webGearAlt: 'Web gear management interface',
+    webGearFormAlt: 'Web add-gear form interface'
   },
   entry: {
     eyebrow: 'Download / mini program entry',
