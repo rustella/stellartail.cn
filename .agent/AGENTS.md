@@ -13,7 +13,7 @@ This file is a lightweight router for agents working in the `stellartail.cn` sta
 
 - Code comments must be English.
 - User-visible copy must live in `src/i18n/locales/*`.
-- Keep the site static. Do not add backend API calls, API base URLs, axios, or runtime server requirements. Static path-only API documentation is allowed under `/docs/`.
+- Keep the site static. Do not add automatic backend API calls, committed API base URLs, axios, or runtime server requirements. `/docs/` may include a user-initiated request runner that only calls an http(s) service origin typed by the reader.
 - Do not market unavailable product capabilities; the site currently presents gear and knot skills only.
 - Motion must be tasteful, performant, and respect `prefers-reduced-motion`.
 - Do not commit secrets, tokens, credentials, or deployment keys.

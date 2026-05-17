@@ -186,7 +186,7 @@ test('does not make backend API requests', async ({ page }) => {
   const blocked: string[] = [];
   page.on('request', (request) => {
     const url = new URL(request.url());
-    if (url.pathname.startsWith('/api/')) blocked.push(request.url());
+    if (url.pathname === '/healthz' || url.pathname.startsWith('/api/')) blocked.push(request.url());
   });
   await page.goto('/?lang=en-US');
   await page.waitForLoadState('networkidle');
@@ -291,7 +291,7 @@ const assertDocsApiReference = async (page: import('@playwright/test').Page, loc
   const backendRequests: string[] = [];
   page.on('request', (request) => {
     const url = new URL(request.url());
-    if (url.pathname.startsWith('/api/')) backendRequests.push(request.url());
+    if (url.pathname === '/healthz' || url.pathname.startsWith('/api/')) backendRequests.push(request.url());
   });
 
   await page.goto(`/docs/?lang=${locale}`);
@@ -333,6 +333,91 @@ test('renders complete English docs API reference page', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Gear library' })).toBeVisible();
 });
 
+
+
+test('docs request runner keeps requests user-initiated and validates required service origin', async ({ page }) => {
+  const backendRequests: string[] = [];
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (url.pathname === '/healthz' || url.pathname.startsWith('/api/')) backendRequests.push(request.url());
+  });
+
+  await page.goto('/docs/?lang=zh-CN');
+  await page.waitForLoadState('networkidle');
+  expect(backendRequests).toEqual([]);
+
+  const card = page.locator('#endpoint-healthz');
+  await expect(card.locator('[data-request-base]')).toHaveValue('');
+  await card.getByRole('button', { name: '发送请求' }).click();
+  await expect(card.locator('[data-response-status]')).toHaveText('请先填写服务地址');
+  expect(backendRequests).toEqual([]);
+});
+
+test('docs request runner builds GET requests from service origin path params and query params', async ({ page }) => {
+  const capturedRequests: string[] = [];
+  await page.route('https://api.example.test/api/gear-templates/backpacking-basic?locale=zh-CN&limit=20', async (route) => {
+    capturedRequests.push(route.request().url());
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ id: 'backpacking-basic', ok: true })
+    });
+  });
+
+  await page.goto('/docs/?lang=zh-CN');
+  const card = page.locator('#endpoint-gearTemplatesDetail');
+  await card.locator('[data-request-base]').fill('https://api.example.test/');
+  await card.locator('[data-path-param="id"]').fill('backpacking-basic');
+  await card.locator('[data-extra-query]').fill('locale=zh-CN&limit=20');
+  await card.getByRole('button', { name: '发送请求' }).click();
+
+  await expect(card.getByText('200 OK')).toBeVisible();
+  await expect(card.locator('[data-response-body]')).toContainText('"ok": true');
+  expect(capturedRequests).toEqual(['https://api.example.test/api/gear-templates/backpacking-basic?locale=zh-CN&limit=20']);
+});
+
+test('docs request runner sends JSON body and custom headers for POST requests', async ({ page }) => {
+  const captured: Array<{ method: string; headers: Record<string, string>; body: string | null }> = [];
+  await page.context().addCookies([{ name: 'docs_session', value: 'should-not-be-sent', url: 'https://api.example.test' }]);
+  await page.route('https://api.example.test/api/auth/login', async (route) => {
+    const request = route.request();
+    if (request.method() === 'OPTIONS') {
+      await route.fulfill({
+        status: 204,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'content-type, x-trace-id'
+        }
+      });
+      return;
+    }
+    captured.push({ method: request.method(), headers: request.headers(), body: request.postData() });
+    await route.fulfill({
+      status: 401,
+      contentType: 'application/json',
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ code: 'invalid_credentials', message: 'Invalid account or password' })
+    });
+  });
+
+  await page.goto('/docs/?lang=zh-CN');
+  const card = page.locator('#endpoint-authPasswordLogin');
+  await card.locator('[data-request-base]').fill('https://api.example.test');
+  await card.locator('[data-request-headers]').fill('X-Trace-Id: docs-test');
+  await card.locator('[data-request-body]').fill(JSON.stringify({ account: 'trail_user', password: 'wrong-password' }, null, 2));
+  await card.getByRole('button', { name: '发送请求' }).click();
+
+  await expect(card.getByText('401 Unauthorized')).toBeVisible();
+  await expect(card.locator('[data-response-body]')).toContainText('invalid_credentials');
+  expect(captured).toHaveLength(1);
+  expect(captured[0].method).toBe('POST');
+  expect(captured[0].headers['x-trace-id']).toBe('docs-test');
+  expect(captured[0].headers['content-type']).toContain('application/json');
+  expect(captured[0].headers.cookie).toBeUndefined();
+  expect(JSON.parse(captured[0].body ?? '{}')).toEqual({ account: 'trail_user', password: 'wrong-password' });
+});
 
 test('brand icon metadata uses optimized product icon assets', async ({ page, request }) => {
   await page.goto('/?lang=zh-CN');

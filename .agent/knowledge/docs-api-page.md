@@ -4,14 +4,15 @@ The repository includes a static developer documentation page at `/docs/` for cu
 
 ## Scope
 
-- The page is static and must not make browser runtime requests to backend paths.
-- API examples are path-only. Do not commit or render the real production docs origin.
+- The page is static and must not make automatic browser runtime requests to backend paths on load.
+- A user-initiated request runner is allowed under `/docs/` only when the reader types an http(s) service origin and clicks send.
+- API examples remain path-only. Do not commit or render the real production docs origin.
 - The production docs origin, when used, belongs only in ignored local/deployment config such as `config/docs.production.local.json` and `.agent/local/production/docs-site.md`.
-- The first documented backend paths are `GET /healthz`, `GET /api/meta`, and the common `404 not_found` response.
+- The document lists every backend route captured in `src/content/api-docs.ts`; request examples and the request runner must not contain a committed production origin.
 
 ## Source of truth
 
-Backend facts were inspected from the StellarTrail service at commit `d5d2465`:
+Backend facts for the complete route inventory were inspected from the StellarTrail service at commit `bd9cbb7`:
 
 - `services/api/src/routes/mod.rs`
 - `services/api/src/routes/health.rs`
@@ -33,3 +34,11 @@ npm run test:e2e
 ```
 
 For deployment base checks, build both root and GitHub Pages base paths and verify `dist/docs/index.html` exists.
+
+
+## Request runner rules
+
+- Do not provide a default service origin, do not read `VITE_API_BASE_URL`, and do not persist origins, headers, request bodies, or responses in local storage.
+- Build requests only from the endpoint inventory plus user input: service origin, path parameters, query parameters, headers, request body, and optional multipart file.
+- Keep page-load behavior request-free. Browser tests should prove `/docs/` makes zero backend-path requests before the reader clicks send.
+- Use `credentials: 'omit'` so the page does not attach ambient cookies to arbitrary typed origins.
