@@ -31,6 +31,7 @@ const findAllIndexes = (text, needle) => {
 };
 
 const basePath = normalizeBasePath(expectedBasePath);
+const WEB_APP_URL = 'https://app.stellartrail.cn/';
 const distDir = 'dist';
 if (!existsSync(join(distDir, 'index.html'))) {
   console.error('dist/index.html does not exist. Run npm run build first.');
@@ -59,6 +60,17 @@ if (existsSync('dist/CNAME')) issues.push('dist/CNAME must not exist for default
 for (const [file, text] of files) {
   if (/https:\/\/stellartail\.cn|https:\/\/www\.stellartail\.cn/.test(text)) {
     issues.push(`${file} contains a removed custom-domain URL`);
+  }
+}
+
+if (!combined.includes(WEB_APP_URL)) {
+  issues.push(`dist must contain the exact Web app URL ${WEB_APP_URL}`);
+}
+
+for (const [file, text] of files) {
+  const prefixedWebAppUrl = `${basePath}${WEB_APP_URL}`;
+  if (text.includes(prefixedWebAppUrl)) {
+    issues.push(`${file} prefixes the external Web app URL with ${basePath}`);
   }
 }
 

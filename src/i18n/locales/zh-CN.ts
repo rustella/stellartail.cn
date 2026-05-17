@@ -9,6 +9,7 @@ export const zhCN = {
     skills: '户外技能',
     screenshots: '产品截图',
     entry: '下载入口',
+    web: 'Web端',
     docs: '接口文档',
     language: '语言'
   },
