@@ -1,7 +1,7 @@
 export const enUS = {
   seo: {
     title: 'StellarTrail | Outdoor gear and knot skill companion',
-    description: 'StellarTrail helps you prepare gear lists and learn practical knot skills before heading outdoors, with a lightweight WeChat and Web experience.'
+    description: 'StellarTrail helps you prepare gear lists and learn practical knot skills before heading outdoors across Web, Android, and WeChat Mini Program.'
   },
   nav: {
     product: 'Product',
@@ -15,13 +15,15 @@ export const enUS = {
   hero: {
     eyebrow: 'StellarTrail',
     title: 'Prepare gear and knot skills before you head out',
-    subtitle: 'A lightweight companion for outdoor preparation: organize gear lists, learn practical knot skills, and keep a consistent experience across WeChat and Web.',
-    primaryCta: 'View mini program entry',
+    subtitle: 'A lightweight companion for outdoor preparation: organize gear lists, learn practical knot skills, and choose the Web, Android, or WeChat Mini Program experience that fits the moment.',
+    primaryCta: 'View platform entry',
     secondaryCta: 'Explore product',
-    note: 'Gear library and outdoor skill features are available now.',
+    note: 'Web, Android, and WeChat Mini Program are supported now.',
+    platformLabel: 'Supported platforms',
+    platforms: ['Web app', 'Android app', 'WeChat Mini Program'],
     statGear: 'Gear lists',
     statSkill: 'Knot skills',
-    statMode: 'Product views'
+    statMode: 'Supported platforms'
   },
   product: {
     eyebrow: 'Product focus',
@@ -30,14 +32,14 @@ export const enUS = {
     cards: {
       fast: { title: 'Gear library', body: 'Organize gear categories, preparation templates, and checklists by trip scenario so you can confirm what to pack faster.' },
       bilingual: { title: 'Knot skills', body: 'Start with common knots such as the adjustable tent-line knot, with use cases, steps, and practical reminders.' },
-      polished: { title: 'Multi-device access', body: 'Use WeChat for quick checks before heading out, and Web for browsing and organizing preparation content on desktop.' }
+      polished: { title: 'Multi-device access', body: 'Use Web for desktop planning, Android for an installed on-the-go experience, and WeChat Mini Program for quick access inside WeChat.' }
     }
   },
   gear: {
     eyebrow: 'Gear library',
     title: 'Turn preparation into a practical checklist',
     body: 'The gear library introduces basic backpacking templates, categories, and preparation thinking. It helps people understand what to prepare before their first deeper look at the product.',
-    bullets: ['Understand gear categories by use case', 'Start from templates for preparation lists', 'Browse clearly on mobile and desktop']
+    bullets: ['Understand gear categories by use case', 'Start from templates for preparation lists', 'Browse clearly on Web, Android, and WeChat Mini Program']
   },
   skills: {
     eyebrow: 'Outdoor skills',
@@ -47,23 +49,29 @@ export const enUS = {
   },
   screenshots: {
     eyebrow: 'Product screenshots',
-    title: 'WeChat and Web views',
-    body: 'Review gear and knot skills on WeChat, then organize lists and add gear details on Web.',
-    wechatTitle: 'WeChat',
-    wechatBody: 'Check gear management and knot skills on the go.',
+    title: 'Web and WeChat Mini Program views, with Android support',
+    body: 'The screenshots show Web and WeChat Mini Program views for gear and knot skills; Android supports the same gear library and outdoor skills.',
+    wechatTitle: 'WeChat Mini Program',
+    wechatBody: 'Open gear management and knot skills quickly inside WeChat.',
     webTitle: 'Web',
     webBody: 'Manage gear lists and add detailed gear information on a larger screen.',
-    wechatGearAlt: 'WeChat gear management interface',
-    wechatKnotsAlt: 'WeChat knot skills interface',
+    wechatGearAlt: 'WeChat Mini Program gear management interface',
+    wechatKnotsAlt: 'WeChat Mini Program knot skills interface',
     webGearAlt: 'Web gear management interface',
     webGearFormAlt: 'Web add-gear form interface'
   },
   entry: {
     eyebrow: 'Download / mini program entry',
-    title: 'WeChat mini program entry is being prepared',
-    body: 'The official mini program QR code will be placed here once published. For now, this section explains the entry status instead of showing an unusable or fake code.',
-    badge: 'Coming soon',
-    hint: 'Search StellarTrail in WeChat or wait for the official QR code release.'
+    title: 'Use StellarTrail on Web, Android, and WeChat Mini Program',
+    body: 'Choose the Web app, Android app, or WeChat Mini Program based on your scenario. Official web links, Android installation entry, and the mini program QR code will be collected here when published.',
+    badge: 'Multi-platform',
+    hint: 'Web is best for desktop planning, Android is ready for on-the-go use, and WeChat Mini Program opens quickly inside WeChat.',
+    channelsLabel: 'Supported platform entries',
+    channels: [
+      { title: 'Web access', body: 'Plan and organize gear on a larger screen.' },
+      { title: 'Android install', body: 'Keep preparation content close on your phone.' },
+      { title: 'WeChat Mini Program', body: 'Open quickly inside WeChat.' }
+    ]
   },
   docs: {
     seo: {

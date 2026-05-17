@@ -1,7 +1,7 @@
 export const zhCN = {
   seo: {
     title: 'StellarTrail / 寻径星野｜户外装备与绳结技能助手',
-    description: '寻径星野帮助你在出发前整理装备清单、学习关键绳结技能，并通过微信端和 Web 端保持轻量准备体验。'
+    description: '寻径星野帮助你在出发前整理装备清单、学习关键绳结技能，并在 Web 端、Android 端和微信小程序端使用。'
   },
   nav: {
     product: '产品',
@@ -15,13 +15,15 @@ export const zhCN = {
   hero: {
     eyebrow: 'StellarTrail / 寻径星野',
     title: '出发前，把装备和绳结技能准备好',
-    subtitle: '面向户外准备阶段的轻量助手：整理装备清单，学习可立即上手的绳结技能，并在微信端与 Web 端保持一致体验。',
-    primaryCta: '查看小程序入口',
+    subtitle: '面向户外准备阶段的轻量助手：整理装备清单，学习可立即上手的绳结技能，并在 Web、Android、微信小程序之间选择顺手的使用方式。',
+    primaryCta: '查看多端入口',
     secondaryCta: '了解产品能力',
-    note: '已开放装备库与户外技能能力。',
+    note: '已支持 Web 端、Android 端、微信小程序端。',
+    platformLabel: '支持平台',
+    platforms: ['Web 端', 'Android 端', '微信小程序端'],
     statGear: '装备清单',
     statSkill: '绳结技能',
-    statMode: '产品界面'
+    statMode: '支持平台'
   },
   product: {
     eyebrow: '产品定位',
@@ -30,14 +32,14 @@ export const zhCN = {
     cards: {
       fast: { title: '装备库', body: '按出行场景整理装备分类、准备模板和检查清单，帮助你更快确认该带什么。' },
       bilingual: { title: '绳结技能', body: '从可调节帐绳结等常用绳结开始，展示适用场景、步骤和使用提醒。' },
-      polished: { title: '多端使用', body: '微信端适合出门前随手查看，Web 端适合在桌面上浏览和整理准备内容。' }
+      polished: { title: '多端使用', body: 'Web 端适合桌面整理，Android 端适合随身使用，微信小程序端适合在微信内快速打开查看。' }
     }
   },
   gear: {
     eyebrow: '装备库',
     title: '把出发前的装备准备变成清单',
     body: '装备库用于展示基础徒步装备模板、分类与准备思路。重点是帮助用户理解「如何准备」，适合作为第一次了解产品的入口。',
-    bullets: ['按用途理解装备分类', '以模板方式快速建立准备清单', '在移动端和桌面端都能清楚浏览']
+    bullets: ['按用途理解装备分类', '以模板方式快速建立准备清单', 'Web、Android、微信小程序端都能清楚浏览']
   },
   skills: {
     eyebrow: '户外技能',
@@ -47,23 +49,29 @@ export const zhCN = {
   },
   screenshots: {
     eyebrow: '产品截图',
-    title: '微信端与 Web 端展示',
-    body: '在微信端快速查看装备与绳结，在 Web 端整理清单并补充装备信息。',
-    wechatTitle: '微信端',
-    wechatBody: '随身查看装备管理和绳结技能。',
+    title: 'Web 与微信小程序画面，Android 端同步支持',
+    body: '当前截图展示 Web 端和微信小程序端的装备、绳结画面；Android 端同样支持装备库与户外技能使用。',
+    wechatTitle: '微信小程序端',
+    wechatBody: '在微信里快速查看装备管理和绳结技能。',
     webTitle: 'Web 端',
     webBody: '在大屏上管理装备列表和添加装备信息。',
-    wechatGearAlt: '微信端装备管理界面',
-    wechatKnotsAlt: '微信端绳结技能界面',
+    wechatGearAlt: '微信小程序端装备管理界面',
+    wechatKnotsAlt: '微信小程序端绳结技能界面',
     webGearAlt: 'Web 端装备管理界面',
     webGearFormAlt: 'Web 端添加装备表单界面'
   },
   entry: {
     eyebrow: '下载 / 小程序入口',
-    title: '微信小程序入口准备中',
-    body: '正式小程序二维码发布后会放在这里。当前先提供入口说明，避免展示不可用或伪造的二维码。',
-    badge: 'Coming soon',
-    hint: '请在微信内搜索 StellarTrail / 寻径星野，或等待正式二维码发布。'
+    title: 'Web、Android、微信小程序都可使用',
+    body: '你可以根据场景选择 Web 端、Android 端或微信小程序端。正式访问链接、Android 安装入口和小程序二维码发布后会集中放在这里。',
+    badge: 'Multi-platform',
+    hint: 'Web 端适合桌面整理，Android 端适合随身使用，微信小程序端适合在微信内快速打开。',
+    channelsLabel: '支持平台入口',
+    channels: [
+      { title: 'Web 访问', body: '适合在桌面大屏整理装备清单。' },
+      { title: 'Android 安装', body: '适合随身保存和查看准备内容。' },
+      { title: '微信小程序', body: '适合在微信内快速打开。' }
+    ]
   },
   docs: {
     seo: {

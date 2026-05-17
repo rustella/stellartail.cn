@@ -33,6 +33,26 @@ test('homepage top bar exposes docs entry', async ({ page }) => {
   await expect(enDocsLink).toHaveAttribute('href', '/docs/?lang=en-US');
 });
 
+
+test('homepage communicates Web Android and mini program support', async ({ page }) => {
+  await page.goto('/?lang=zh-CN');
+  const zhPlatforms = page.getByRole('list', { name: '支持平台' });
+  await expect(zhPlatforms.getByText('Web 端', { exact: true })).toBeVisible();
+  await expect(zhPlatforms.getByText('Android 端', { exact: true })).toBeVisible();
+  await expect(zhPlatforms.getByText('微信小程序端', { exact: true })).toBeVisible();
+  await expect(page.locator('.metric').filter({ hasText: '支持平台' }).locator('strong')).toHaveText('03');
+  await expect(page.locator('#entry')).toContainText('Web、Android、微信小程序都可使用');
+  await expect(page.locator('#entry')).toContainText('Android 安装');
+
+  await page.evaluate(() => window.localStorage.clear());
+  await page.goto('/?lang=en-US');
+  const enPlatforms = page.getByRole('list', { name: 'Supported platforms' });
+  await expect(enPlatforms.getByText('Web app', { exact: true })).toBeVisible();
+  await expect(enPlatforms.getByText('Android app', { exact: true })).toBeVisible();
+  await expect(enPlatforms.getByText('WeChat Mini Program', { exact: true })).toBeVisible();
+  await expect(page.locator('#entry')).toContainText('Use StellarTrail on Web, Android, and WeChat Mini Program');
+});
+
 test('does not make backend API requests', async ({ page }) => {
   const blocked: string[] = [];
   page.on('request', (request) => {
@@ -81,7 +101,7 @@ test('homepage copy stays user-facing and separates screenshot platforms', async
 
   const screenshotGroups = page.locator('.screenshot-group');
   await expect(screenshotGroups).toHaveCount(2);
-  await expect(screenshotGroups.nth(0).getByRole('heading', { name: '微信端', exact: true })).toBeVisible();
+  await expect(screenshotGroups.nth(0).getByRole('heading', { name: '微信小程序端', exact: true })).toBeVisible();
   await expect(screenshotGroups.nth(0).locator('img')).toHaveCount(2);
   await expect(screenshotGroups.nth(1).getByRole('heading', { name: 'Web 端', exact: true })).toBeVisible();
   await expect(screenshotGroups.nth(1).locator('img')).toHaveCount(2);
