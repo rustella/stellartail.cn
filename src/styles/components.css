@@ -367,6 +367,31 @@
 }
 .entry-platforms strong { color: #fff; font-size: 14px; }
 .entry-platforms span { color: rgba(248, 255, 249, 0.74); font-size: 13px; line-height: 1.5; }
+.entry-platforms__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 34px;
+  margin-top: 4px;
+  padding: 0 12px;
+  border-radius: 999px;
+  color: var(--color-primary-strong);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+  overflow-wrap: anywhere;
+  box-shadow: 0 10px 24px rgba(8, 34, 29, 0.16);
+}
+.entry-platforms__link:hover,
+.entry-platforms__link:focus-visible {
+  color: var(--color-primary-strong);
+  background: #fff;
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
 .entry-placeholder {
   width: 210px;
   border-radius: 28px;

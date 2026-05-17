@@ -69,14 +69,29 @@ export const zhCN = {
   entry: {
     eyebrow: '下载 / 小程序入口',
     title: 'Web、Android、微信小程序都可使用',
-    body: '你可以根据场景选择 Web 端、Android 端或微信小程序端。正式访问链接、Android 安装入口和小程序二维码发布后会集中放在这里。',
+    body: 'Web 端已上线，可以先在浏览器打开整理装备；Android 安装方式和小程序码准备好后也会放在这里。',
     badge: 'Multi-platform',
     hint: 'Web 端适合桌面整理，Android 端适合随身使用，微信小程序端适合在微信内快速打开。',
     channelsLabel: '支持平台入口',
     channels: [
-      { title: 'Web 访问', body: '适合在桌面大屏整理装备清单。' },
-      { title: 'Android 安装', body: '适合随身保存和查看准备内容。' },
-      { title: '微信小程序', body: '适合在微信内快速打开。' }
+      {
+        title: 'Web 访问',
+        body: 'Web 端已上线，适合在桌面大屏整理装备清单。',
+        href: 'https://app.stellartrail.cn/',
+        action: '打开 Web 端'
+      },
+      {
+        title: 'Android 安装',
+        body: '适合随身保存和查看准备内容，安装方式准备好后补上。',
+        href: null,
+        action: null
+      },
+      {
+        title: '微信小程序',
+        body: '适合在微信内快速打开，小程序码准备好后补上。',
+        href: null,
+        action: null
+      }
     ]
   },
   docs: {

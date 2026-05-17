@@ -122,15 +122,25 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
   await expect(enFloatingNav.getByRole('link', { name: 'API Docs', exact: true })).toHaveCount(0);
 });
 
-test('homepage communicates Web Android and mini program support', async ({ page }) => {
+test('homepage communicates Web Android and mini program support with live web entry', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   const zhPlatforms = page.getByRole('list', { name: '支持平台' });
   await expect(zhPlatforms.getByText('Web 端', { exact: true })).toBeVisible();
   await expect(zhPlatforms.getByText('Android 端', { exact: true })).toBeVisible();
   await expect(zhPlatforms.getByText('微信小程序端', { exact: true })).toBeVisible();
   await expect(page.locator('.metric').filter({ hasText: '支持平台' }).locator('strong')).toHaveText('03');
-  await expect(page.locator('#entry')).toContainText('Web、Android、微信小程序都可使用');
-  await expect(page.locator('#entry')).toContainText('Android 安装');
+  const zhEntry = page.locator('#entry');
+  await expect(zhEntry).toContainText('Web、Android、微信小程序都可使用');
+  await expect(zhEntry).toContainText('Web 端已上线');
+  await expect(zhEntry).toContainText('Android 安装');
+  const zhWebLink = zhEntry.getByRole('link', { name: '打开 Web 端', exact: true });
+  await expect(zhWebLink).toBeVisible();
+  await expect(zhWebLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
+  await expect(zhWebLink).toHaveAttribute('target', '_blank');
+  await expect(zhWebLink).toHaveAttribute('rel', /noopener/);
+  await expect(zhWebLink).toHaveAttribute('rel', /noreferrer/);
+  await expect(zhEntry.locator('li').filter({ hasText: 'Android 安装' }).locator('a')).toHaveCount(0);
+  await expect(zhEntry.locator('li').filter({ hasText: '微信小程序' }).locator('a')).toHaveCount(0);
 
   await page.evaluate(() => window.localStorage.clear());
   await page.goto('/?lang=en-US');
@@ -138,7 +148,17 @@ test('homepage communicates Web Android and mini program support', async ({ page
   await expect(enPlatforms.getByText('Web app', { exact: true })).toBeVisible();
   await expect(enPlatforms.getByText('Android app', { exact: true })).toBeVisible();
   await expect(enPlatforms.getByText('WeChat Mini Program', { exact: true })).toBeVisible();
-  await expect(page.locator('#entry')).toContainText('Use StellarTrail on Web, Android, and WeChat Mini Program');
+  const enEntry = page.locator('#entry');
+  await expect(enEntry).toContainText('Use StellarTrail on Web, Android, and WeChat Mini Program');
+  await expect(enEntry).toContainText('The Web app is live');
+  const enWebLink = enEntry.getByRole('link', { name: 'Open Web app', exact: true });
+  await expect(enWebLink).toBeVisible();
+  await expect(enWebLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
+  await expect(enWebLink).toHaveAttribute('target', '_blank');
+  await expect(enWebLink).toHaveAttribute('rel', /noopener/);
+  await expect(enWebLink).toHaveAttribute('rel', /noreferrer/);
+  await expect(enEntry.locator('li').filter({ hasText: 'Android install' }).locator('a')).toHaveCount(0);
+  await expect(enEntry.locator('li').filter({ hasText: 'WeChat Mini Program' }).locator('a')).toHaveCount(0);
 });
 
 test('does not make backend API requests', async ({ page }) => {
