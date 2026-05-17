@@ -9,6 +9,7 @@ export const enUS = {
     skills: 'Outdoor skills',
     screenshots: 'Product screenshots',
     entry: 'Downloads',
+    web: 'Web App',
     docs: 'API Docs',
     language: 'Language'
   },

@@ -20,9 +20,15 @@ test('persists language switch preference', async ({ page }) => {
   expect(stored).toBe('en-US');
 });
 
-test('homepage top bar uses API docs label and breadcrumb uses descriptive section labels', async ({ page }) => {
+test('homepage top bar exposes Web app and API docs entries', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   const nav = page.locator('.nav');
+  const zhWebLink = nav.getByRole('link', { name: 'Web端', exact: true });
+  await expect(zhWebLink).toBeVisible();
+  await expect(zhWebLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
+  await expect(zhWebLink).toHaveAttribute('target', '_blank');
+  await expect(zhWebLink).toHaveAttribute('rel', /noopener/);
+  await expect(zhWebLink).toHaveAttribute('rel', /noreferrer/);
   const zhDocsLink = nav.getByRole('link', { name: '接口文档', exact: true });
   await expect(zhDocsLink).toBeVisible();
   await expect(zhDocsLink).toHaveAttribute('href', '/docs/?lang=zh-CN');
@@ -30,6 +36,7 @@ test('homepage top bar uses API docs label and breadcrumb uses descriptive secti
   for (const anchor of ['#product', '#gear', '#skills', '#screenshots', '#entry']) {
     await expect(nav.locator(`a[href="${anchor}"]`)).toHaveCount(0);
   }
+  await expect(nav.locator('.nav__links').locator('a')).toHaveCount(2);
 
   await page.evaluate(() => window.scrollTo(0, 980));
   await expect(nav).toBeVisible();
@@ -37,9 +44,23 @@ test('homepage top bar uses API docs label and breadcrumb uses descriptive secti
     .poll(async () => Math.round(await nav.evaluate((element) => element.getBoundingClientRect().top)))
     .toBe(0);
 
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(zhWebLink).toBeVisible();
+  await expect(zhDocsLink).toBeVisible();
+  await expect
+    .poll(async () => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1))
+    .toBe(true);
+
   await page.evaluate(() => window.localStorage.clear());
   await page.goto('/?lang=en-US');
-  const enDocsLink = page.locator('.nav').getByRole('link', { name: 'API Docs', exact: true });
+  const enNav = page.locator('.nav');
+  const enWebLink = enNav.getByRole('link', { name: 'Web App', exact: true });
+  await expect(enWebLink).toBeVisible();
+  await expect(enWebLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
+  await expect(enWebLink).toHaveAttribute('target', '_blank');
+  await expect(enWebLink).toHaveAttribute('rel', /noopener/);
+  await expect(enWebLink).toHaveAttribute('rel', /noreferrer/);
+  const enDocsLink = enNav.getByRole('link', { name: 'API Docs', exact: true });
   await expect(enDocsLink).toBeVisible();
   await expect(enDocsLink).toHaveAttribute('href', '/docs/?lang=en-US');
 });

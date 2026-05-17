@@ -71,6 +71,7 @@ const render = (): void => {
             <span>${m.footer.tagline}</span>
           </a>
           <div class="nav__links">
+            <a class="nav__web-link" href="https://app.stellartrail.cn/" target="_blank" rel="noopener noreferrer">${m.nav.web}</a>
             <a class="nav__docs-link" href="${sitePath(`docs/?lang=${activeLocale}`)}">${m.nav.docs}</a>
             <button class="lang-button" type="button" data-language-toggle aria-label="${m.language.switchTo}">${m.language.current}</button>
           </div>
