@@ -98,7 +98,7 @@ export const zhCN = {
   docs: {
     seo: {
       title: 'StellarTrail 开发文档｜API Reference',
-      description: 'StellarTrail 后端 API 的静态参考文档，说明当前可用的服务状态和服务信息读取方式。'
+      description: 'StellarTrail 服务接口的静态参考文档，按当前后端源码列出已注册的请求路径、请求体、响应体和错误结构。'
     },
     nav: {
       label: '开发文档导航',
@@ -108,7 +108,7 @@ export const zhCN = {
     hero: {
       eyebrow: '开发文档',
       title: '开发文档',
-      body: '这里记录当前后端已经存在并可确认的读取类能力。示例只使用路径和环境变量占位，不在页面中展示生产访问地址。'
+      body: '这里基于当前后端源码整理已注册的服务接口。示例只使用路径和占位值，不在页面中展示生产访问地址。'
     },
     toc: {
       label: '文档目录'
@@ -117,37 +117,92 @@ export const zhCN = {
       title: '来源信息',
       repository: '来源仓库',
       inspectedHead: '检查版本',
-      inspectedAt: '检查日期'
+      inspectedAt: '检查日期',
+      endpointCount: '接口数量'
     },
     sections: {
       overview: {
         title: '概览',
-        body: '首版文档覆盖服务健康检查、服务信息读取和统一的未找到响应。后端新增能力后，应先从真实服务源码和响应结构同步到这里。',
-        note: '本文档是静态说明页，不会从浏览器直接请求后端服务。'
+        body: '本文档从后端源码中的 Axum 注册表、请求 DTO、响应 DTO 和统一错误模型同步而来，覆盖系统状态、登录账号、公开内容、绳结技能、装备库、上传与反馈。',
+        count: '当前列出 {count} 个已注册接口。',
+        note: '本文档是静态说明页，不会从浏览器直接请求服务。'
       },
       authentication: {
         title: '认证',
-        body: '当前列出的读取项不需要登录态。后续如果加入需要用户身份的能力，应单独标记认证方式、权限边界和错误响应。'
+        body: '公开接口不需要登录；用户私有数据接口使用 Authorization Bearer；管理员接口在 Bearer 登录基础上校验管理员权限。技能内容可通过 X-StellarTrail-Locale 或 Accept-Language 选择 zh-CN / en。'
       },
       endpoints: {
         title: '接口',
-        body: '当前可确认的读取项。'
+        body: '下面按功能分组展示当前源码中已注册的请求路径。'
       },
       errors: {
         title: '错误响应',
-        body: '未匹配到资源时返回统一的 JSON 错误结构。'
+        body: '服务错误使用统一 JSON 结构：code、message，并按场景附带 fields、captcha 或 parameter。'
       },
       config: {
         title: '访问配置',
         body: '生产访问地址保存在部署侧或本地忽略配置中，不写入公开源码、页面内容或构建产物。调用示例应使用自己的环境变量拼接路径。'
       }
     },
+    groupTitles: {
+      system: '系统状态',
+      auth: '登录与账号',
+      content: '公开内容',
+      skills: '绳结技能',
+      admin: '管理员内容',
+      gear: '装备库',
+      uploads: '图片上传',
+      feedback: '用户反馈'
+    },
+    authLabels: {
+      public: '公开',
+      bearer: '需要 Bearer 登录',
+      admin: '需要管理员权限'
+    },
     endpointSummaries: {
-      health: '服务状态',
-      meta: '服务信息'
+      healthz: '服务状态',
+      meta: '服务信息',
+      authWechatLogin: '微信小程序登录',
+      authEmailVerificationCode: '发送注册邮箱验证码',
+      authEmailLoginCode: '发送邮箱登录验证码',
+      authEmailLogin: '邮箱验证码登录',
+      authPasswordResetCode: '发送重置密码验证码',
+      authPasswordReset: '重置密码',
+      authRegister: '注册账号',
+      authPasswordLogin: '账号密码登录',
+      authRefresh: '刷新登录态',
+      authCaptcha: '创建图形验证码',
+      gearTemplatesList: '装备准备模板列表',
+      gearTemplatesDetail: '装备准备模板详情',
+      skillsCategories: '户外技能分类',
+      skillsKnotsList: '绳结列表',
+      skillsKnotsDetail: '绳结详情',
+      adminKnotMediaUpload: '上传绳结媒体素材',
+      gearsCategories: '我的装备分类统计',
+      gearsStats: '我的装备统计',
+      gearsExport: '导出装备 CSV',
+      gearsImport: '导入装备 JSON',
+      gearsList: '我的装备列表',
+      gearsCreate: '新增装备',
+      gearsDetail: '装备详情',
+      gearsUpdate: '更新装备',
+      gearsArchive: '归档装备',
+      gearsRestore: '恢复装备',
+      uploadsCreate: '上传反馈图片',
+      uploadsDownload: '读取已上传图片',
+      feedbackCreate: '提交反馈'
     },
     labels: {
-      responseStatus: '响应状态'
+      group: '分组',
+      auth: '权限',
+      responseStatus: '响应状态',
+      contentType: '请求类型',
+      responseType: '响应类型',
+      query: '查询参数',
+      headers: '请求头',
+      requestBody: '请求体',
+      responseBody: '响应体',
+      noBody: '无响应体'
     }
   },
   footer: {
