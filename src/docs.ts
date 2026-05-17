@@ -4,7 +4,12 @@ import './styles/layout.css';
 import './styles/components.css';
 import './styles/docs.css';
 
-import { apiDocs, type ApiDocEndpointSummaryKey } from './content/api-docs';
+import {
+  apiDocs,
+  type ApiDocEndpoint,
+  type ApiDocEndpointGroupKey,
+  type ApiDocEndpointId
+} from './content/api-docs';
 import { getMessages, nextLocale, persistLocale, resolveInitialLocale, type Locale } from './i18n';
 import { assetPath, sitePath } from './utils/asset';
 
@@ -12,6 +17,8 @@ let activeLocale: Locale = resolveInitialLocale();
 
 const app = document.querySelector<HTMLDivElement>('#docs-app');
 if (!app) throw new Error('Missing docs app root');
+
+const endpointById = new Map<string, ApiDocEndpoint>(apiDocs.endpoints.map((endpoint) => [endpoint.id, endpoint]));
 
 const escapeHtml = (value: string): string =>
   value
@@ -21,19 +28,98 @@ const escapeHtml = (value: string): string =>
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 
-const codeJson = (value: unknown): string => escapeHtml(JSON.stringify(value, null, 2));
+const codeValue = (value: unknown): string => {
+  if (typeof value === 'string') return escapeHtml(value);
+  return escapeHtml(JSON.stringify(value, null, 2));
+};
 
-const renderEndpoint = (summaryLabels: Record<ApiDocEndpointSummaryKey, string>, responseLabel: string): string =>
-  apiDocs.endpoints
-    .map(
-      (endpoint) => `
-        <article class="endpoint-card">
-          <div class="endpoint-card__head">
-            <h2>${escapeHtml(summaryLabels[endpoint.summaryKey])}</h2>
-            <code class="endpoint-card__request"><span class="method-badge">${endpoint.method}</span> <span class="path-badge">${endpoint.path}</span></code>
+const renderCodeBlock = (value: unknown): string => `<pre class="code-block"><code>${codeValue(value)}</code></pre>`;
+
+const renderList = (items?: readonly string[]): string => {
+  if (!items?.length) return '';
+  return `<ul class="endpoint-card__list">${items.map((item) => `<li><code>${escapeHtml(item)}</code></li>`).join('')}</ul>`;
+};
+
+const renderDetail = (label: string, value: string): string => `
+  <div class="endpoint-card__detail">
+    <dt>${escapeHtml(label)}</dt>
+    <dd>${escapeHtml(value)}</dd>
+  </div>`;
+
+const renderOptionalSection = (label: string, value?: unknown): string => {
+  if (value === undefined) return '';
+  return `
+    <div class="endpoint-card__block">
+      <h3>${escapeHtml(label)}</h3>
+      ${renderCodeBlock(value)}
+    </div>`;
+};
+
+const renderEndpoint = (
+  endpoint: ApiDocEndpoint,
+  endpointLabels: Record<ApiDocEndpointId, string>,
+  authLabels: Record<ApiDocEndpoint['auth'], string>,
+  labels: ReturnType<typeof getMessages>['docs']['labels']
+): string => {
+  const query = renderList(endpoint.query);
+  const headers = renderList(endpoint.headers);
+  const response = endpoint.responseBody === undefined ? labels.noBody : endpoint.responseBody;
+
+  return `
+    <article class="endpoint-card" id="endpoint-${endpoint.id}">
+      <div class="endpoint-card__head">
+        <h3>${escapeHtml(endpointLabels[endpoint.id])}</h3>
+        <code class="endpoint-card__request"><span class="method-badge method-badge--${endpoint.method.toLowerCase()}">${endpoint.method}</span> <span class="path-badge">${escapeHtml(endpoint.path)}</span></code>
+      </div>
+      <dl class="endpoint-card__meta">
+        ${renderDetail(labels.auth, authLabels[endpoint.auth])}
+        ${renderDetail(labels.responseStatus, String(endpoint.status))}
+        ${endpoint.contentType ? renderDetail(labels.contentType, endpoint.contentType) : ''}
+        ${endpoint.responseType ? renderDetail(labels.responseType, endpoint.responseType) : ''}
+      </dl>
+      ${query ? `<div class="endpoint-card__block"><h4>${labels.query}</h4>${query}</div>` : ''}
+      ${headers ? `<div class="endpoint-card__block"><h4>${labels.headers}</h4>${headers}</div>` : ''}
+      ${renderOptionalSection(labels.requestBody, endpoint.requestBody)}
+      <div class="endpoint-card__block">
+        <h4>${labels.responseBody}</h4>
+        ${renderCodeBlock(response)}
+      </div>
+    </article>`;
+};
+
+const renderEndpointGroups = (docs: ReturnType<typeof getMessages>['docs']): string => {
+  const endpointLabels = docs.endpointSummaries as Record<ApiDocEndpointId, string>;
+  const groupLabels = docs.groupTitles as Record<ApiDocEndpointGroupKey, string>;
+  const authLabels = docs.authLabels as Record<ApiDocEndpoint['auth'], string>;
+
+  return apiDocs.groups
+    .map((group) => {
+      const endpoints = group.endpointIds
+        .map((endpointId) => {
+          const endpoint = endpointById.get(endpointId);
+          if (!endpoint) throw new Error(`Missing API document endpoint ${endpointId}`);
+          return renderEndpoint(endpoint, endpointLabels, authLabels, docs.labels);
+        })
+        .join('');
+      return `
+        <section class="endpoint-group" id="group-${group.key}">
+          <div class="endpoint-group__head">
+            <p class="eyebrow">${docs.labels.group}</p>
+            <h2>${escapeHtml(groupLabels[group.key])}</h2>
           </div>
-          <p>${responseLabel}: ${endpoint.response.status}</p>
-          <pre class="code-block"><code>${codeJson(endpoint.response.body)}</code></pre>
+          <div class="endpoint-list">${endpoints}</div>
+        </section>`;
+    })
+    .join('');
+};
+
+const renderErrors = (docs: ReturnType<typeof getMessages>['docs']): string =>
+  apiDocs.errors
+    .map(
+      (error) => `
+        <article class="error-card">
+          <h3>${docs.labels.responseStatus}: ${error.status}</h3>
+          ${renderCodeBlock(error.body)}
         </article>`
     )
     .join('');
@@ -41,6 +127,7 @@ const renderEndpoint = (summaryLabels: Record<ApiDocEndpointSummaryKey, string>,
 const renderDocs = (): void => {
   const m = getMessages(activeLocale);
   const docs = m.docs;
+  const groupLabels = docs.groupTitles as Record<ApiDocEndpointGroupKey, string>;
   document.title = docs.seo.title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', docs.seo.description);
   persistLocale(activeLocale);
@@ -74,6 +161,7 @@ const renderDocs = (): void => {
               <div><dt>${docs.source.repository}</dt><dd>${apiDocs.source.productRepository}</dd></div>
               <div><dt>${docs.source.inspectedHead}</dt><dd>${apiDocs.source.inspectedHead}</dd></div>
               <div><dt>${docs.source.inspectedAt}</dt><dd>${apiDocs.source.inspectedAt}</dd></div>
+              <div><dt>${docs.source.endpointCount}</dt><dd>${apiDocs.endpointCount}</dd></div>
             </dl>
           </aside>
         </div>
@@ -84,6 +172,7 @@ const renderDocs = (): void => {
           <a href="#overview">${docs.sections.overview.title}</a>
           <a href="#auth">${docs.sections.authentication.title}</a>
           <a href="#endpoints">${docs.sections.endpoints.title}</a>
+          ${apiDocs.groups.map((group) => `<a href="#group-${group.key}">${groupLabels[group.key]}</a>`).join('')}
           <a href="#errors">${docs.sections.errors.title}</a>
           <a href="#config">${docs.sections.config.title}</a>
         </aside>
@@ -91,22 +180,29 @@ const renderDocs = (): void => {
           <section class="docs-section" id="overview">
             <h2>${docs.sections.overview.title}</h2>
             <p>${docs.sections.overview.body}</p>
-            <div class="docs-note">${docs.sections.overview.note}</div>
+            <div class="docs-note">${docs.sections.overview.count.replace('{count}', String(apiDocs.endpointCount))}</div>
+            <div class="docs-note docs-note--muted">${docs.sections.overview.note}</div>
           </section>
 
           <section class="docs-section" id="auth">
             <h2>${docs.sections.authentication.title}</h2>
             <p>${docs.sections.authentication.body}</p>
+            <div class="docs-inline-code">
+              <code>${escapeHtml(apiDocs.commonHeaders.bearer)}</code>
+              <code>${escapeHtml(apiDocs.commonHeaders.locale)}</code>
+            </div>
           </section>
 
-          <section class="endpoint-list" id="endpoints" aria-label="${docs.sections.endpoints.title}">
-            ${renderEndpoint(docs.endpointSummaries, docs.labels.responseStatus)}
+          <section class="docs-section" id="endpoints">
+            <h2>${docs.sections.endpoints.title}</h2>
+            <p>${docs.sections.endpoints.body}</p>
           </section>
+          ${renderEndpointGroups(docs)}
 
           <section class="docs-section" id="errors">
             <h2>${docs.sections.errors.title}</h2>
             <p>${docs.sections.errors.body}</p>
-            <pre class="code-block"><code>${codeJson(apiDocs.errors[0].body)}</code></pre>
+            <div class="error-grid">${renderErrors(docs)}</div>
           </section>
 
           <section class="docs-section" id="config">

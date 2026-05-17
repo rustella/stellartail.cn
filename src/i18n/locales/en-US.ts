@@ -98,7 +98,7 @@ export const enUS = {
   docs: {
     seo: {
       title: 'StellarTrail API Reference',
-      description: 'A static reference for the currently available StellarTrail backend API paths.'
+      description: 'A static API reference generated from the current StellarTrail backend source: registered paths, request bodies, responses, and errors.'
     },
     nav: {
       label: 'API reference navigation',
@@ -108,7 +108,7 @@ export const enUS = {
     hero: {
       eyebrow: 'Developer docs',
       title: 'API Reference',
-      body: 'This page records the read-only backend behavior that is currently present and verified. Examples use paths and environment placeholders only; the production access origin is not displayed here.'
+      body: 'This page lists the service endpoints registered in the current backend source. Examples use paths and placeholder values only; the production origin is not displayed here.'
     },
     toc: {
       label: 'Table of contents'
@@ -117,37 +117,92 @@ export const enUS = {
       title: 'Source information',
       repository: 'Source repository',
       inspectedHead: 'Inspected version',
-      inspectedAt: 'Inspected date'
+      inspectedAt: 'Inspected date',
+      endpointCount: 'Endpoint count'
     },
     sections: {
       overview: {
         title: 'Overview',
-        body: 'The first version covers service health, service metadata, and the common not-found response. When backend behavior grows, update this page from the real service source and response definitions first.',
-        note: 'This is a static documentation page. It does not request the backend from the browser.'
+        body: 'This reference is synchronized from the backend Axum registration, request DTOs, response DTOs, and common error model. It covers service status, authentication, public content, knot skills, gear library, uploads, and feedback.',
+        count: '{count} registered endpoints are listed.',
+        note: 'This is a static documentation page. It does not request the service from the browser.'
       },
       authentication: {
         title: 'Authentication',
-        body: 'The listed read paths currently do not require a signed-in user. Future user-scoped behavior should document authentication, permission boundaries, and error responses separately.'
+        body: 'Public endpoints do not require sign-in. User-scoped endpoints use Authorization Bearer. Administrator endpoints require an authenticated administrator. Skill content accepts X-StellarTrail-Locale or Accept-Language for zh-CN / en.'
       },
       endpoints: {
         title: 'Endpoints',
-        body: 'Currently verified read paths.'
+        body: 'Registered request paths are grouped by capability below.'
       },
       errors: {
         title: 'Error responses',
-        body: 'Unmatched resources return a consistent JSON error shape.'
+        body: 'Service errors use a common JSON shape with code and message, plus fields, captcha, or parameter when applicable.'
       },
       config: {
         title: 'Access configuration',
-        body: 'The production access origin is stored only in deployment-side or ignored local config. It must not be committed, rendered, or bundled. Use your own environment variable and append the path when calling the service.'
+        body: 'The production origin is stored only in deployment-side or ignored local config. It must not be committed, rendered, or bundled. Use your own environment variable and append the path when calling the service.'
       }
     },
+    groupTitles: {
+      system: 'System status',
+      auth: 'Authentication and account',
+      content: 'Public content',
+      skills: 'Knot skills',
+      admin: 'Admin content',
+      gear: 'Gear library',
+      uploads: 'Image uploads',
+      feedback: 'User feedback'
+    },
+    authLabels: {
+      public: 'Public',
+      bearer: 'Bearer sign-in required',
+      admin: 'Administrator required'
+    },
     endpointSummaries: {
-      health: 'Service health',
-      meta: 'Service metadata'
+      healthz: 'Service health',
+      meta: 'Service metadata',
+      authWechatLogin: 'WeChat Mini Program login',
+      authEmailVerificationCode: 'Send registration email code',
+      authEmailLoginCode: 'Send email login code',
+      authEmailLogin: 'Email code login',
+      authPasswordResetCode: 'Send password reset code',
+      authPasswordReset: 'Reset password',
+      authRegister: 'Register account',
+      authPasswordLogin: 'Account password login',
+      authRefresh: 'Refresh session',
+      authCaptcha: 'Create image captcha',
+      gearTemplatesList: 'Gear preparation template list',
+      gearTemplatesDetail: 'Gear preparation template detail',
+      skillsCategories: 'Outdoor skill categories',
+      skillsKnotsList: 'Knot list',
+      skillsKnotsDetail: 'Knot detail',
+      adminKnotMediaUpload: 'Upload knot media asset',
+      gearsCategories: 'My gear category counts',
+      gearsStats: 'My gear statistics',
+      gearsExport: 'Export gear CSV',
+      gearsImport: 'Import gear JSON',
+      gearsList: 'My gear list',
+      gearsCreate: 'Create gear',
+      gearsDetail: 'Gear detail',
+      gearsUpdate: 'Update gear',
+      gearsArchive: 'Archive gear',
+      gearsRestore: 'Restore gear',
+      uploadsCreate: 'Upload feedback image',
+      uploadsDownload: 'Read uploaded image',
+      feedbackCreate: 'Submit feedback'
     },
     labels: {
-      responseStatus: 'Response status'
+      group: 'Group',
+      auth: 'Auth',
+      responseStatus: 'Response status',
+      contentType: 'Content type',
+      responseType: 'Response type',
+      query: 'Query parameters',
+      headers: 'Headers',
+      requestBody: 'Request body',
+      responseBody: 'Response body',
+      noBody: 'No response body'
     }
   },
   footer: {

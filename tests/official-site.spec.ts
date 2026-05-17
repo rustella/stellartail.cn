@@ -253,31 +253,84 @@ test('homepage copy stays user-facing and separates screenshot platforms', async
 });
 
 
-test('renders docs API reference page without backend requests', async ({ page }) => {
+const registeredApiRequests = [
+  'GET /healthz',
+  'GET /api/meta',
+  'POST /api/auth/wechat-login',
+  'POST /api/auth/email-verification-code',
+  'POST /api/auth/email-login-code',
+  'POST /api/auth/email-login',
+  'POST /api/auth/password-reset-code',
+  'POST /api/auth/password-reset',
+  'POST /api/auth/register',
+  'POST /api/auth/login',
+  'POST /api/auth/refresh',
+  'POST /api/auth/captcha',
+  'GET /api/gear-templates',
+  'GET /api/gear-templates/:id',
+  'GET /api/skills',
+  'GET /api/skills/knots/list',
+  'GET /api/skills/knots/detail/:id',
+  'PUT /api/admin/skills/knots/:knot_id/media/:asset_id',
+  'GET /api/me/gears/categories',
+  'GET /api/me/gears/stats',
+  'GET /api/me/gears/export',
+  'POST /api/me/gears/import',
+  'GET /api/me/gears',
+  'POST /api/me/gears',
+  'GET /api/me/gears/:id',
+  'PATCH /api/me/gears/:id',
+  'DELETE /api/me/gears/:id',
+  'POST /api/me/gears/:id/restore',
+  'POST /api/me/uploads',
+  'GET /api/me/uploads/:id',
+  'POST /api/me/feedback'
+] as const;
+
+const assertDocsApiReference = async (page: import('@playwright/test').Page, locale: 'zh-CN' | 'en-US') => {
   const backendRequests: string[] = [];
   page.on('request', (request) => {
     const url = new URL(request.url());
     if (url.pathname.startsWith('/api/')) backendRequests.push(request.url());
   });
 
-  await page.goto('/docs/?lang=zh-CN');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('开发文档');
-  await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
-  await expect(page.getByText('GET /healthz')).toBeVisible();
-  await expect(page.getByText('GET /api/meta')).toBeVisible();
-  await expect(page.getByText('database_kind')).toBeVisible();
+  await page.goto(`/docs/?lang=${locale}`);
+  await expect(page.locator('html')).toHaveAttribute('lang', locale);
+  const requestTexts = await page.locator('.endpoint-card__request').evaluateAll((nodes) =>
+    nodes.map((node) => node.textContent?.replace(/\s+/g, ' ').trim())
+  );
+  expect(requestTexts).toEqual([...registeredApiRequests]);
+  await expect(page.getByText('bd9cbb7', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026-05-18', { exact: true })).toBeVisible();
+  await expect(page.getByText('Authorization: Bearer <access_token>')).toBeVisible();
+  await expect(page.getByText('X-StellarTrail-Locale: zh-CN | en').first()).toBeVisible();
+  await expect(page.getByText('multipart/form-data').first()).toBeVisible();
+  await expect(page.getByText('text/csv; charset=utf-8').first()).toBeVisible();
+  await expect(page.getByText('captcha_required').first()).toBeVisible();
+  await expect(page.getByText('validation_failed').first()).toBeVisible();
   const bodyText = await page.locator('body').innerText();
+  for (const unregistered of ['/api/mountains', '/api/routes', '/assets/*']) {
+    expect(bodyText).not.toContain(unregistered);
+  }
   const forbiddenDocsOrigin = process.env.DOCS_PUBLIC_ORIGIN ?? '';
   if (forbiddenDocsOrigin) expect(bodyText).not.toContain(forbiddenDocsOrigin);
   expect(backendRequests).toEqual([]);
+};
+
+test('renders complete Chinese docs API reference page without backend requests', async ({ page }) => {
+  await assertDocsApiReference(page, 'zh-CN');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('开发文档');
+  await expect(page.getByText('当前列出 31 个已注册接口')).toBeVisible();
+  await expect(page.getByRole('heading', { name: '登录与账号' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '装备库' })).toBeVisible();
 });
 
-test('renders English docs API reference page', async ({ page }) => {
-  await page.goto('/docs/?lang=en-US');
+test('renders complete English docs API reference page', async ({ page }) => {
+  await assertDocsApiReference(page, 'en-US');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('API Reference');
-  await expect(page.locator('html')).toHaveAttribute('lang', 'en-US');
-  await expect(page.getByText('GET /healthz')).toBeVisible();
-  await expect(page.getByText('GET /api/meta')).toBeVisible();
+  await expect(page.getByText('31 registered endpoints are listed')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Authentication and account' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Gear library' })).toBeVisible();
 });
 
 
