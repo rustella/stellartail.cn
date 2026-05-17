@@ -1,5 +1,48 @@
-<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="128" height="128" rx="34" fill="#165B4C"/>
-  <path d="M24 82C39 54 49 44 63 76C75 38 88 47 104 82" stroke="#F6FBF7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M80 28L84 38L95 39L86 46L89 57L80 51L71 57L74 46L65 39L76 38L80 28Z" fill="#EF9D43"/>
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="StellarTrail product icon">
+  <defs>
+    <linearGradient id="sky" x1="64" y1="0" x2="64" y2="128" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B2139"/>
+      <stop offset="0.58" stop-color="#0E3B3F"/>
+      <stop offset="1" stop-color="#092D2C"/>
+    </linearGradient>
+    <linearGradient id="trail" x1="61" y1="66" x2="62" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF3B0"/>
+      <stop offset="0.55" stop-color="#F5C55E"/>
+      <stop offset="1" stop-color="#FFE7A2"/>
+    </linearGradient>
+    <radialGradient id="starGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(75 30) rotate(90) scale(26)">
+      <stop stop-color="#FFE48A" stop-opacity="0.52"/>
+      <stop offset="0.45" stop-color="#F5C55E" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#F5C55E" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="round"><rect width="128" height="128" rx="27"/></clipPath>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#031817" flood-opacity="0.34"/>
+    </filter>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="128" height="128" fill="url(#sky)"/>
+    <circle cx="75" cy="30" r="24" fill="url(#starGlow)"/>
+    <circle cx="30" cy="15" r="1.2" fill="#A8D3CF" opacity="0.9"/>
+    <circle cx="98" cy="20" r="1.3" fill="#A8D3CF" opacity="0.88"/>
+    <circle cx="18" cy="48" r="1" fill="#D3EADF" opacity="0.7"/>
+    <circle cx="48" cy="68" r="1.4" fill="#FFE8A3" opacity="0.82"/>
+    <circle cx="63" cy="63" r="1.4" fill="#D3EADF" opacity="0.85"/>
+    <path d="M-6 89L17 63L33 78L51 48L71 79L91 58L114 82L137 70V128H-6V89Z" fill="#318B87"/>
+    <path d="M17 63L31 76L51 48L66 70L91 58L105 74L114 82L137 70V128H-6V89L17 63Z" fill="#26756F" opacity="0.92"/>
+    <path d="M51 48L37 80L54 69L66 70L51 48Z" fill="#8FD7C1" opacity="0.95"/>
+    <path d="M91 58L75 82L92 72L105 74L91 58Z" fill="#94D4C6" opacity="0.9"/>
+    <path d="M-10 98L15 74L36 94L56 65L80 98L101 76L130 101V128H-10V98Z" fill="#124F4B"/>
+    <path d="M56 65L39 98L57 83L80 98L56 65Z" fill="#5FBFA7"/>
+    <path d="M101 76L84 101L102 91L130 101L101 76Z" fill="#57B19F" opacity="0.9"/>
+    <path d="M-6 108L20 82L45 106L63 86L87 111L111 90L137 108V128H-6V108Z" fill="#0B3A36"/>
+    <path d="M20 82L6 107L22 96L45 106L20 82Z" fill="#27806F" opacity="0.76"/>
+    <path d="M111 90L94 111L112 101L137 108L111 90Z" fill="#2E8A79" opacity="0.68"/>
+    <path d="M56 131C55 115 59 102 65 91C72 79 75 70 68 62" stroke="#072C29" stroke-width="14" stroke-linecap="round" filter="url(#softShadow)"/>
+    <path d="M56 131C55 115 59 102 65 91C72 79 75 70 68 62" stroke="url(#trail)" stroke-width="9" stroke-linecap="round"/>
+    <path d="M59 126C59 113 63 101 68 92C73 82 75 74 71 66" stroke="#FFF8C8" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+    <path d="M75.00,17.00 76.84,25.57 84.19,20.81 79.43,28.16 88.00,30.00 79.43,31.84 84.19,39.19 76.84,34.43 75.00,43.00 73.16,34.43 65.81,39.19 70.57,31.84 62.00,30.00 70.57,28.16 65.81,20.81 73.16,25.57" fill="#FFEFA6" stroke="#F8BE3F" stroke-width="2" stroke-linejoin="round" filter="url(#softShadow)"/>
+    <circle cx="75" cy="30" r="3.1" fill="#FFFFFF" opacity="0.84"/>
+    <path d="M75 13V20M75 40V47M58 30H65M85 30H92" stroke="#FFF3B0" stroke-width="2.2" stroke-linecap="round" opacity="0.92"/>
+  </g>
 </svg>

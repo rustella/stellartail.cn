@@ -89,3 +89,42 @@ test('homepage copy stays user-facing and separates screenshot platforms', async
   expect(imageAlts.toLowerCase()).not.toContain('day mode');
   expect(imageAlts.toLowerCase()).not.toContain('day-mode');
 });
+
+
+test('brand icon metadata uses optimized product icon assets', async ({ page, request }) => {
+  await page.goto('/?lang=zh-CN');
+
+  const brandImageSrc = await page.locator('.nav__brand img').getAttribute('src');
+  expect(brandImageSrc).toContain('/assets/brand/logo.svg');
+
+  const iconLinks = await page
+    .locator('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"], link[rel="manifest"]')
+    .evaluateAll((links) => links.map((link) => `${link.getAttribute('rel')}:${link.getAttribute('href')}`));
+  expect(iconLinks.join(' ')).toContain('/assets/brand/logo.svg');
+  expect(iconLinks.join(' ')).toContain('/assets/brand/favicon-16.png');
+  expect(iconLinks.join(' ')).toContain('/assets/brand/favicon-32.png');
+  expect(iconLinks.join(' ')).toContain('/assets/brand/favicon-64.png');
+  expect(iconLinks.join(' ')).toContain('/assets/brand/favicon.ico');
+  expect(iconLinks.join(' ')).toContain('/assets/brand/apple-touch-icon.png');
+  expect(iconLinks.join(' ')).toContain('/site.webmanifest');
+
+  for (const asset of [
+    '/assets/brand/logo.svg',
+    '/assets/brand/favicon-16.png',
+    '/assets/brand/favicon-32.png',
+    '/assets/brand/favicon-64.png',
+    '/assets/brand/favicon.ico',
+    '/assets/brand/apple-touch-icon.png',
+    '/assets/brand/logo-192.png',
+    '/assets/brand/logo-512.png'
+  ]) {
+    const response = await request.get(asset);
+    expect(response.ok(), `${asset} should be served`).toBe(true);
+  }
+
+  const manifestResponse = await request.get('/site.webmanifest');
+  expect(manifestResponse.ok()).toBe(true);
+  const manifest = await manifestResponse.json();
+  expect(JSON.stringify(manifest.icons)).toContain('assets/brand/logo-192.png');
+  expect(JSON.stringify(manifest.icons)).toContain('assets/brand/logo-512.png');
+});
