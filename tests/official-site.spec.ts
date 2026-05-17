@@ -62,7 +62,7 @@ test('reduced motion preference keeps content visible and minimizes animation', 
 test('homepage copy stays user-facing and separates screenshot platforms', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   const zhBodyText = await page.locator('body').innerText();
-  for (const forbidden of ['官网不依赖后端', '静态方式交付', '部署简单', '后续易维护', '白天模式', '轻量可信', '官网只承诺当前可展示能力', '中英双语', '根据系统语言默认展示']) {
+  for (const forbidden of ['官网不依赖后端', '静态方式交付', '部署简单', '后续易维护', '白天模式', '轻量可信', '官网只承诺当前可展示能力', '中英双语', '根据系统语言默认展示', '从当前产品页面', '挑选代表功能', '代表功能', '代表内容', '给你的prompt', 'prompt']) {
     expect(zhBodyText).not.toContain(forbidden);
   }
 
@@ -73,16 +73,16 @@ test('homepage copy stays user-facing and separates screenshot platforms', async
   await expect(screenshotGroups.nth(1).getByRole('heading', { name: 'Web 端', exact: true })).toBeVisible();
   await expect(screenshotGroups.nth(1).locator('img')).toHaveCount(2);
   const imageSources = await page.locator('img').evaluateAll((images) => images.map((image) => image.getAttribute('src') ?? '').join(' '));
-  for (const expected of ['wechat-gear-management-zh.png', 'wechat-knot-skills-zh.png', 'web-gear-management-zh.png', 'web-gear-form-zh.png']) {
+  for (const expected of ['wechat-gear-management-a1fc941-zh.png', 'wechat-knot-skills-a1fc941-zh.png', 'web-gear-management-a1fc941-zh.png', 'web-gear-form-a1fc941-zh.png']) {
     expect(imageSources).toContain(expected);
   }
-  for (const oldMockAsset of ['wechat-gear-light-zh.png', 'wechat-knots-light-zh.png', 'web-gear-light-zh.png', 'web-skills-light-zh.png']) {
+  for (const oldMockAsset of ['wechat-gear-management-zh.png', 'wechat-knot-skills-zh.png', 'web-gear-management-zh.png', 'web-gear-form-zh.png', 'wechat-gear-light-zh.png', 'wechat-knots-light-zh.png', 'web-gear-light-zh.png', 'web-skills-light-zh.png']) {
     expect(imageSources).not.toContain(oldMockAsset);
   }
 
   await page.goto('/?lang=en-US');
   const enBodyText = await page.locator('body').innerText();
-  for (const forbidden of ['day mode', 'day-mode', 'official site is fully static', 'asset names', 'final runtime', 'lightweight and honest', 'bilingual by default', 'system language']) {
+  for (const forbidden of ['day mode', 'day-mode', 'official site is fully static', 'asset names', 'final runtime', 'lightweight and honest', 'bilingual by default', 'system language', 'representative product views', 'current pages', 'highlighted skill', 'prompt']) {
     expect(enBodyText.toLowerCase()).not.toContain(forbidden);
   }
   const imageAlts = await page.locator('img[alt]').evaluateAll((images) => images.map((image) => image.getAttribute('alt') ?? '').join(' '));

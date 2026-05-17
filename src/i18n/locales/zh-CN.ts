@@ -41,21 +41,21 @@ export const zhCN = {
   skills: {
     eyebrow: '户外技能',
     title: '从绳结开始，学习真正用得上的技能',
-    body: '当前户外技能聚焦绳结。代表内容是「可调节帐绳结」：适用于帐篷、天幕和风绳张力调节，可在受力后微调长度。',
+    body: '当前户外技能聚焦绳结。「可调节帐绳结」适用于帐篷、天幕和风绳张力调节，可在受力后微调长度。',
     bullets: ['当前能力：绳结教程', '示例技能：可调节帐绳结', '适合出发前快速复习']
   },
   screenshots: {
     eyebrow: '产品截图',
     title: '微信端与 Web 端展示',
-    body: '从当前产品页面中挑选代表功能：装备管理、添加装备和绳结技能。',
+    body: '在微信端快速查看装备与绳结，在 Web 端整理清单并补充装备信息。',
     wechatTitle: '微信端',
     wechatBody: '随身查看装备管理和绳结技能。',
     webTitle: 'Web 端',
     webBody: '在大屏上管理装备列表和添加装备信息。',
-    wechatGearAlt: '微信端装备管理实际运行截图',
-    wechatKnotsAlt: '微信端绳结技能实际运行截图',
-    webGearAlt: 'Web 端装备管理实际运行截图',
-    webGearFormAlt: 'Web 端添加装备表单实际运行截图'
+    wechatGearAlt: '微信端装备管理界面',
+    wechatKnotsAlt: '微信端绳结技能界面',
+    webGearAlt: 'Web 端装备管理界面',
+    webGearFormAlt: 'Web 端添加装备表单界面'
   },
   entry: {
     eyebrow: '下载 / 小程序入口',
