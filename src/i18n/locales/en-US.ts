@@ -9,6 +9,7 @@ export const enUS = {
     skills: 'Skills',
     screenshots: 'Screenshots',
     entry: 'Entry',
+    docs: 'Docs',
     language: 'Language'
   },
   hero: {

@@ -8,7 +8,7 @@ import { initReveal } from './effects/reveal';
 import { initStarfield } from './effects/starfield';
 import { getMessages, nextLocale, persistLocale, resolveInitialLocale, type Locale } from './i18n';
 import { screenshotAssets } from './content/screenshots';
-import { assetPath } from './utils/asset';
+import { assetPath, sitePath } from './utils/asset';
 
 let activeLocale: Locale = resolveInitialLocale();
 
@@ -35,6 +35,7 @@ const render = (): void => {
             <a href="#skills">${m.nav.skills}</a>
             <a href="#screenshots">${m.nav.screenshots}</a>
             <a href="#entry">${m.nav.entry}</a>
+            <a class="nav__docs-link" href="${sitePath(`docs/?lang=${activeLocale}`)}">${m.nav.docs}</a>
             <button class="lang-button" type="button" data-language-toggle aria-label="${m.language.switchTo}">${m.language.current}</button>
           </div>
         </div>
