@@ -12,6 +12,12 @@ export const zhCN = {
     docs: 'Docs',
     language: '语言'
   },
+  jump: {
+    label: '页面快捷跳转',
+    trigger: '展开页面快捷跳转',
+    title: '本页跳转',
+    home: '首页'
+  },
   hero: {
     eyebrow: 'StellarTrail / 寻径星野',
     title: '出发前，把装备和绳结技能准备好',
