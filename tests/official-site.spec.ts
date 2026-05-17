@@ -20,10 +20,10 @@ test('persists language switch preference', async ({ page }) => {
   expect(stored).toBe('en-US');
 });
 
-test('homepage top bar keeps only docs and language controls and sticks on scroll', async ({ page }) => {
+test('homepage top bar uses API docs label and breadcrumb uses descriptive section labels', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   const nav = page.locator('.nav');
-  const zhDocsLink = nav.getByRole('link', { name: 'Docs', exact: true });
+  const zhDocsLink = nav.getByRole('link', { name: '接口文档', exact: true });
   await expect(zhDocsLink).toBeVisible();
   await expect(zhDocsLink).toHaveAttribute('href', '/docs/?lang=zh-CN');
   await expect(nav.getByRole('button', { name: /Switch to English/ })).toBeVisible();
@@ -39,7 +39,7 @@ test('homepage top bar keeps only docs and language controls and sticks on scrol
 
   await page.evaluate(() => window.localStorage.clear());
   await page.goto('/?lang=en-US');
-  const enDocsLink = page.locator('.nav').getByRole('link', { name: 'Docs', exact: true });
+  const enDocsLink = page.locator('.nav').getByRole('link', { name: 'API Docs', exact: true });
   await expect(enDocsLink).toBeVisible();
   await expect(enDocsLink).toHaveAttribute('href', '/docs/?lang=en-US');
 });
@@ -79,25 +79,25 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
 
   const zhJumpLinks = [
     ['首页', '#top'],
-    ['产品', '#product'],
-    ['装备', '#gear'],
-    ['技能', '#skills'],
-    ['截图', '#screenshots'],
-    ['入口', '#entry']
+    ['产品介绍', '#product'],
+    ['装备管理', '#gear'],
+    ['户外技能', '#skills'],
+    ['产品截图', '#screenshots'],
+    ['下载入口', '#entry']
   ] as const;
   for (const [item, href] of zhJumpLinks) {
     const link = floatingNav.getByRole('link', { name: item, exact: true });
     await expect(link).toBeVisible();
     await expect(link).toHaveAttribute('href', href);
   }
-  await expect(floatingNav.getByRole('link', { name: 'Docs', exact: true })).toHaveCount(0);
+  await expect(floatingNav.getByRole('link', { name: '接口文档', exact: true })).toHaveCount(0);
 
   await page.mouse.click(24, 24);
   await expect(trigger).toHaveAttribute('aria-expanded', 'false');
   await expect(panel).toBeHidden();
   await trigger.click();
 
-  await floatingNav.getByRole('link', { name: '入口', exact: true }).click();
+  await floatingNav.getByRole('link', { name: '下载入口', exact: true }).click();
   await expect(page).toHaveURL(/#entry$/);
 
   await page.evaluate(() => window.localStorage.clear());
@@ -106,10 +106,20 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
   const enTrigger = enFloatingNav.getByRole('button', { name: 'Expand page quick jumps' });
   await enTrigger.click();
   await expect(enTrigger).toHaveAttribute('aria-expanded', 'true');
-  const enHomeLink = enFloatingNav.getByRole('link', { name: 'Home', exact: true });
-  await expect(enHomeLink).toBeVisible();
-  await expect(enHomeLink).toHaveAttribute('href', '#top');
-  await expect(enFloatingNav.getByRole('link', { name: 'Docs', exact: true })).toHaveCount(0);
+  const enJumpLinks = [
+    ['Home', '#top'],
+    ['Product intro', '#product'],
+    ['Gear management', '#gear'],
+    ['Outdoor skills', '#skills'],
+    ['Product screenshots', '#screenshots'],
+    ['Downloads', '#entry']
+  ] as const;
+  for (const [item, href] of enJumpLinks) {
+    const link = enFloatingNav.getByRole('link', { name: item, exact: true });
+    await expect(link).toBeVisible();
+    await expect(link).toHaveAttribute('href', href);
+  }
+  await expect(enFloatingNav.getByRole('link', { name: 'API Docs', exact: true })).toHaveCount(0);
 });
 
 test('homepage communicates Web Android and mini program support', async ({ page }) => {
