@@ -53,6 +53,9 @@ const render = (): void => {
               <a class="button button--ghost" href="#product">${m.hero.secondaryCta}</a>
             </div>
             <span class="hero-note">${m.hero.note}</span>
+            <ul class="platform-list" aria-label="${m.hero.platformLabel}">
+              ${m.hero.platforms.map((platform) => `<li>${platform}</li>`).join('')}
+            </ul>
           </div>
           <div class="hero-card float-soft" data-reveal>
             <div class="phone-mock" aria-hidden="true">
@@ -63,7 +66,7 @@ const render = (): void => {
             <div class="metric-row">
               <div class="metric"><strong>01</strong><span>${m.hero.statGear}</span></div>
               <div class="metric"><strong>01</strong><span>${m.hero.statSkill}</span></div>
-              <div class="metric"><strong>04</strong><span>${m.hero.statMode}</span></div>
+              <div class="metric"><strong>03</strong><span>${m.hero.statMode}</span></div>
             </div>
           </div>
         </div>
@@ -149,6 +152,9 @@ const render = (): void => {
                 <p class="eyebrow">${m.entry.eyebrow}</p>
                 <h2 class="section__title">${m.entry.title}</h2>
                 <p class="section__body">${m.entry.body}</p>
+                <ul class="entry-platforms" aria-label="${m.entry.channelsLabel}">
+                  ${m.entry.channels.map((channel) => `<li><strong>${channel.title}</strong><span>${channel.body}</span></li>`).join('')}
+                </ul>
                 <p>${m.entry.hint}</p>
               </div>
               <img class="entry-placeholder" src="${assetPath('assets/entry/miniprogram-placeholder.png')}" alt="${m.entry.title}" />
