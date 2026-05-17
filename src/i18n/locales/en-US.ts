@@ -12,6 +12,12 @@ export const enUS = {
     docs: 'Docs',
     language: 'Language'
   },
+  jump: {
+    label: 'Page quick jumps',
+    trigger: 'Expand page quick jumps',
+    title: 'On this page',
+    home: 'Home'
+  },
   hero: {
     eyebrow: 'StellarTrail',
     title: 'Prepare gear and knot skills before you head out',

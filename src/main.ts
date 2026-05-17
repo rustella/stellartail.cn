@@ -18,6 +18,15 @@ if (!app) throw new Error('Missing app root');
 const listItems = (items: readonly string[]): string => items.map((item) => `<li>${item}</li>`).join('');
 const render = (): void => {
   const m = getMessages(activeLocale);
+  const jumpLinks = [
+    { label: m.jump.home, href: '#top' },
+    { label: m.nav.product, href: '#product' },
+    { label: m.nav.gear, href: '#gear' },
+    { label: m.nav.skills, href: '#skills' },
+    { label: m.nav.screenshots, href: '#screenshots' },
+    { label: m.nav.entry, href: '#entry' },
+    { label: m.nav.docs, href: sitePath(`docs/?lang=${activeLocale}`) }
+  ];
   document.title = m.seo.title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', m.seo.description);
   persistLocale(activeLocale);
@@ -38,6 +47,18 @@ const render = (): void => {
             <a class="nav__docs-link" href="${sitePath(`docs/?lang=${activeLocale}`)}">${m.nav.docs}</a>
             <button class="lang-button" type="button" data-language-toggle aria-label="${m.language.switchTo}">${m.language.current}</button>
           </div>
+        </div>
+      </nav>
+
+      <nav class="floating-breadcrumb" aria-label="${m.jump.label}">
+        <button class="floating-breadcrumb__trigger" type="button" aria-label="${m.jump.trigger}" aria-haspopup="true">
+          <span class="floating-breadcrumb__icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+        <div class="floating-breadcrumb__panel">
+          <span class="floating-breadcrumb__title">${m.jump.title}</span>
+          <ol>
+            ${jumpLinks.map((link) => `<li><a href="${link.href}">${link.label}</a></li>`).join('')}
+          </ol>
         </div>
       </nav>
 
