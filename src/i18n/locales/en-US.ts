@@ -64,6 +64,61 @@ export const enUS = {
     badge: 'Coming soon',
     hint: 'Search StellarTrail in WeChat or wait for the official QR code release.'
   },
+  docs: {
+    seo: {
+      title: 'StellarTrail API Reference',
+      description: 'A static reference for the currently available StellarTrail backend API paths.'
+    },
+    nav: {
+      label: 'API reference navigation',
+      brand: 'StellarTrail Docs',
+      backHome: 'Back to site'
+    },
+    hero: {
+      eyebrow: 'Developer docs',
+      title: 'API Reference',
+      body: 'This page records the read-only backend behavior that is currently present and verified. Examples use paths and environment placeholders only; the production access origin is not displayed here.'
+    },
+    toc: {
+      label: 'Table of contents'
+    },
+    source: {
+      title: 'Source information',
+      repository: 'Source repository',
+      inspectedHead: 'Inspected version',
+      inspectedAt: 'Inspected date'
+    },
+    sections: {
+      overview: {
+        title: 'Overview',
+        body: 'The first version covers service health, service metadata, and the common not-found response. When backend behavior grows, update this page from the real service source and response definitions first.',
+        note: 'This is a static documentation page. It does not request the backend from the browser.'
+      },
+      authentication: {
+        title: 'Authentication',
+        body: 'The listed read paths currently do not require a signed-in user. Future user-scoped behavior should document authentication, permission boundaries, and error responses separately.'
+      },
+      endpoints: {
+        title: 'Endpoints',
+        body: 'Currently verified read paths.'
+      },
+      errors: {
+        title: 'Error responses',
+        body: 'Unmatched resources return a consistent JSON error shape.'
+      },
+      config: {
+        title: 'Access configuration',
+        body: 'The production access origin is stored only in deployment-side or ignored local config. It must not be committed, rendered, or bundled. Use your own environment variable and append the path when calling the service.'
+      }
+    },
+    endpointSummaries: {
+      health: 'Service health',
+      meta: 'Service metadata'
+    },
+    labels: {
+      responseStatus: 'Response status'
+    }
+  },
   footer: {
     tagline: 'StellarTrail',
     caption: 'Outdoor preparation starts with checklists and knots',

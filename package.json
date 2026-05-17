@@ -13,8 +13,9 @@
     "validate:no-backend": "node scripts/validate-no-backend-deps.mjs",
     "validate:no-routes-copy": "node scripts/validate-no-routes-copy.mjs",
     "test:e2e": "playwright test",
-    "check": "npm run validate:i18n && npm run validate:no-backend && npm run validate:no-routes-copy && npm run typecheck && npm run build && npm run test:e2e",
-    "validate:deploy-base": "node scripts/validate-deploy-base.mjs"
+    "check": "npm run validate:i18n && npm run validate:no-backend && npm run typecheck && npm run build && npm run validate:no-routes-copy && npm run validate:docs-config && npm run test:e2e",
+    "validate:deploy-base": "node scripts/validate-deploy-base.mjs",
+    "validate:docs-config": "node scripts/validate-docs-config.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.60.0",

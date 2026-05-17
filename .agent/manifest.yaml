@@ -18,6 +18,7 @@ stack:
   testing: playwright
 source_roots:
   - src
+  - docs
   - public
   - scripts
   - tests
@@ -28,6 +29,7 @@ config_paths:
   - playwright.config.ts
   - .github/workflows/ci.yml
   - .github/workflows/deploy-pages.yml
+  - config/docs.example.json
 generated_paths:
   - node_modules
   - dist
@@ -37,6 +39,8 @@ generated_paths:
 entrypoints:
   app: src/main.ts
   html: index.html
+  docs_html: docs/index.html
+  docs_app: src/docs.ts
 policies:
   comments_language: english
   i18n_required: true
@@ -46,9 +50,12 @@ policies:
   reduced_motion_required: true
   custom_domain_configured: false
   deployment_base_must_be_configurable: true
+  docs_origin_committed: false
+  docs_runtime_backend_requests_allowed: false
 validation:
   canonical: npm run check
   deploy_base: npm run validate:deploy-base
+  docs_config: npm run validate:docs-config
 freshness:
   last_updated: 2026-05-17
-  source: implementation from Hermes plan 2026-05-17_040401-configurable-base-multi-target-pages-deploy.md
+  source: implementation from Hermes plan 2026-05-17_162238-docs-api-reference-page.md plus current code inspection

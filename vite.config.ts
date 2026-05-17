@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url';
+
 import { defineConfig } from 'vite';
 
 const BASE_PATH_PATTERN = /^\/(?:[A-Za-z0-9._~-]+\/?)*$/;
@@ -24,7 +26,13 @@ export default defineConfig({
   base: normalizeBasePath(process.env.SITE_BASE_PATH),
   build: {
     target: 'es2022',
-    sourcemap: true
+    sourcemap: true,
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL('index.html', import.meta.url)),
+        docs: fileURLToPath(new URL('docs/index.html', import.meta.url))
+      }
+    }
   },
   server: {
     host: '0.0.0.0'

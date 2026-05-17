@@ -64,6 +64,61 @@ export const zhCN = {
     badge: 'Coming soon',
     hint: '请在微信内搜索 StellarTrail / 寻径星野，或等待正式二维码发布。'
   },
+  docs: {
+    seo: {
+      title: 'StellarTrail 开发文档｜API Reference',
+      description: 'StellarTrail 后端 API 的静态参考文档，说明当前可用的服务状态和服务信息读取方式。'
+    },
+    nav: {
+      label: '开发文档导航',
+      brand: 'StellarTrail Docs',
+      backHome: '返回官网'
+    },
+    hero: {
+      eyebrow: '开发文档',
+      title: '开发文档',
+      body: '这里记录当前后端已经存在并可确认的读取类能力。示例只使用路径和环境变量占位，不在页面中展示生产访问地址。'
+    },
+    toc: {
+      label: '文档目录'
+    },
+    source: {
+      title: '来源信息',
+      repository: '来源仓库',
+      inspectedHead: '检查版本',
+      inspectedAt: '检查日期'
+    },
+    sections: {
+      overview: {
+        title: '概览',
+        body: '首版文档覆盖服务健康检查、服务信息读取和统一的未找到响应。后端新增能力后，应先从真实服务源码和响应结构同步到这里。',
+        note: '本文档是静态说明页，不会从浏览器直接请求后端服务。'
+      },
+      authentication: {
+        title: '认证',
+        body: '当前列出的读取项不需要登录态。后续如果加入需要用户身份的能力，应单独标记认证方式、权限边界和错误响应。'
+      },
+      endpoints: {
+        title: '接口',
+        body: '当前可确认的读取项。'
+      },
+      errors: {
+        title: '错误响应',
+        body: '未匹配到资源时返回统一的 JSON 错误结构。'
+      },
+      config: {
+        title: '访问配置',
+        body: '生产访问地址保存在部署侧或本地忽略配置中，不写入公开源码、页面内容或构建产物。调用示例应使用自己的环境变量拼接路径。'
+      }
+    },
+    endpointSummaries: {
+      health: '服务状态',
+      meta: '服务信息'
+    },
+    labels: {
+      responseStatus: '响应状态'
+    }
+  },
   footer: {
     tagline: 'StellarTrail / 寻径星野',
     caption: '户外准备，从清单和绳结开始',

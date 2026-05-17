@@ -22,10 +22,20 @@ npm run check
 npm run validate:i18n
 npm run validate:no-backend
 npm run validate:no-routes-copy
+npm run validate:docs-config
 npm run typecheck
 npm run build
 npm run validate:deploy-base
 npm run test:e2e
+```
+
+## Docs page
+
+The static API reference is available at `/docs/` in local development and at `/<base>/docs/` after a subpath build. The production docs origin, if configured, belongs in ignored deployment/local config such as `config/docs.production.local.json`; do not commit or render the real origin.
+
+```bash
+npm run dev
+# open /docs/
 ```
 
 ## Screenshot assets

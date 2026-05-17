@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
-const roots = ['src', 'index.html', 'public', 'dist'];
+const roots = ['src', 'docs', 'index.html', 'public', 'dist'];
 const banned = [/路线/g, /route(s|d|r)?/gi, /itinerary/gi, /trip planning/gi];
 const textExt = /\.(ts|tsx|js|mjs|html|css|svg|json|txt|xml)$/;
 const files = [];
