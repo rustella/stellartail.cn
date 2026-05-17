@@ -201,7 +201,15 @@ const render = (): void => {
                 <h2 class="section__title">${m.entry.title}</h2>
                 <p class="section__body">${m.entry.body}</p>
                 <ul class="entry-platforms" aria-label="${m.entry.channelsLabel}">
-                  ${m.entry.channels.map((channel) => `<li><strong>${channel.title}</strong><span>${channel.body}</span></li>`).join('')}
+                  ${m.entry.channels
+                    .map(
+                      (channel) => `<li>
+                        <strong>${channel.title}</strong>
+                        <span>${channel.body}</span>
+                        ${channel.href && channel.action ? `<a class="entry-platforms__link" href="${channel.href}" target="_blank" rel="noopener noreferrer">${channel.action}</a>` : ''}
+                      </li>`
+                    )
+                    .join('')}
                 </ul>
                 <p>${m.entry.hint}</p>
               </div>

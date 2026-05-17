@@ -69,14 +69,29 @@ export const enUS = {
   entry: {
     eyebrow: 'Download / mini program entry',
     title: 'Use StellarTrail on Web, Android, and WeChat Mini Program',
-    body: 'Choose the Web app, Android app, or WeChat Mini Program based on your scenario. Official web links, Android installation entry, and the mini program QR code will be collected here when published.',
+    body: 'The Web app is live and ready for browser-based gear planning. Android install and the WeChat Mini Program code will be added here when ready.',
     badge: 'Multi-platform',
     hint: 'Web is best for desktop planning, Android is ready for on-the-go use, and WeChat Mini Program opens quickly inside WeChat.',
     channelsLabel: 'Supported platform entries',
     channels: [
-      { title: 'Web access', body: 'Plan and organize gear on a larger screen.' },
-      { title: 'Android install', body: 'Keep preparation content close on your phone.' },
-      { title: 'WeChat Mini Program', body: 'Open quickly inside WeChat.' }
+      {
+        title: 'Web access',
+        body: 'The Web app is live for planning and organizing gear on a larger screen.',
+        href: 'https://app.stellartrail.cn/',
+        action: 'Open Web app'
+      },
+      {
+        title: 'Android install',
+        body: 'Keep preparation content close on your phone. The install option will be added when ready.',
+        href: null,
+        action: null
+      },
+      {
+        title: 'WeChat Mini Program',
+        body: 'Open quickly inside WeChat. The mini program code will be added when ready.',
+        href: null,
+        action: null
+      }
     ]
   },
   docs: {
