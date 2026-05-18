@@ -25,4 +25,4 @@ This repository is a static Vite website for StellarTrail / 寻径星野. The sa
 
 ## Docs page
 
-`docs/index.html` loads `src/docs.ts` as a separate Vite page at `/docs/`. It renders static API reference data from `src/content/api-docs.ts` and must not request backend paths from the browser. The real production docs origin is deployment-only/local config and must not be committed or bundled.
+`docs/index.html` loads `src/docs.ts` as a separate Vite page at `/docs/`. It renders static API reference data from `src/content/api-docs.ts`. Page load must not request backend paths; the docs request runner may send user-initiated requests only to the shared service address typed by the reader. The real production docs origin is deployment-only/local config and must not be committed or bundled.

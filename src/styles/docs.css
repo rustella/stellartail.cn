@@ -456,3 +456,30 @@
   color: var(--color-primary-strong);
   font-size: 13px;
 }
+
+
+.request-settings {
+  display: grid;
+  gap: 16px;
+  border-color: rgba(22, 91, 76, 0.18);
+  background: linear-gradient(135deg, rgba(22, 91, 76, 0.08), rgba(231, 188, 104, 0.12));
+}
+.request-settings__copy {
+  display: grid;
+  gap: 8px;
+}
+.request-settings__copy h2,
+.request-settings__copy p {
+  margin: 0;
+}
+.request-settings__panel {
+  display: grid;
+  min-width: 0;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(22, 91, 76, 0.14);
+  background: rgba(255, 255, 255, 0.7);
+}
+.request-settings [data-service-address] {
+  font-size: 15px;
+}

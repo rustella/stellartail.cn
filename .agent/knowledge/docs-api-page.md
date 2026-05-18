@@ -5,7 +5,7 @@ The repository includes a static developer documentation page at `/docs/` for cu
 ## Scope
 
 - The page is static and must not make automatic browser runtime requests to backend paths on load.
-- A user-initiated request runner is allowed under `/docs/` only when the reader types an http(s) service origin and clicks send.
+- A user-initiated request runner is allowed under `/docs/` only when the reader types an http(s) service address in the shared setting and clicks send.
 - API examples remain path-only. Do not commit or render the real production docs origin.
 - The production docs origin, when used, belongs only in ignored local/deployment config such as `config/docs.production.local.json` and `.agent/local/production/docs-site.md`.
 - The document lists every backend route captured in `src/content/api-docs.ts`; request examples and the request runner must not contain a committed production origin.
@@ -38,7 +38,7 @@ For deployment base checks, build both root and GitHub Pages base paths and veri
 
 ## Request runner rules
 
-- Do not provide a default service origin, do not read `VITE_API_BASE_URL`, and do not persist origins, headers, request bodies, or responses in local storage.
-- Build requests only from the endpoint inventory plus user input: service origin, path parameters, query parameters, headers, request body, and optional multipart file.
+- Do not provide a default service address, do not read `VITE_API_BASE_URL`, and do not persist addresses, headers, request bodies, or responses in local storage.
+- Build requests only from the endpoint inventory plus user input: one shared service address, path parameters, query parameters, headers, request body, and optional multipart file.
 - Keep page-load behavior request-free. Browser tests should prove `/docs/` makes zero backend-path requests before the reader clicks send.
 - Use `credentials: 'omit'` so the page does not attach ambient cookies to arbitrary typed origins.

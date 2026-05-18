@@ -346,8 +346,11 @@ test('docs request runner keeps requests user-initiated and validates required s
   await page.waitForLoadState('networkidle');
   expect(backendRequests).toEqual([]);
 
+  await expect(page.locator('[data-service-address]')).toHaveCount(1);
+  await expect(page.locator('[data-request-base]')).toHaveCount(0);
+  await expect(page.locator('[data-service-address]')).toHaveValue('');
+
   const card = page.locator('#endpoint-healthz');
-  await expect(card.locator('[data-request-base]')).toHaveValue('');
   await card.getByRole('button', { name: '发送请求' }).click();
   await expect(card.locator('[data-response-status]')).toHaveText('请先填写服务地址');
   expect(backendRequests).toEqual([]);
@@ -366,8 +369,9 @@ test('docs request runner builds GET requests from service origin path params an
   });
 
   await page.goto('/docs/?lang=zh-CN');
+  await expect(page.locator('[data-service-address]')).toHaveCount(1);
   const card = page.locator('#endpoint-gearTemplatesDetail');
-  await card.locator('[data-request-base]').fill('https://api.example.test/');
+  await page.locator('[data-service-address]').fill('https://api.example.test/');
   await card.locator('[data-path-param="id"]').fill('backpacking-basic');
   await card.locator('[data-extra-query]').fill('locale=zh-CN&limit=20');
   await card.getByRole('button', { name: '发送请求' }).click();
@@ -375,6 +379,34 @@ test('docs request runner builds GET requests from service origin path params an
   await expect(card.getByText('200 OK')).toBeVisible();
   await expect(card.locator('[data-response-body]')).toContainText('"ok": true');
   expect(capturedRequests).toEqual(['https://api.example.test/api/gear-templates/backpacking-basic?locale=zh-CN&limit=20']);
+});
+
+
+
+test('docs request runner reuses one shared service address for different endpoints', async ({ page }) => {
+  const capturedRequests: string[] = [];
+  await page.route('https://api.example.test/healthz', async (route) => {
+    capturedRequests.push(route.request().url());
+    await route.fulfill({ status: 204, headers: { 'Access-Control-Allow-Origin': '*' } });
+  });
+  await page.route('https://api.example.test/api/meta', async (route) => {
+    capturedRequests.push(route.request().url());
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ service: 'stellartrail-api' })
+    });
+  });
+
+  await page.goto('/docs/?lang=zh-CN');
+  await page.locator('[data-service-address]').fill('https://api.example.test');
+  await page.locator('#endpoint-healthz').getByRole('button', { name: '发送请求' }).click();
+  await expect(page.locator('#endpoint-healthz').getByText('204 No Content')).toBeVisible();
+
+  await page.locator('#endpoint-meta').getByRole('button', { name: '发送请求' }).click();
+  await expect(page.locator('#endpoint-meta').locator('[data-response-body]')).toContainText('stellartrail-api');
+  expect(capturedRequests).toEqual(['https://api.example.test/healthz', 'https://api.example.test/api/meta']);
 });
 
 test('docs request runner sends JSON body and custom headers for POST requests', async ({ page }) => {
@@ -403,8 +435,9 @@ test('docs request runner sends JSON body and custom headers for POST requests',
   });
 
   await page.goto('/docs/?lang=zh-CN');
+  await expect(page.locator('[data-service-address]')).toHaveCount(1);
   const card = page.locator('#endpoint-authPasswordLogin');
-  await card.locator('[data-request-base]').fill('https://api.example.test');
+  await page.locator('[data-service-address]').fill('https://api.example.test');
   await card.locator('[data-request-headers]').fill('X-Trace-Id: docs-test');
   await card.locator('[data-request-body]').fill(JSON.stringify({ account: 'trail_user', password: 'wrong-password' }, null, 2));
   await card.getByRole('button', { name: '发送请求' }).click();

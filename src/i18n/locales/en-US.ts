@@ -204,10 +204,10 @@ export const enUS = {
       responseBody: 'Response body',
       noBody: 'No response body',
       tryRequest: 'Try request',
-      tryRequestNote: 'The request is sent only after you click send and only to the service origin you enter. The page does not save the origin, headers, or response.',
-      serviceOrigin: 'Service address',
+      tryRequestNote: 'Uses the shared service address above. Requests are sent only after you click send; the page does not save the address, headers, or response.',
+      serviceOrigin: 'Shared service address',
       serviceOriginPlaceholder: 'https://your-api.example.com',
-      serviceOriginHelp: 'Enter an http(s) service address. The documented path is appended to it.',
+      serviceOriginHelp: 'Enter this once and all endpoint runners below will reuse it. The page does not save this address.',
       pathParams: 'Path parameters',
       pathParamLabel: '{name} path parameter',
       queryParams: 'Query parameter input',
@@ -230,7 +230,9 @@ export const enUS = {
       invalidHeader: 'Header format must be Name: value',
       invalidJson: 'Request body must be valid JSON',
       networkError: 'Request failed: {message}',
-      noResponseBody: 'No response body'
+      noResponseBody: 'No response body',
+      serviceSettingsTitle: 'Shared service address',
+      serviceSettingsNote: 'Fill in the service address once here. Every endpoint runner below will reuse it, and leaving it empty prevents requests.'
     }
   },
   footer: {
