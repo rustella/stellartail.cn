@@ -139,6 +139,21 @@ const renderBodyInput = (endpoint: ApiDocEndpoint, labels: DocsLabels): string =
     </div>`;
 };
 
+const renderGlobalRequestSettings = (labels: DocsLabels): string => `
+  <section class="docs-section request-settings" id="request-settings">
+    <div class="request-settings__copy">
+      <h2>${escapeHtml(labels.serviceSettingsTitle)}</h2>
+      <p>${escapeHtml(labels.serviceSettingsNote)}</p>
+    </div>
+    <div class="request-settings__panel">
+      ${renderRequestField(
+        labels.serviceOrigin,
+        `<input type="url" inputmode="url" autocomplete="off" data-service-address placeholder="${escapeHtml(labels.serviceOriginPlaceholder)}" />`,
+        labels.serviceOriginHelp
+      )}
+    </div>
+  </section>`;
+
 const renderRequestRunner = (endpoint: ApiDocEndpoint, labels: DocsLabels): string => `
   <form class="request-runner" data-request-form data-endpoint-id="${endpoint.id}">
     <div class="request-runner__head">
@@ -148,11 +163,6 @@ const renderRequestRunner = (endpoint: ApiDocEndpoint, labels: DocsLabels): stri
       </div>
       <button class="request-runner__send" type="submit" data-send-request>${escapeHtml(labels.sendRequest)}</button>
     </div>
-    ${renderRequestField(
-      labels.serviceOrigin,
-      `<input type="url" inputmode="url" autocomplete="off" data-request-base placeholder="${escapeHtml(labels.serviceOriginPlaceholder)}" />`,
-      labels.serviceOriginHelp
-    )}
     ${renderPathParamInputs(endpoint, labels)}
     ${renderQueryInputs(endpoint, labels)}
     <div class="request-runner__block">
@@ -380,7 +390,8 @@ const handleRequestSubmit = async (event: SubmitEvent, labels: DocsLabels): Prom
     setText(form, '[data-response-body]', '');
     setText(form, '[data-response-headers]', '—');
 
-    const origin = parseServiceOrigin(form.querySelector<HTMLInputElement>('[data-request-base]')?.value ?? '', labels);
+    const serviceAddressInput = app.querySelector<HTMLInputElement>('[data-service-address]');
+    const origin = parseServiceOrigin(serviceAddressInput?.value ?? '', labels);
     const path = buildPath(endpoint, form, labels);
     const requestUrl = new URL(`${origin}${path.startsWith('/') ? '' : '/'}${path}`);
     appendQueryParams(requestUrl, form);
@@ -465,6 +476,7 @@ const renderDocs = (): void => {
         <aside class="docs-toc" aria-label="${docs.toc.label}">
           <a href="#overview">${docs.sections.overview.title}</a>
           <a href="#auth">${docs.sections.authentication.title}</a>
+          <a href="#request-settings">${docs.labels.serviceSettingsTitle}</a>
           <a href="#endpoints">${docs.sections.endpoints.title}</a>
           ${apiDocs.groups.map((group) => `<a href="#group-${group.key}">${groupLabels[group.key]}</a>`).join('')}
           <a href="#errors">${docs.sections.errors.title}</a>
@@ -486,6 +498,8 @@ const renderDocs = (): void => {
               <code>${escapeHtml(apiDocs.commonHeaders.locale)}</code>
             </div>
           </section>
+
+          ${renderGlobalRequestSettings(docs.labels)}
 
           <section class="docs-section" id="endpoints">
             <h2>${docs.sections.endpoints.title}</h2>

@@ -204,10 +204,10 @@ export const zhCN = {
       responseBody: '响应体',
       noBody: '无响应体',
       tryRequest: '调试请求',
-      tryRequestNote: '仅在点击发送后请求你填写的服务地址；页面不会保存地址、请求头或响应。',
-      serviceOrigin: '服务地址',
+      tryRequestNote: '使用上方统一服务地址；点击发送后才会发起请求，页面不会保存地址、请求头或响应。',
+      serviceOrigin: '统一服务地址',
       serviceOriginPlaceholder: 'https://your-api.example.com',
-      serviceOriginHelp: '输入 http(s) 服务地址，页面会把接口路径拼接在后面。',
+      serviceOriginHelp: '输入一次即可供下方所有接口共用；页面不会保存这个地址。',
       pathParams: '路径参数',
       pathParamLabel: '{name} 路径参数',
       queryParams: '查询参数输入',
@@ -230,7 +230,9 @@ export const zhCN = {
       invalidHeader: '请求头格式应为 Name: value',
       invalidJson: '请求体必须是合法 JSON',
       networkError: '请求失败：{message}',
-      noResponseBody: '无响应内容'
+      noResponseBody: '无响应内容',
+      serviceSettingsTitle: '统一服务地址',
+      serviceSettingsNote: '在这里填写一次服务地址，下方所有接口调试都会共用它。留空时不会发送请求。'
     }
   },
   footer: {
