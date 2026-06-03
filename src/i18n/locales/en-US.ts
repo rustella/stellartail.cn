@@ -1,15 +1,17 @@
 export const enUS = {
   seo: {
-    title: 'StellarTrail | Outdoor gear and knot skill companion',
-    description: 'StellarTrail helps you prepare gear lists and learn practical knot skills before heading outdoors across Web, Android, and WeChat Mini Program.'
+    title: 'StellarTrail | Outdoor preparation companion',
+    description: 'StellarTrail helps you manage personal gear, confirm packing lists, organize trip prep, and review practical knot skills before heading outdoors.'
   },
   nav: {
     product: 'Product intro',
-    gear: 'Gear management',
-    skills: 'Outdoor skills',
-    screenshots: 'Product screenshots',
+    gear: 'Personal gear',
+    packing: 'Packing lists',
+    trips: 'Trip prep',
+    skills: 'Knot skills',
     entry: 'Downloads',
     web: 'Web App',
+    downloads: 'Downloads',
     docs: 'API Docs',
     language: 'Language'
   },
@@ -21,79 +23,163 @@ export const enUS = {
   },
   hero: {
     eyebrow: 'StellarTrail',
-    title: 'Prepare gear and knot skills before you head out',
-    subtitle: 'A lightweight companion for outdoor preparation: organize gear lists, learn practical knot skills, and choose the Web, Android, or WeChat Mini Program experience that fits the moment.',
-    primaryCta: 'View platform entry',
-    secondaryCta: 'Explore product',
-    note: 'Web, Android, and WeChat Mini Program are supported now.',
-    platformLabel: 'Supported platforms',
-    platforms: ['Web app', 'Android app', 'WeChat Mini Program'],
-    statGear: 'Gear lists',
-    statSkill: 'Knot skills',
-    statMode: 'Supported platforms'
+    title: 'Prepare gear, lists, trips, and knots before you head out',
+    subtitle: 'A lightweight companion for outdoor preparation: track personal gear, confirm packing lists, organize trip prep, and review field-ready knot skills before departure.',
+    primaryCta: 'View downloads',
+    secondaryCta: 'Open Web app',
+    stats: [
+      { value: 'Organize', label: 'Gear and lists' },
+      { value: 'Confirm', label: 'Trip prep' },
+      { value: 'Review', label: 'Knot skills' }
+    ]
   },
   product: {
     eyebrow: 'Product focus',
-    title: 'Designed for the preparation phase before going outdoors',
-    body: 'StellarTrail gathers gear preparation, skill learning, and entry information into a calm, clear interface so you can quickly confirm what to pack and which key skills to review before leaving.',
-    cards: {
-      fast: { title: 'Gear library', body: 'Organize gear categories, preparation templates, and checklists by trip scenario so you can confirm what to pack faster.' },
-      bilingual: { title: 'Knot skills', body: 'Start with common knots such as the adjustable tent-line knot, with use cases, steps, and practical reminders.' },
-      polished: { title: 'Multi-device access', body: 'Use Web for desktop planning, Android for an installed on-the-go experience, and WeChat Mini Program for quick access inside WeChat.' }
+    title: 'Turn scattered pre-departure tasks into steps you can check',
+    body: 'StellarTrail focuses on the preparation phase before heading outdoors. The site highlights product-visible capabilities and separates available entries from feature previews with clear status labels.',
+    statusLabels: {
+      available: 'Available now',
+      preview: 'Feature preview'
+    },
+    capabilities: {
+      gear: {
+        title: 'Personal gear',
+        subtitle: 'Track each item by category, status, weight, value, and storage location.',
+        body: 'Keep headlamps, packs, stoves, and other recurring gear in one personal library so pre-departure checks start from your own inventory.',
+        bullets: ['Gear counts and weight summaries', 'Category, status, and search filters', 'Gear detail and editing flow']
+      },
+      packing: {
+        title: 'Packing lists',
+        subtitle: 'Confirm departure items by trip and scenario.',
+        body: 'Turn personal gear into a packing list, then check total weight, packed weight, and missing items before you leave.',
+        bullets: ['Build lists by scenario', 'Mark packed items one by one', 'Track weight and progress']
+      },
+      trips: {
+        title: 'Trip prep',
+        subtitle: 'Keep solo prep and group coordination in one view.',
+        body: 'Trip pages collect dates, members, and readiness signals so you can confirm gear, skills, weather, and safety prep before departure.',
+        bullets: ['Solo prep and group coordination', 'Member and day summaries', 'Readiness cues']
+      },
+      skills: {
+        title: 'Knot skills',
+        subtitle: 'Review practical outdoor skills before departure.',
+        body: 'The current skill library focuses on knots for camping, fishing, connecting, and securing, with quick entry into detailed practice views.',
+        bullets: ['Knot category entry', 'Favorite skills list', 'Fast review before departure']
+      }
     }
   },
   gear: {
-    eyebrow: 'Gear library',
-    title: 'Turn preparation into a practical checklist',
-    body: 'The gear library introduces basic backpacking templates, categories, and preparation thinking. It helps people understand what to prepare before their first deeper look at the product.',
-    bullets: ['Understand gear categories by use case', 'Start from templates for preparation lists', 'Browse clearly on Web, Android, and WeChat Mini Program']
+    eyebrow: 'Personal gear',
+    title: 'Keep every item in a gear library you can track',
+    body: 'Record category, status, weight, and value for each item. Whether you organize on desktop or check on mobile, the available gear stays easy to scan.',
+    bullets: ['View item count, category count, total weight, and value', 'Search by name, brand, or model', 'Move from personal gear into atlas or packing lists']
+  },
+  packing: {
+    eyebrow: 'Packing lists',
+    title: 'Confirm every item before departure',
+    body: 'Packing lists break preparation into checkable items, helping you confirm gear by destination, day count, and scenario before you walk out the door.',
+    bullets: ['Create packing lists for a trip', 'Track total and packed weight', 'Keep list state close on mobile']
+  },
+  trips: {
+    eyebrow: 'Trip prep',
+    title: 'Make trip details, members, and readiness easier to see',
+    body: 'Trip prep gathers dates, members, and readiness progress so you can quickly see what still needs attention before departure.',
+    bullets: ['Solo prep and group coordination entries', 'Date, member, and day summaries', 'Pre-departure checks for gear, skills, weather, and safety']
   },
   skills: {
-    eyebrow: 'Outdoor skills',
+    eyebrow: 'Knot skills',
     title: 'Start with knots that are useful in the field',
-    body: 'Outdoor skills currently focus on knots. The adjustable guyline hitch helps tune tent, tarp, and guyline tension after load is applied.',
-    bullets: ['Current capability: knot tutorials', 'Example skill: adjustable guyline hitch', 'Good for quick review before departure']
+    body: 'The current skill library focuses on knots for camping, fishing, connecting, and securing, making it useful for quick review before heading outdoors.',
+    bullets: ['Current capability: knot tutorials', 'Favorite common skills', 'Fast review before departure']
   },
   screenshots: {
-    eyebrow: 'Product screenshots',
-    title: 'Web and WeChat Mini Program views, with Android support',
-    body: 'The screenshots show Web and WeChat Mini Program views for gear and knot skills; Android supports the same gear library and outdoor skills.',
-    wechatTitle: 'WeChat Mini Program',
-    wechatBody: 'Open gear management and knot skills quickly inside WeChat.',
-    webTitle: 'Web',
-    webBody: 'Manage gear lists and add detailed gear information on a larger screen.',
+    androidGearAlt: 'Android personal gear interface',
+    androidPackingAlt: 'Android packing list interface',
+    androidTripsAlt: 'Android trip preparation interface',
+    androidSkillsAlt: 'Android knot skills interface',
     wechatGearAlt: 'WeChat Mini Program gear management interface',
     wechatKnotsAlt: 'WeChat Mini Program knot skills interface',
     webGearAlt: 'Web gear management interface',
     webGearFormAlt: 'Web add-gear form interface'
   },
   entry: {
-    eyebrow: 'Download / mini program entry',
-    title: 'Use StellarTrail on Web, Android, and WeChat Mini Program',
-    body: 'The Web app is live and ready for browser-based gear planning. Android install and the WeChat Mini Program code will be added here when ready.',
+    eyebrow: 'Downloads',
+    title: 'Mobile entries live on the downloads page',
+    body: 'The Web app is live for browser-based personal gear organization and public content. Android install and WeChat Mini Program entries are grouped on the downloads page.',
     badge: 'Multi-platform',
-    hint: 'Web is best for desktop planning, Android is ready for on-the-go use, and WeChat Mini Program opens quickly inside WeChat.',
+    hint: 'The homepage does not show placeholder mobile downloads or placeholder mini program codes; mobile entries are updated on the downloads page.',
     channelsLabel: 'Supported platform entries',
     channels: [
       {
         title: 'Web access',
-        body: 'The Web app is live for planning and organizing gear on a larger screen.',
+        body: 'The Web app is live for organizing gear and viewing public content on a larger screen.',
         href: 'https://app.stellartrail.cn/',
-        action: 'Open Web app'
+        action: 'Open Web app',
+        external: true
       },
       {
-        title: 'Android install',
-        body: 'Keep preparation content close on your phone. The install option will be added when ready.',
-        href: null,
-        action: null
-      },
-      {
-        title: 'WeChat Mini Program',
-        body: 'Open quickly inside WeChat. The mini program code will be added when ready.',
-        href: null,
-        action: null
+        title: 'Mobile downloads',
+        body: 'Android install and WeChat Mini Program entries are collected on one page.',
+        href: 'downloads/',
+        action: 'View downloads',
+        external: false
       }
     ]
+  },
+  downloads: {
+    seo: {
+      title: 'StellarTrail | Downloads and mobile entries',
+      description: 'Check StellarTrail Web, Android, and WeChat Mini Program entry status. Mobile entries are grouped on this page.'
+    },
+    nav: {
+      label: 'Downloads navigation',
+      brand: 'StellarTrail',
+      backHome: 'Back to site',
+      web: 'Web App',
+      docs: 'API Docs'
+    },
+    hero: {
+      eyebrow: 'Downloads',
+      title: 'Mobile entries are collected here',
+      body: 'Android install and WeChat Mini Program entries will be updated on this page. The Web app is available now; unpublished mobile entries stay clearly marked as preparing.',
+      primaryCta: 'View mobile entries',
+      secondaryCta: 'Open Web app'
+    },
+    summary: {
+      title: 'Entry status',
+      items: ['Web app available now', 'Android install preparing', 'WeChat Mini Program preparing']
+    },
+    channelsLabel: 'Downloads and entries',
+    channels: {
+      android: {
+        platform: 'Android',
+        status: 'Preparing',
+        title: 'Android install',
+        body: 'Android product views are available as examples. The public package, app-store listing, or install method will be added here when ready.',
+        bullets: ['Central install status', 'No placeholder download link', 'Real entry added after publication'],
+        action: 'Not open yet',
+        note: 'The Android entry will be updated here when ready.'
+      },
+      wechat: {
+        platform: 'WeChat Mini Program',
+        status: 'Preparing',
+        title: 'WeChat Mini Program entry',
+        body: 'Designed for quick access inside WeChat. The mini program code will be shown here when ready.',
+        bullets: ['Central mini program status', 'No placeholder mini program code', 'Real entry added after publication'],
+        action: 'Not open yet',
+        note: 'The WeChat Mini Program entry will be updated here when ready.'
+      },
+      web: {
+        platform: 'Web',
+        status: 'Available now',
+        title: 'Web app',
+        body: 'The Web app is already available for organizing gear and viewing public content in a browser.',
+        bullets: ['Desktop gear organization', 'Public content browsing', 'No install needed'],
+        action: 'Open Web app',
+        note: 'Use the Web app while mobile entries are being prepared.'
+      }
+    },
+    footerNote: 'No fake download link or fake mini program code is shown; unpublished entries are clearly marked.'
   },
   docs: {
     seo: {

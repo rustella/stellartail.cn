@@ -30,7 +30,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: fileURLToPath(new URL('index.html', import.meta.url)),
-        docs: fileURLToPath(new URL('docs/index.html', import.meta.url))
+        docs: fileURLToPath(new URL('docs/index.html', import.meta.url)),
+        downloads: fileURLToPath(new URL('downloads/index.html', import.meta.url))
       }
     }
   },

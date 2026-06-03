@@ -12,6 +12,22 @@ test('renders English content with explicit language', async ({ page }) => {
   await expect(page.locator('html')).toHaveAttribute('lang', 'en-US');
 });
 
+test('uses browser language on first visit without stored preference', async ({ browser }) => {
+  const zhContext = await browser.newContext({ locale: 'zh-CN', viewport: { width: 390, height: 844 } });
+  const zhPage = await zhContext.newPage();
+  await zhPage.goto('/');
+  await expect(zhPage.locator('html')).toHaveAttribute('lang', 'zh-CN');
+  await expect(zhPage.getByRole('heading', { level: 1 })).toContainText('出发前');
+  await zhContext.close();
+
+  const enContext = await browser.newContext({ locale: 'en-US', viewport: { width: 390, height: 844 } });
+  const enPage = await enContext.newPage();
+  await enPage.goto('/');
+  await expect(enPage.locator('html')).toHaveAttribute('lang', 'en-US');
+  await expect(enPage.getByRole('heading', { level: 1 })).toContainText('Prepare gear');
+  await enContext.close();
+});
+
 test('persists language switch preference', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   await page.getByRole('button', { name: /Switch to English/ }).click();
@@ -20,7 +36,7 @@ test('persists language switch preference', async ({ page }) => {
   expect(stored).toBe('en-US');
 });
 
-test('homepage top bar exposes Web app and API docs entries', async ({ page }) => {
+test('homepage top bar exposes Web app downloads and API docs entries', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   const nav = page.locator('.nav');
   const zhWebLink = nav.getByRole('link', { name: 'Web端', exact: true });
@@ -29,14 +45,17 @@ test('homepage top bar exposes Web app and API docs entries', async ({ page }) =
   await expect(zhWebLink).toHaveAttribute('target', '_blank');
   await expect(zhWebLink).toHaveAttribute('rel', /noopener/);
   await expect(zhWebLink).toHaveAttribute('rel', /noreferrer/);
+  const zhDownloadsLink = nav.getByRole('link', { name: '下载', exact: true });
+  await expect(zhDownloadsLink).toBeVisible();
+  await expect(zhDownloadsLink).toHaveAttribute('href', '/downloads/?lang=zh-CN');
   const zhDocsLink = nav.getByRole('link', { name: '接口文档', exact: true });
   await expect(zhDocsLink).toBeVisible();
   await expect(zhDocsLink).toHaveAttribute('href', '/docs/?lang=zh-CN');
   await expect(nav.getByRole('button', { name: /Switch to English/ })).toBeVisible();
-  for (const anchor of ['#product', '#gear', '#skills', '#screenshots', '#entry']) {
+  for (const anchor of ['#product', '#gear', '#packing', '#trips', '#skills', '#entry']) {
     await expect(nav.locator(`a[href="${anchor}"]`)).toHaveCount(0);
   }
-  await expect(nav.locator('.nav__links').locator('a')).toHaveCount(2);
+  await expect(nav.locator('.nav__links').locator('a')).toHaveCount(3);
 
   await page.evaluate(() => window.scrollTo(0, 980));
   await expect(nav).toBeVisible();
@@ -46,6 +65,7 @@ test('homepage top bar exposes Web app and API docs entries', async ({ page }) =
 
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(zhWebLink).toBeVisible();
+  await expect(zhDownloadsLink).toBeVisible();
   await expect(zhDocsLink).toBeVisible();
   await expect
     .poll(async () => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1))
@@ -60,13 +80,16 @@ test('homepage top bar exposes Web app and API docs entries', async ({ page }) =
   await expect(enWebLink).toHaveAttribute('target', '_blank');
   await expect(enWebLink).toHaveAttribute('rel', /noopener/);
   await expect(enWebLink).toHaveAttribute('rel', /noreferrer/);
+  const enDownloadsLink = enNav.getByRole('link', { name: 'Downloads', exact: true });
+  await expect(enDownloadsLink).toBeVisible();
+  await expect(enDownloadsLink).toHaveAttribute('href', '/downloads/?lang=en-US');
   const enDocsLink = enNav.getByRole('link', { name: 'API Docs', exact: true });
   await expect(enDocsLink).toBeVisible();
   await expect(enDocsLink).toHaveAttribute('href', '/docs/?lang=en-US');
 });
 
 
-test('right floating breadcrumb pins in-page jump links on click', async ({ page }, testInfo) => {
+test('right floating breadcrumb shows in-page jump links by default', async ({ page }, testInfo) => {
   await page.goto('/?lang=zh-CN');
   const isMobile = testInfo.project.name.includes('mobile');
   const floatingNav = page.getByRole('navigation', { name: '页面快捷跳转' });
@@ -74,17 +97,6 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
   await expect(floatingNav).toBeVisible();
   const panel = floatingNav.locator('.floating-breadcrumb__panel');
   const trigger = floatingNav.getByRole('button', { name: '展开页面快捷跳转' });
-  await expect(panel).toBeHidden();
-  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
-
-  if (!isMobile) {
-    await trigger.hover();
-    await expect(panel).toBeVisible();
-    await page.mouse.move(24, 24);
-    await expect(panel).toBeHidden();
-  }
-
-  await trigger.click();
   await expect(trigger).toHaveAttribute('aria-expanded', 'true');
   await expect(panel).toBeVisible();
   if (isMobile) {
@@ -101,9 +113,10 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
   const zhJumpLinks = [
     ['首页', '#top'],
     ['产品介绍', '#product'],
-    ['装备管理', '#gear'],
-    ['户外技能', '#skills'],
-    ['产品截图', '#screenshots'],
+    ['个人装备', '#gear'],
+    ['装备清单', '#packing'],
+    ['行程准备', '#trips'],
+    ['绳结技能', '#skills'],
     ['下载入口', '#entry']
   ] as const;
   for (const [item, href] of zhJumpLinks) {
@@ -113,10 +126,12 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
   }
   await expect(floatingNav.getByRole('link', { name: '接口文档', exact: true })).toHaveCount(0);
 
-  await page.mouse.click(24, 24);
+  await trigger.click();
   await expect(trigger).toHaveAttribute('aria-expanded', 'false');
   await expect(panel).toBeHidden();
   await trigger.click();
+  await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+  await expect(panel).toBeVisible();
 
   await floatingNav.getByRole('link', { name: '下载入口', exact: true }).click();
   await expect(page).toHaveURL(/#entry$/);
@@ -125,14 +140,16 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
   await page.goto('/?lang=en-US');
   const enFloatingNav = page.getByRole('navigation', { name: 'Page quick jumps' });
   const enTrigger = enFloatingNav.getByRole('button', { name: 'Expand page quick jumps' });
-  await enTrigger.click();
+  const enPanel = enFloatingNav.locator('.floating-breadcrumb__panel');
   await expect(enTrigger).toHaveAttribute('aria-expanded', 'true');
+  await expect(enPanel).toBeVisible();
   const enJumpLinks = [
     ['Home', '#top'],
     ['Product intro', '#product'],
-    ['Gear management', '#gear'],
-    ['Outdoor skills', '#skills'],
-    ['Product screenshots', '#screenshots'],
+    ['Personal gear', '#gear'],
+    ['Packing lists', '#packing'],
+    ['Trip prep', '#trips'],
+    ['Knot skills', '#skills'],
     ['Downloads', '#entry']
   ] as const;
   for (const [item, href] of enJumpLinks) {
@@ -143,34 +160,64 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
   await expect(enFloatingNav.getByRole('link', { name: 'API Docs', exact: true })).toHaveCount(0);
 });
 
-test('homepage communicates Web Android and mini program support with live web entry', async ({ page }) => {
+test('homepage hero exposes download and Web CTAs without capability shortcuts', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
-  const zhPlatforms = page.getByRole('list', { name: '支持平台' });
-  await expect(zhPlatforms.getByText('Web 端', { exact: true })).toBeVisible();
-  await expect(zhPlatforms.getByText('Android 端', { exact: true })).toBeVisible();
-  await expect(zhPlatforms.getByText('微信小程序端', { exact: true })).toBeVisible();
-  await expect(page.locator('.metric').filter({ hasText: '支持平台' }).locator('strong')).toHaveText('03');
+  await expect(page.locator('.hero-note')).toHaveCount(0);
+  await expect(page.locator('.platform-list')).toHaveCount(0);
+  const zhHero = page.locator('.hero');
+  await expect(zhHero.locator('.hero-quick-links')).toHaveCount(0);
+  await expect(zhHero.locator('.phone-mock__screen img')).toHaveAttribute('src', /android-home-22da64a-zh\.png/);
+  const zhHeroDownloadLink = zhHero.getByRole('link', { name: '查看下载入口', exact: true });
+  await expect(zhHeroDownloadLink).toBeVisible();
+  await expect(zhHeroDownloadLink).toHaveAttribute('href', '/downloads/?lang=zh-CN');
+  await expect(zhHeroDownloadLink).not.toHaveAttribute('target', '_blank');
+  const zhHeroWebLink = zhHero.getByRole('link', { name: '打开 Web 端', exact: true });
+  await expect(zhHeroWebLink).toBeVisible();
+  await expect(zhHeroWebLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
+  await expect(zhHeroWebLink).toHaveAttribute('target', '_blank');
+  await expect(zhHeroWebLink).toHaveAttribute('rel', /noopener/);
+  await expect(zhHeroWebLink).toHaveAttribute('rel', /noreferrer/);
+  await expect(page.locator('.metric strong')).toHaveText(['整理', '确认', '复习']);
+  await expect(page.locator('.metric').filter({ hasText: '装备与清单' }).locator('strong')).toHaveText('整理');
+  await expect(page.locator('.metric').filter({ hasText: '行程准备' }).locator('strong')).toHaveText('确认');
+  await expect(page.locator('.metric').filter({ hasText: '绳结技能' }).locator('strong')).toHaveText('复习');
+  await expect(page.getByRole('link', { name: '查看多端入口', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: '查看重点能力', exact: true })).toHaveCount(0);
   const zhEntry = page.locator('#entry');
-  await expect(zhEntry).toContainText('Web、Android、微信小程序都可使用');
+  await expect(zhEntry).toContainText('移动端入口集中在下载页');
   await expect(zhEntry).toContainText('Web 端已上线');
-  await expect(zhEntry).toContainText('Android 安装');
   const zhWebLink = zhEntry.getByRole('link', { name: '打开 Web 端', exact: true });
   await expect(zhWebLink).toBeVisible();
   await expect(zhWebLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
   await expect(zhWebLink).toHaveAttribute('target', '_blank');
   await expect(zhWebLink).toHaveAttribute('rel', /noopener/);
   await expect(zhWebLink).toHaveAttribute('rel', /noreferrer/);
-  await expect(zhEntry.locator('li').filter({ hasText: 'Android 安装' }).locator('a')).toHaveCount(0);
-  await expect(zhEntry.locator('li').filter({ hasText: '微信小程序' }).locator('a')).toHaveCount(0);
+  const zhMobileLink = zhEntry.getByRole('link', { name: '查看下载页', exact: true });
+  await expect(zhMobileLink).toBeVisible();
+  await expect(zhMobileLink).toHaveAttribute('href', '/downloads/?lang=zh-CN');
+  await expect(zhMobileLink).not.toHaveAttribute('target', '_blank');
 
   await page.evaluate(() => window.localStorage.clear());
   await page.goto('/?lang=en-US');
-  const enPlatforms = page.getByRole('list', { name: 'Supported platforms' });
-  await expect(enPlatforms.getByText('Web app', { exact: true })).toBeVisible();
-  await expect(enPlatforms.getByText('Android app', { exact: true })).toBeVisible();
-  await expect(enPlatforms.getByText('WeChat Mini Program', { exact: true })).toBeVisible();
+  await expect(page.locator('.hero-note')).toHaveCount(0);
+  await expect(page.locator('.platform-list')).toHaveCount(0);
+  const enHero = page.locator('.hero');
+  await expect(enHero.locator('.hero-quick-links')).toHaveCount(0);
+  await expect(enHero.locator('.phone-mock__screen img')).toHaveAttribute('src', /android-home-22da64a-zh\.png/);
+  const enHeroDownloadLink = enHero.getByRole('link', { name: 'View downloads', exact: true });
+  await expect(enHeroDownloadLink).toBeVisible();
+  await expect(enHeroDownloadLink).toHaveAttribute('href', '/downloads/?lang=en-US');
+  await expect(enHeroDownloadLink).not.toHaveAttribute('target', '_blank');
+  const enHeroWebLink = enHero.getByRole('link', { name: 'Open Web app', exact: true });
+  await expect(enHeroWebLink).toBeVisible();
+  await expect(enHeroWebLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
+  await expect(enHeroWebLink).toHaveAttribute('target', '_blank');
+  await expect(enHeroWebLink).toHaveAttribute('rel', /noopener/);
+  await expect(enHeroWebLink).toHaveAttribute('rel', /noreferrer/);
+  await expect(page.getByRole('link', { name: 'View platform entry', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Explore key features', exact: true })).toHaveCount(0);
   const enEntry = page.locator('#entry');
-  await expect(enEntry).toContainText('Use StellarTrail on Web, Android, and WeChat Mini Program');
+  await expect(enEntry).toContainText('Mobile entries live on the downloads page');
   await expect(enEntry).toContainText('The Web app is live');
   const enWebLink = enEntry.getByRole('link', { name: 'Open Web app', exact: true });
   await expect(enWebLink).toBeVisible();
@@ -178,8 +225,52 @@ test('homepage communicates Web Android and mini program support with live web e
   await expect(enWebLink).toHaveAttribute('target', '_blank');
   await expect(enWebLink).toHaveAttribute('rel', /noopener/);
   await expect(enWebLink).toHaveAttribute('rel', /noreferrer/);
-  await expect(enEntry.locator('li').filter({ hasText: 'Android install' }).locator('a')).toHaveCount(0);
-  await expect(enEntry.locator('li').filter({ hasText: 'WeChat Mini Program' }).locator('a')).toHaveCount(0);
+  const enMobileLink = enEntry.getByRole('link', { name: 'View downloads', exact: true });
+  await expect(enMobileLink).toBeVisible();
+  await expect(enMobileLink).toHaveAttribute('href', '/downloads/?lang=en-US');
+  await expect(enMobileLink).not.toHaveAttribute('target', '_blank');
+});
+
+test('downloads page groups mobile entries without placeholder links', async ({ page }) => {
+  await page.goto('/downloads/?lang=zh-CN');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('移动端入口都放在这里');
+  const zhNav = page.getByRole('navigation', { name: '下载页导航' });
+  await expect(zhNav.locator('.nav__brand')).toHaveAttribute('href', '/?lang=zh-CN');
+  await expect(zhNav.locator('.nav__links').getByRole('link', { name: '接口文档', exact: true })).toHaveAttribute('href', '/docs/?lang=zh-CN');
+
+  const downloads = page.locator('#mobile-downloads');
+  await expect(downloads).toContainText('Android 安装包');
+  await expect(downloads).toContainText('微信小程序入口');
+  await expect(downloads.locator('.download-card')).toHaveCount(3);
+  await expect(downloads.locator('.download-card--android a')).toHaveCount(0);
+  await expect(downloads.locator('.download-card--wechat a')).toHaveCount(0);
+  const webLink = downloads.getByRole('link', { name: '打开 Web 端', exact: true });
+  await expect(webLink).toBeVisible();
+  await expect(webLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
+  await expect(webLink).toHaveAttribute('target', '_blank');
+  await expect(downloads).toContainText('不会展示假下载地址或假小程序码');
+
+  await page.evaluate(() => window.localStorage.clear());
+  await page.goto('/downloads/?lang=en-US');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en-US');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Mobile entries are collected here');
+  await expect(page.locator('#mobile-downloads')).toContainText('Android install');
+  await expect(page.locator('#mobile-downloads')).toContainText('WeChat Mini Program entry');
+});
+
+test('downloads page stays static and fits mobile viewport', async ({ page }) => {
+  const blocked: string[] = [];
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (url.pathname === '/healthz' || url.pathname.startsWith('/api/')) blocked.push(request.url());
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/downloads/?lang=zh-CN');
+  await page.waitForLoadState('load');
+  expect(blocked).toEqual([]);
+  const fits = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
+  expect(fits).toBe(true);
 });
 
 test('does not make backend API requests', async ({ page }) => {
@@ -202,8 +293,28 @@ test('mobile viewport has no horizontal overflow', async ({ page }) => {
 
 test('desktop page includes all core sections', async ({ page }) => {
   await page.goto('/?lang=en-US');
-  for (const id of ['product', 'gear', 'skills', 'screenshots', 'entry']) {
+  for (const id of ['product', 'gear', 'packing', 'trips', 'skills', 'entry']) {
     await expect(page.locator(`#${id}`)).toBeVisible();
+  }
+  await expect(page.locator('#screenshots')).toHaveCount(0);
+});
+
+test('feature sections keep copy before their screenshots on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?lang=zh-CN');
+
+  for (const id of ['gear', 'packing', 'trips', 'skills']) {
+    const section = page.locator(`#${id}`);
+    const heading = section.getByRole('heading', { level: 2 });
+    const phone = section.locator('.feature-panel--phone');
+    await expect(heading).toBeVisible();
+    await expect(phone).toBeVisible();
+
+    const headingBox = await heading.boundingBox();
+    const phoneBox = await phone.boundingBox();
+    expect(headingBox).not.toBeNull();
+    expect(phoneBox).not.toBeNull();
+    expect(headingBox!.y).toBeLessThan(phoneBox!.y);
   }
 });
 
@@ -221,22 +332,28 @@ test('reduced motion preference keeps content visible and minimizes animation', 
   await context.close();
 });
 
-test('homepage copy stays user-facing and separates screenshot platforms', async ({ page }) => {
+test('homepage copy stays user-facing and avoids duplicate screenshot gallery', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   const zhBodyText = await page.locator('body').innerText();
   for (const forbidden of ['官网不依赖后端', '静态方式交付', '部署简单', '后续易维护', '白天模式', '轻量可信', '官网只承诺当前可展示能力', '中英双语', '根据系统语言默认展示', '从当前产品页面', '挑选代表功能', '代表功能', '代表内容', '给你的prompt', 'prompt', '开发文档', '后端接口', 'API Reference']) {
     expect(zhBodyText).not.toContain(forbidden);
   }
 
-  const screenshotGroups = page.locator('.screenshot-group');
-  await expect(screenshotGroups).toHaveCount(2);
-  await expect(screenshotGroups.nth(0).getByRole('heading', { name: '微信小程序端', exact: true })).toBeVisible();
-  await expect(screenshotGroups.nth(0).locator('img')).toHaveCount(2);
-  await expect(screenshotGroups.nth(1).getByRole('heading', { name: 'Web 端', exact: true })).toBeVisible();
-  await expect(screenshotGroups.nth(1).locator('img')).toHaveCount(2);
+  await expect(page.locator('#screenshots')).toHaveCount(0);
+  await expect(page.getByText('重点能力的真实界面示例')).toHaveCount(0);
+  await expect(page.getByText('产品截图', { exact: true })).toHaveCount(0);
   const imageSources = await page.locator('img').evaluateAll((images) => images.map((image) => image.getAttribute('src') ?? '').join(' '));
-  for (const expected of ['wechat-gear-management-a1fc941-zh.png', 'wechat-knot-skills-a1fc941-zh.png', 'web-gear-management-a1fc941-zh.png', 'web-gear-form-a1fc941-zh.png']) {
+  for (const expected of [
+    'android-home-22da64a-zh.png',
+    'android-gear-library-22da64a-zh.png',
+    'android-packing-list-22da64a-zh.png',
+    'android-trips-22da64a-zh.png',
+    'android-knot-skills-22da64a-zh.png'
+  ]) {
     expect(imageSources).toContain(expected);
+  }
+  for (const duplicateGalleryAsset of ['wechat-gear-management-a1fc941-zh.png', 'wechat-knot-skills-a1fc941-zh.png', 'web-gear-management-a1fc941-zh.png', 'web-gear-form-a1fc941-zh.png']) {
+    expect(imageSources).not.toContain(duplicateGalleryAsset);
   }
   for (const oldMockAsset of ['wechat-gear-management-zh.png', 'wechat-knot-skills-zh.png', 'web-gear-management-zh.png', 'web-gear-form-zh.png', 'wechat-gear-light-zh.png', 'wechat-knots-light-zh.png', 'web-gear-light-zh.png', 'web-skills-light-zh.png']) {
     expect(imageSources).not.toContain(oldMockAsset);

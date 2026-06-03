@@ -19,6 +19,7 @@ stack:
 source_roots:
   - src
   - docs
+  - downloads
   - public
   - scripts
   - tests
@@ -41,6 +42,8 @@ entrypoints:
   html: index.html
   docs_html: docs/index.html
   docs_app: src/docs.ts
+  downloads_html: downloads/index.html
+  downloads_app: src/downloads.ts
 policies:
   comments_language: english
   i18n_required: true

@@ -37,6 +37,10 @@ if (!existsSync(join(distDir, 'index.html'))) {
   console.error('dist/index.html does not exist. Run npm run build first.');
   process.exit(1);
 }
+if (!existsSync(join(distDir, 'downloads', 'index.html'))) {
+  console.error('dist/downloads/index.html does not exist. Run npm run build after adding the downloads page.');
+  process.exit(1);
+}
 
 const textFiles = [];
 const walk = (path) => {

@@ -1,15 +1,17 @@
 export const zhCN = {
   seo: {
-    title: 'StellarTrail / 寻径星野｜户外装备与绳结技能助手',
-    description: '寻径星野帮助你在出发前整理装备清单、学习关键绳结技能，并在 Web 端、Android 端和微信小程序端使用。'
+    title: 'StellarTrail / 寻径星野｜出发前的户外准备助手',
+    description: '寻径星野帮助你在出发前管理个人装备、确认打包清单、梳理行程准备，并复习关键绳结技能。'
   },
   nav: {
     product: '产品介绍',
-    gear: '装备管理',
-    skills: '户外技能',
-    screenshots: '产品截图',
+    gear: '个人装备',
+    packing: '装备清单',
+    trips: '行程准备',
+    skills: '绳结技能',
     entry: '下载入口',
     web: 'Web端',
+    downloads: '下载',
     docs: '接口文档',
     language: '语言'
   },
@@ -21,79 +23,163 @@ export const zhCN = {
   },
   hero: {
     eyebrow: 'StellarTrail / 寻径星野',
-    title: '出发前，把装备和绳结技能准备好',
-    subtitle: '面向户外准备阶段的轻量助手：整理装备清单，学习可立即上手的绳结技能，并在 Web、Android、微信小程序之间选择顺手的使用方式。',
-    primaryCta: '查看多端入口',
-    secondaryCta: '了解产品能力',
-    note: '已支持 Web 端、Android 端、微信小程序端。',
-    platformLabel: '支持平台',
-    platforms: ['Web 端', 'Android 端', '微信小程序端'],
-    statGear: '装备清单',
-    statSkill: '绳结技能',
-    statMode: '支持平台'
+    title: '出发前，把装备、清单、行程和绳结都准备好',
+    subtitle: '面向户外准备阶段的轻量助手：记录个人装备，逐项确认打包清单，梳理行程准备，并在出发前复习真正用得上的绳结技能。',
+    primaryCta: '查看下载入口',
+    secondaryCta: '打开 Web 端',
+    stats: [
+      { value: '整理', label: '装备与清单' },
+      { value: '确认', label: '行程准备' },
+      { value: '复习', label: '绳结技能' }
+    ]
   },
   product: {
     eyebrow: '产品定位',
-    title: '为户外出发前的准备工作而设计',
-    body: '寻径星野专注于把分散的装备准备、技能学习和入口信息收束到一个清爽界面里，让你在出发前更快确认该带什么、该复习哪些关键技能。',
-    cards: {
-      fast: { title: '装备库', body: '按出行场景整理装备分类、准备模板和检查清单，帮助你更快确认该带什么。' },
-      bilingual: { title: '绳结技能', body: '从可调节帐绳结等常用绳结开始，展示适用场景、步骤和使用提醒。' },
-      polished: { title: '多端使用', body: 'Web 端适合桌面整理，Android 端适合随身使用，微信小程序端适合在微信内快速打开查看。' }
+    title: '把分散的出发前准备，整理成可检查的步骤',
+    body: '寻径星野聚焦出发前的准备环节。官网优先展示已经能在产品中看到的重点能力，并用清楚的状态标签区分可用入口与功能预览。',
+    statusLabels: {
+      available: '当前可用',
+      preview: '功能预览'
+    },
+    capabilities: {
+      gear: {
+        title: '个人装备',
+        subtitle: '记录每件装备的分类、状态、重量、价值和存放信息。',
+        body: '适合把头灯、背包、炉具等常用装备沉淀成自己的清单，出发前可以按分类快速检查。',
+        bullets: ['装备数量和重量统计', '分类、状态与搜索筛选', '装备详情与编辑管理']
+      },
+      packing: {
+        title: '装备清单',
+        subtitle: '按行程和场景逐项确认出发物品。',
+        body: '把个人装备转成打包清单，重点查看总重量、已打包重量和遗漏项，减少出发前反复翻找。',
+        bullets: ['按场景建立清单', '逐项勾选已打包物品', '查看总重量和完成度']
+      },
+      trips: {
+        title: '行程准备',
+        subtitle: '把单人准备和多人协作放到同一个视图里。',
+        body: '行程页用于整理出发时间、成员协作和准备进度，帮助你在出发前确认装备、技能、天气和安全预案。',
+        bullets: ['单人准备与多人协作', '成员和天数概览', '准备进度提示']
+      },
+      skills: {
+        title: '绳结技能',
+        subtitle: '出发前复习可立即上手的户外技能。',
+        body: '当前技能库聚焦绳结，适合快速查看常用露营、钓鱼、连接和固定绳结，并在需要时进入详情练习。',
+        bullets: ['绳结分类入口', '收藏清单', '适合出发前快速复习']
+      }
     }
   },
   gear: {
-    eyebrow: '装备库',
-    title: '把出发前的装备准备变成清单',
-    body: '装备库用于展示基础徒步装备模板、分类与准备思路。重点是帮助用户理解「如何准备」，适合作为第一次了解产品的入口。',
-    bullets: ['按用途理解装备分类', '以模板方式快速建立准备清单', 'Web、Android、微信小程序端都能清楚浏览']
+    eyebrow: '个人装备',
+    title: '把每件装备都放进可追踪的个人装备库',
+    body: '记录装备分类、状态、重量和价值。无论是在桌面整理，还是手机上出发前检查，都能快速确认当前可用装备。',
+    bullets: ['查看装备数量、分类数、总重量和估值', '按名称、品牌、型号搜索', '从个人装备进入图鉴或打包清单']
+  },
+  packing: {
+    eyebrow: '装备清单',
+    title: '出发前逐项确认该带的物品',
+    body: '打包清单把准备工作拆成可勾选条目，适合按目的地、天数和场景确认装备，减少临出门前的遗漏。',
+    bullets: ['按行程建立打包清单', '查看总重量和已打包重量', '把清单状态保持在手机上']
+  },
+  trips: {
+    eyebrow: '行程准备',
+    title: '让行程信息、成员协作和准备进度更清楚',
+    body: '行程准备页把时间、成员和准备度集中展示，适合出发前快速确认还有哪些事项需要补齐。',
+    bullets: ['单人准备与多人协作入口', '查看日期、成员和天数', '出发前检查装备、技能、天气和安全预案']
   },
   skills: {
-    eyebrow: '户外技能',
-    title: '从绳结开始，学习真正用得上的技能',
-    body: '当前户外技能聚焦绳结。「可调节帐绳结」适用于帐篷、天幕和风绳张力调节，可在受力后微调长度。',
-    bullets: ['当前能力：绳结教程', '示例技能：可调节帐绳结', '适合出发前快速复习']
+    eyebrow: '绳结技能',
+    title: '从绳结开始，复习真正用得上的户外技能',
+    body: '当前技能库聚焦绳结，覆盖露营、钓鱼、连接和固定等常见场景，适合出发前快速复习。',
+    bullets: ['当前能力：绳结教程', '收藏常用技能', '适合出发前快速复习']
   },
   screenshots: {
-    eyebrow: '产品截图',
-    title: 'Web 与微信小程序画面，Android 端同步支持',
-    body: '当前截图展示 Web 端和微信小程序端的装备、绳结画面；Android 端同样支持装备库与户外技能使用。',
-    wechatTitle: '微信小程序端',
-    wechatBody: '在微信里快速查看装备管理和绳结技能。',
-    webTitle: 'Web 端',
-    webBody: '在大屏上管理装备列表和添加装备信息。',
+    androidGearAlt: 'Android 端个人装备界面',
+    androidPackingAlt: 'Android 端打包清单界面',
+    androidTripsAlt: 'Android 端行程准备界面',
+    androidSkillsAlt: 'Android 端绳结技能界面',
     wechatGearAlt: '微信小程序端装备管理界面',
     wechatKnotsAlt: '微信小程序端绳结技能界面',
     webGearAlt: 'Web 端装备管理界面',
     webGearFormAlt: 'Web 端添加装备表单界面'
   },
   entry: {
-    eyebrow: '下载 / 小程序入口',
-    title: 'Web、Android、微信小程序都可使用',
-    body: 'Web 端已上线，可以先在浏览器打开整理装备；Android 安装方式和小程序码准备好后也会放在这里。',
+    eyebrow: '下载入口',
+    title: '移动端入口集中在下载页',
+    body: 'Web 端已上线，可以直接在浏览器整理个人装备和查看公开内容；Android 安装方式和微信小程序入口都统一放在下载页。',
     badge: 'Multi-platform',
-    hint: 'Web 端适合桌面整理，Android 端适合随身使用，微信小程序端适合在微信内快速打开。',
+    hint: '首页不放占位下载地址或占位小程序码；移动端入口准备好后在下载页更新。',
     channelsLabel: '支持平台入口',
     channels: [
       {
         title: 'Web 访问',
-        body: 'Web 端已上线，适合在桌面大屏整理装备清单。',
+        body: 'Web 端已上线，适合在桌面大屏整理装备与查看公开内容。',
         href: 'https://app.stellartrail.cn/',
-        action: '打开 Web 端'
+        action: '打开 Web 端',
+        external: true
       },
       {
-        title: 'Android 安装',
-        body: '适合随身保存和查看准备内容，安装方式准备好后补上。',
-        href: null,
-        action: null
-      },
-      {
-        title: '微信小程序',
-        body: '适合在微信内快速打开，小程序码准备好后补上。',
-        href: null,
-        action: null
+        title: '移动端下载页',
+        body: 'Android 安装与微信小程序入口集中在一个页面查看。',
+        href: 'downloads/',
+        action: '查看下载页',
+        external: false
       }
     ]
+  },
+  downloads: {
+    seo: {
+      title: 'StellarTrail / 寻径星野｜下载与移动端入口',
+      description: '查看寻径星野 Web、Android 与微信小程序入口状态，移动端下载入口集中在本页。'
+    },
+    nav: {
+      label: '下载页导航',
+      brand: 'StellarTrail / 寻径星野',
+      backHome: '返回官网',
+      web: 'Web端',
+      docs: '接口文档'
+    },
+    hero: {
+      eyebrow: '下载入口',
+      title: '移动端入口都放在这里',
+      body: 'Android 安装方式和微信小程序入口会集中在本页更新。当前 Web 端可直接打开，未公开的移动端入口会保持明确的准备中状态。',
+      primaryCta: '查看移动端入口',
+      secondaryCta: '打开 Web 端'
+    },
+    summary: {
+      title: '入口状态',
+      items: ['Web 端当前可用', 'Android 安装入口准备中', '微信小程序入口准备中']
+    },
+    channelsLabel: '下载与入口列表',
+    channels: {
+      android: {
+        platform: 'Android',
+        status: '准备中',
+        title: 'Android 安装包',
+        body: 'Android 端已有产品界面示例。安装包、应用市场或其他公开安装方式准备好后，会在这里提供。',
+        bullets: ['集中展示安装状态', '不放占位下载地址', '公开后更新真实入口'],
+        action: '暂未开放下载',
+        note: '准备好后会在本页更新 Android 入口。'
+      },
+      wechat: {
+        platform: '微信小程序',
+        status: '准备中',
+        title: '微信小程序入口',
+        body: '适合在微信内快速打开查看装备与绳结内容。小程序码准备好后，会在这里展示。',
+        bullets: ['集中展示小程序状态', '不放占位小程序码', '公开后更新真实入口'],
+        action: '暂未开放',
+        note: '准备好后会在本页更新微信小程序入口。'
+      },
+      web: {
+        platform: 'Web',
+        status: '当前可用',
+        title: 'Web 端',
+        body: 'Web 端已经可以打开，适合先在浏览器整理装备与查看公开内容。',
+        bullets: ['桌面大屏整理装备', '浏览公开内容', '无需安装'],
+        action: '打开 Web 端',
+        note: '移动端入口公开前，可以先使用 Web 端。'
+      }
+    },
+    footerNote: '不会展示假下载地址或假小程序码；未公开入口会明确标注状态。'
   },
   docs: {
     seo: {
