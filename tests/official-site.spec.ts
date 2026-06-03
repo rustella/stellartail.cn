@@ -168,12 +168,10 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
   await expect(enFloatingNav.getByRole('link', { name: 'API Docs', exact: true })).toHaveCount(0);
 });
 
-test('homepage communicates Web Android and mini program support with live web entry', async ({ page }) => {
+test('homepage points platform entry to downloads without duplicate hero badges', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
-  const zhPlatforms = page.getByRole('list', { name: '支持平台' });
-  await expect(zhPlatforms.getByText('Web 端', { exact: true })).toBeVisible();
-  await expect(zhPlatforms.getByText('Android 端', { exact: true })).toBeVisible();
-  await expect(zhPlatforms.getByText('微信小程序端', { exact: true })).toBeVisible();
+  await expect(page.locator('.hero-note')).toHaveCount(0);
+  await expect(page.locator('.platform-list')).toHaveCount(0);
   await expect(page.locator('.metric strong')).toHaveText(['02', '03', '04']);
   await expect(page.locator('.metric').filter({ hasText: '重点能力' }).locator('strong')).toHaveText('04');
   await expect(page.locator('.metric').filter({ hasText: '支持平台' }).locator('strong')).toHaveText('03');
@@ -194,10 +192,8 @@ test('homepage communicates Web Android and mini program support with live web e
 
   await page.evaluate(() => window.localStorage.clear());
   await page.goto('/?lang=en-US');
-  const enPlatforms = page.getByRole('list', { name: 'Supported platforms' });
-  await expect(enPlatforms.getByText('Web app', { exact: true })).toBeVisible();
-  await expect(enPlatforms.getByText('Android app', { exact: true })).toBeVisible();
-  await expect(enPlatforms.getByText('WeChat Mini Program', { exact: true })).toBeVisible();
+  await expect(page.locator('.hero-note')).toHaveCount(0);
+  await expect(page.locator('.platform-list')).toHaveCount(0);
   const enEntry = page.locator('#entry');
   await expect(enEntry).toContainText('Mobile entries live on the downloads page');
   await expect(enEntry).toContainText('The Web app is live');

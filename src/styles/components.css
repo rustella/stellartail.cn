@@ -56,15 +56,6 @@
 }
 .button--ghost { color: var(--color-primary); background: rgba(255, 255, 255, 0.62); }
 .button:hover { transform: translateY(-2px); box-shadow: 0 22px 52px rgba(22, 91, 76, 0.18); }
-.hero-note {
-  display: inline-flex;
-  margin-top: 22px;
-  padding: 10px 14px;
-  border-radius: 999px;
-  color: var(--color-primary);
-  background: rgba(255, 255, 255, 0.68);
-  border: 1px solid var(--color-line);
-}
 .hero-card {
   position: relative;
   padding: 22px;
@@ -120,28 +111,6 @@
   object-fit: cover;
   object-position: top center;
 }
-.platform-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 0;
-  margin: 18px 0 0;
-  list-style: none;
-}
-.platform-list li {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: 999px;
-  color: var(--color-primary-strong);
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(22, 91, 76, 0.12);
-  box-shadow: 0 10px 26px rgba(22, 91, 76, 0.08);
-  font-size: 13px;
-  font-weight: 800;
-}
-
 .floating-breadcrumb {
   position: fixed;
   top: 50%;

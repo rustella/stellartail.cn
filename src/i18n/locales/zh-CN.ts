@@ -27,9 +27,6 @@ export const zhCN = {
     subtitle: '面向户外准备阶段的轻量助手：记录个人装备，逐项确认打包清单，梳理行程准备，并在出发前复习真正用得上的绳结技能。',
     primaryCta: '查看多端入口',
     secondaryCta: '查看重点能力',
-    note: 'Web 端可立即打开；Android 与微信小程序入口会按可公开状态补齐。',
-    platformLabel: '支持平台',
-    platforms: ['Web 端', 'Android 端', '微信小程序端'],
     stats: [
       { value: '02', label: '当前入口' },
       { value: '03', label: '支持平台' },

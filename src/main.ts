@@ -163,10 +163,6 @@ const render = (): void => {
               <a class="button button--primary" href="${sitePath(`downloads/?lang=${activeLocale}`)}">${m.hero.primaryCta}</a>
               <a class="button button--ghost" href="#product">${m.hero.secondaryCta}</a>
             </div>
-            <span class="hero-note">${m.hero.note}</span>
-            <ul class="platform-list" aria-label="${m.hero.platformLabel}">
-              ${m.hero.platforms.map((platform) => `<li>${platform}</li>`).join('')}
-            </ul>
           </div>
           <div class="hero-card float-soft" data-reveal>
             <div class="phone-mock" aria-hidden="true">

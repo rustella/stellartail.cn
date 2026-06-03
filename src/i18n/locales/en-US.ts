@@ -27,9 +27,6 @@ export const enUS = {
     subtitle: 'A lightweight companion for outdoor preparation: track personal gear, confirm packing lists, organize trip prep, and review field-ready knot skills before departure.',
     primaryCta: 'View platform entry',
     secondaryCta: 'Explore key features',
-    note: 'The Web app is available now; Android and WeChat entries will be added when they are ready to publish.',
-    platformLabel: 'Supported platforms',
-    platforms: ['Web app', 'Android app', 'WeChat Mini Program'],
     stats: [
       { value: '02', label: 'Current entries' },
       { value: '03', label: 'Platforms' },
