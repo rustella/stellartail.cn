@@ -169,6 +169,7 @@ test('homepage communicates Web Android and mini program support with live web e
   await expect(zhPlatforms.getByText('Web 端', { exact: true })).toBeVisible();
   await expect(zhPlatforms.getByText('Android 端', { exact: true })).toBeVisible();
   await expect(zhPlatforms.getByText('微信小程序端', { exact: true })).toBeVisible();
+  await expect(page.locator('.metric strong')).toHaveText(['02', '03', '04']);
   await expect(page.locator('.metric').filter({ hasText: '重点能力' }).locator('strong')).toHaveText('04');
   await expect(page.locator('.metric').filter({ hasText: '支持平台' }).locator('strong')).toHaveText('03');
   const zhEntry = page.locator('#entry');
@@ -225,6 +226,25 @@ test('desktop page includes all core sections', async ({ page }) => {
   await page.goto('/?lang=en-US');
   for (const id of ['product', 'gear', 'packing', 'trips', 'skills', 'screenshots', 'entry']) {
     await expect(page.locator(`#${id}`)).toBeVisible();
+  }
+});
+
+test('feature sections keep copy before their screenshots on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?lang=zh-CN');
+
+  for (const id of ['gear', 'packing', 'trips', 'skills']) {
+    const section = page.locator(`#${id}`);
+    const heading = section.getByRole('heading', { level: 2 });
+    const phone = section.locator('.feature-panel--phone');
+    await expect(heading).toBeVisible();
+    await expect(phone).toBeVisible();
+
+    const headingBox = await heading.boundingBox();
+    const phoneBox = await phone.boundingBox();
+    expect(headingBox).not.toBeNull();
+    expect(phoneBox).not.toBeNull();
+    expect(headingBox!.y).toBeLessThan(phoneBox!.y);
   }
 });
 

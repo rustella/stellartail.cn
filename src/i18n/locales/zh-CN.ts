@@ -31,9 +31,9 @@ export const zhCN = {
     platformLabel: '支持平台',
     platforms: ['Web 端', 'Android 端', '微信小程序端'],
     stats: [
-      { value: '04', label: '重点能力' },
+      { value: '02', label: '当前入口' },
       { value: '03', label: '支持平台' },
-      { value: '02', label: '当前入口' }
+      { value: '04', label: '重点能力' }
     ]
   },
   product: {

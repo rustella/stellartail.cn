@@ -48,7 +48,7 @@ const renderCapabilitySections = (m: Messages): string => {
   };
 
   return productCapabilities
-    .map((capability, index) => {
+    .map((capability) => {
       const copy = sectionCopy[capability.id];
       const text = `<div data-reveal>
         <p class="eyebrow">${copy.eyebrow}</p>
@@ -62,7 +62,7 @@ const renderCapabilitySections = (m: Messages): string => {
 
       return `<section class="section capability-section" id="${capability.sectionId}">
         <div class="container two-column">
-          ${index % 2 === 0 ? `${text}${media}` : `${media}${text}`}
+          ${text}${media}
         </div>
       </section>`;
     })

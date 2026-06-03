@@ -31,9 +31,9 @@ export const enUS = {
     platformLabel: 'Supported platforms',
     platforms: ['Web app', 'Android app', 'WeChat Mini Program'],
     stats: [
-      { value: '04', label: 'Key features' },
+      { value: '02', label: 'Current entries' },
       { value: '03', label: 'Platforms' },
-      { value: '02', label: 'Current entries' }
+      { value: '04', label: 'Key features' }
     ]
   },
   product: {
