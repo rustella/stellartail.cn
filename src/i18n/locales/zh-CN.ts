@@ -96,7 +96,7 @@ export const zhCN = {
     androidGearAlt: 'Android 端个人装备界面',
     androidPackingAlt: 'Android 端打包清单界面',
     androidTripsAlt: 'Android 端行程准备界面',
-    androidSkillsAlt: 'Android 端绳结技能界面',
+    androidSkillsAlt: 'Android 端可调节绳结详情界面',
     wechatGearAlt: '微信小程序端装备管理界面',
     wechatKnotsAlt: '微信小程序端绳结技能界面',
     webGearAlt: 'Web 端装备管理界面',
