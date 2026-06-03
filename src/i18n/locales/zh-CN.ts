@@ -25,13 +25,6 @@ export const zhCN = {
     eyebrow: 'StellarTrail / 寻径星野',
     title: '出发前，把装备、清单、行程和绳结都准备好',
     subtitle: '面向户外准备阶段的轻量助手：记录个人装备，逐项确认打包清单，梳理行程准备，并在出发前复习真正用得上的绳结技能。',
-    quickLinksLabel: '首屏能力入口',
-    quickLinks: [
-      { label: '个人装备', href: '#gear' },
-      { label: '装备清单', href: '#packing' },
-      { label: '行程准备', href: '#trips' },
-      { label: '绳结技能', href: '#skills' }
-    ],
     stats: [
       { value: '整理', label: '装备与清单' },
       { value: '确认', label: '行程准备' },

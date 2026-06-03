@@ -86,21 +86,16 @@ const initFloatingBreadcrumb = (): (() => void) | null => {
     trigger.setAttribute('aria-expanded', String(pinned));
   };
   const togglePinned = (): void => setPinned(breadcrumb.dataset.pinned !== 'true');
-  const closeIfOutside = (event: MouseEvent): void => {
-    if (event.target instanceof Node && !breadcrumb.contains(event.target)) setPinned(false);
-  };
   const closeOnEscape = (event: KeyboardEvent): void => {
     if (event.key === 'Escape') setPinned(false);
   };
 
-  setPinned(false);
+  setPinned(true);
   trigger.addEventListener('click', togglePinned);
-  document.addEventListener('click', closeIfOutside);
   document.addEventListener('keydown', closeOnEscape);
 
   return () => {
     trigger.removeEventListener('click', togglePinned);
-    document.removeEventListener('click', closeIfOutside);
     document.removeEventListener('keydown', closeOnEscape);
   };
 };
@@ -140,8 +135,8 @@ const render = (): void => {
         </div>
       </nav>
 
-      <nav class="floating-breadcrumb" aria-label="${m.jump.label}" data-floating-breadcrumb data-pinned="false">
-        <button class="floating-breadcrumb__trigger" type="button" aria-label="${m.jump.trigger}" aria-haspopup="true" aria-expanded="false" aria-controls="floating-breadcrumb-panel" data-breadcrumb-toggle>
+      <nav class="floating-breadcrumb" aria-label="${m.jump.label}" data-floating-breadcrumb data-pinned="true">
+        <button class="floating-breadcrumb__trigger" type="button" aria-label="${m.jump.trigger}" aria-haspopup="true" aria-expanded="true" aria-controls="floating-breadcrumb-panel" data-breadcrumb-toggle>
           <span class="floating-breadcrumb__icon" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
         <div class="floating-breadcrumb__panel" id="floating-breadcrumb-panel">
@@ -159,9 +154,6 @@ const render = (): void => {
             <p class="eyebrow">${m.hero.eyebrow}</p>
             <h1 class="hero__title">${m.hero.title}</h1>
             <p class="hero__subtitle">${m.hero.subtitle}</p>
-            <nav class="hero-quick-links" aria-label="${m.hero.quickLinksLabel}">
-              ${m.hero.quickLinks.map((link) => `<a href="${link.href}">${link.label}</a>`).join('')}
-            </nav>
           </div>
           <div class="hero-card float-soft" data-reveal>
             <div class="phone-mock" aria-hidden="true">
