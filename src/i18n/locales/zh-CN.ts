@@ -12,6 +12,7 @@ export const zhCN = {
     screenshots: '产品截图',
     entry: '下载入口',
     web: 'Web端',
+    downloads: '下载',
     docs: '接口文档',
     language: '语言'
   },
@@ -115,32 +116,83 @@ export const zhCN = {
     webGearFormAlt: 'Web 端添加装备表单界面'
   },
   entry: {
-    eyebrow: '下载 / 小程序入口',
-    title: '先从 Web 端打开，移动端入口会持续补齐',
-    body: 'Web 端已上线，可以先在浏览器整理个人装备和查看公开内容；Android 安装方式和小程序码准备好后会放在这里。',
+    eyebrow: '下载入口',
+    title: '移动端入口集中在下载页',
+    body: 'Web 端已上线，可以直接在浏览器整理个人装备和查看公开内容；Android 安装方式和微信小程序入口都统一放在下载页。',
     badge: 'Multi-platform',
-    hint: '不会展示假下载地址或假小程序码；入口准备好后再公开。',
+    hint: '首页不放占位下载地址或占位小程序码；移动端入口准备好后在下载页更新。',
     channelsLabel: '支持平台入口',
     channels: [
       {
         title: 'Web 访问',
         body: 'Web 端已上线，适合在桌面大屏整理装备与查看公开内容。',
         href: 'https://app.stellartrail.cn/',
-        action: '打开 Web 端'
+        action: '打开 Web 端',
+        external: true
       },
       {
-        title: 'Android 安装',
-        body: 'Android 端已有产品界面示例，安装入口准备好后补上。',
-        href: null,
-        action: null
-      },
-      {
-        title: '微信小程序',
-        body: '适合在微信内快速打开，小程序码准备好后补上。',
-        href: null,
-        action: null
+        title: '移动端下载页',
+        body: 'Android 安装与微信小程序入口集中在一个页面查看。',
+        href: 'downloads/',
+        action: '查看下载页',
+        external: false
       }
     ]
+  },
+  downloads: {
+    seo: {
+      title: 'StellarTrail / 寻径星野｜下载与移动端入口',
+      description: '查看寻径星野 Web、Android 与微信小程序入口状态，移动端下载入口集中在本页。'
+    },
+    nav: {
+      label: '下载页导航',
+      brand: 'StellarTrail / 寻径星野',
+      backHome: '返回官网',
+      web: 'Web端',
+      docs: '接口文档'
+    },
+    hero: {
+      eyebrow: '下载入口',
+      title: '移动端入口都放在这里',
+      body: 'Android 安装方式和微信小程序入口会集中在本页更新。当前 Web 端可直接打开，未公开的移动端入口会保持明确的准备中状态。',
+      primaryCta: '查看移动端入口',
+      secondaryCta: '打开 Web 端'
+    },
+    summary: {
+      title: '入口状态',
+      items: ['Web 端当前可用', 'Android 安装入口准备中', '微信小程序入口准备中']
+    },
+    channelsLabel: '下载与入口列表',
+    channels: {
+      android: {
+        platform: 'Android',
+        status: '准备中',
+        title: 'Android 安装包',
+        body: 'Android 端已有产品界面示例。安装包、应用市场或其他公开安装方式准备好后，会在这里提供。',
+        bullets: ['集中展示安装状态', '不放占位下载地址', '公开后更新真实入口'],
+        action: '暂未开放下载',
+        note: '准备好后会在本页更新 Android 入口。'
+      },
+      wechat: {
+        platform: '微信小程序',
+        status: '准备中',
+        title: '微信小程序入口',
+        body: '适合在微信内快速打开查看装备与绳结内容。小程序码准备好后，会在这里展示。',
+        bullets: ['集中展示小程序状态', '不放占位小程序码', '公开后更新真实入口'],
+        action: '暂未开放',
+        note: '准备好后会在本页更新微信小程序入口。'
+      },
+      web: {
+        platform: 'Web',
+        status: '当前可用',
+        title: 'Web 端',
+        body: 'Web 端已经可以打开，适合先在浏览器整理装备与查看公开内容。',
+        bullets: ['桌面大屏整理装备', '浏览公开内容', '无需安装'],
+        action: '打开 Web 端',
+        note: '移动端入口公开前，可以先使用 Web 端。'
+      }
+    },
+    footerNote: '不会展示假下载地址或假小程序码；未公开入口会明确标注状态。'
   },
   docs: {
     seo: {

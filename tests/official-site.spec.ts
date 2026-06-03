@@ -36,7 +36,7 @@ test('persists language switch preference', async ({ page }) => {
   expect(stored).toBe('en-US');
 });
 
-test('homepage top bar exposes Web app and API docs entries', async ({ page }) => {
+test('homepage top bar exposes Web app downloads and API docs entries', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   const nav = page.locator('.nav');
   const zhWebLink = nav.getByRole('link', { name: 'Web端', exact: true });
@@ -45,6 +45,9 @@ test('homepage top bar exposes Web app and API docs entries', async ({ page }) =
   await expect(zhWebLink).toHaveAttribute('target', '_blank');
   await expect(zhWebLink).toHaveAttribute('rel', /noopener/);
   await expect(zhWebLink).toHaveAttribute('rel', /noreferrer/);
+  const zhDownloadsLink = nav.getByRole('link', { name: '下载', exact: true });
+  await expect(zhDownloadsLink).toBeVisible();
+  await expect(zhDownloadsLink).toHaveAttribute('href', '/downloads/?lang=zh-CN');
   const zhDocsLink = nav.getByRole('link', { name: '接口文档', exact: true });
   await expect(zhDocsLink).toBeVisible();
   await expect(zhDocsLink).toHaveAttribute('href', '/docs/?lang=zh-CN');
@@ -52,7 +55,7 @@ test('homepage top bar exposes Web app and API docs entries', async ({ page }) =
   for (const anchor of ['#product', '#gear', '#packing', '#trips', '#skills', '#screenshots', '#entry']) {
     await expect(nav.locator(`a[href="${anchor}"]`)).toHaveCount(0);
   }
-  await expect(nav.locator('.nav__links').locator('a')).toHaveCount(2);
+  await expect(nav.locator('.nav__links').locator('a')).toHaveCount(3);
 
   await page.evaluate(() => window.scrollTo(0, 980));
   await expect(nav).toBeVisible();
@@ -62,6 +65,7 @@ test('homepage top bar exposes Web app and API docs entries', async ({ page }) =
 
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(zhWebLink).toBeVisible();
+  await expect(zhDownloadsLink).toBeVisible();
   await expect(zhDocsLink).toBeVisible();
   await expect
     .poll(async () => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1))
@@ -76,6 +80,9 @@ test('homepage top bar exposes Web app and API docs entries', async ({ page }) =
   await expect(enWebLink).toHaveAttribute('target', '_blank');
   await expect(enWebLink).toHaveAttribute('rel', /noopener/);
   await expect(enWebLink).toHaveAttribute('rel', /noreferrer/);
+  const enDownloadsLink = enNav.getByRole('link', { name: 'Downloads', exact: true });
+  await expect(enDownloadsLink).toBeVisible();
+  await expect(enDownloadsLink).toHaveAttribute('href', '/downloads/?lang=en-US');
   const enDocsLink = enNav.getByRole('link', { name: 'API Docs', exact: true });
   await expect(enDocsLink).toBeVisible();
   await expect(enDocsLink).toHaveAttribute('href', '/docs/?lang=en-US');
@@ -172,18 +179,20 @@ test('homepage communicates Web Android and mini program support with live web e
   await expect(page.locator('.metric strong')).toHaveText(['02', '03', '04']);
   await expect(page.locator('.metric').filter({ hasText: '重点能力' }).locator('strong')).toHaveText('04');
   await expect(page.locator('.metric').filter({ hasText: '支持平台' }).locator('strong')).toHaveText('03');
+  await expect(page.getByRole('link', { name: '查看多端入口', exact: true })).toHaveAttribute('href', '/downloads/?lang=zh-CN');
   const zhEntry = page.locator('#entry');
-  await expect(zhEntry).toContainText('先从 Web 端打开');
+  await expect(zhEntry).toContainText('移动端入口集中在下载页');
   await expect(zhEntry).toContainText('Web 端已上线');
-  await expect(zhEntry).toContainText('Android 安装');
   const zhWebLink = zhEntry.getByRole('link', { name: '打开 Web 端', exact: true });
   await expect(zhWebLink).toBeVisible();
   await expect(zhWebLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
   await expect(zhWebLink).toHaveAttribute('target', '_blank');
   await expect(zhWebLink).toHaveAttribute('rel', /noopener/);
   await expect(zhWebLink).toHaveAttribute('rel', /noreferrer/);
-  await expect(zhEntry.locator('li').filter({ hasText: 'Android 安装' }).locator('a')).toHaveCount(0);
-  await expect(zhEntry.locator('li').filter({ hasText: '微信小程序' }).locator('a')).toHaveCount(0);
+  const zhMobileLink = zhEntry.getByRole('link', { name: '查看下载页', exact: true });
+  await expect(zhMobileLink).toBeVisible();
+  await expect(zhMobileLink).toHaveAttribute('href', '/downloads/?lang=zh-CN');
+  await expect(zhMobileLink).not.toHaveAttribute('target', '_blank');
 
   await page.evaluate(() => window.localStorage.clear());
   await page.goto('/?lang=en-US');
@@ -192,7 +201,7 @@ test('homepage communicates Web Android and mini program support with live web e
   await expect(enPlatforms.getByText('Android app', { exact: true })).toBeVisible();
   await expect(enPlatforms.getByText('WeChat Mini Program', { exact: true })).toBeVisible();
   const enEntry = page.locator('#entry');
-  await expect(enEntry).toContainText('Start with the Web app');
+  await expect(enEntry).toContainText('Mobile entries live on the downloads page');
   await expect(enEntry).toContainText('The Web app is live');
   const enWebLink = enEntry.getByRole('link', { name: 'Open Web app', exact: true });
   await expect(enWebLink).toBeVisible();
@@ -200,8 +209,52 @@ test('homepage communicates Web Android and mini program support with live web e
   await expect(enWebLink).toHaveAttribute('target', '_blank');
   await expect(enWebLink).toHaveAttribute('rel', /noopener/);
   await expect(enWebLink).toHaveAttribute('rel', /noreferrer/);
-  await expect(enEntry.locator('li').filter({ hasText: 'Android install' }).locator('a')).toHaveCount(0);
-  await expect(enEntry.locator('li').filter({ hasText: 'WeChat Mini Program' }).locator('a')).toHaveCount(0);
+  const enMobileLink = enEntry.getByRole('link', { name: 'View downloads', exact: true });
+  await expect(enMobileLink).toBeVisible();
+  await expect(enMobileLink).toHaveAttribute('href', '/downloads/?lang=en-US');
+  await expect(enMobileLink).not.toHaveAttribute('target', '_blank');
+});
+
+test('downloads page groups mobile entries without placeholder links', async ({ page }) => {
+  await page.goto('/downloads/?lang=zh-CN');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('移动端入口都放在这里');
+  const zhNav = page.getByRole('navigation', { name: '下载页导航' });
+  await expect(zhNav.locator('.nav__brand')).toHaveAttribute('href', '/?lang=zh-CN');
+  await expect(zhNav.locator('.nav__links').getByRole('link', { name: '接口文档', exact: true })).toHaveAttribute('href', '/docs/?lang=zh-CN');
+
+  const downloads = page.locator('#mobile-downloads');
+  await expect(downloads).toContainText('Android 安装包');
+  await expect(downloads).toContainText('微信小程序入口');
+  await expect(downloads.locator('.download-card')).toHaveCount(3);
+  await expect(downloads.locator('.download-card--android a')).toHaveCount(0);
+  await expect(downloads.locator('.download-card--wechat a')).toHaveCount(0);
+  const webLink = downloads.getByRole('link', { name: '打开 Web 端', exact: true });
+  await expect(webLink).toBeVisible();
+  await expect(webLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
+  await expect(webLink).toHaveAttribute('target', '_blank');
+  await expect(downloads).toContainText('不会展示假下载地址或假小程序码');
+
+  await page.evaluate(() => window.localStorage.clear());
+  await page.goto('/downloads/?lang=en-US');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en-US');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Mobile entries are collected here');
+  await expect(page.locator('#mobile-downloads')).toContainText('Android install');
+  await expect(page.locator('#mobile-downloads')).toContainText('WeChat Mini Program entry');
+});
+
+test('downloads page stays static and fits mobile viewport', async ({ page }) => {
+  const blocked: string[] = [];
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (url.pathname === '/healthz' || url.pathname.startsWith('/api/')) blocked.push(request.url());
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/downloads/?lang=zh-CN');
+  await page.waitForLoadState('load');
+  expect(blocked).toEqual([]);
+  const fits = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
+  expect(fits).toBe(true);
 });
 
 test('does not make backend API requests', async ({ page }) => {

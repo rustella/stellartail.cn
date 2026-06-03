@@ -23,6 +23,7 @@
 .nav__links { display: flex; align-items: center; gap: 18px; color: var(--color-muted); font-size: 14px; }
 .nav__links a:hover { color: var(--color-primary); }
 .nav__web-link,
+.nav__downloads-link,
 .nav__docs-link {
   display: inline-flex;
   align-items: center;
@@ -36,6 +37,7 @@
   border: 1px solid rgba(22, 91, 76, 0.14);
 }
 .nav__web-link:hover,
+.nav__downloads-link:hover,
 .nav__docs-link:hover { background: rgba(22, 91, 76, 0.12); }
 .lang-button {
   border: 1px solid rgba(22, 91, 76, 0.18);
@@ -96,6 +98,7 @@
 @media (max-width: 920px) {
   .nav__links a { display: none; }
   .nav__links a.nav__web-link,
+  .nav__links a.nav__downloads-link,
   .nav__links a.nav__docs-link { display: inline-flex; }
   .hero { min-height: auto; padding: 64px 0; }
   .hero__grid, .two-column { grid-template-columns: 1fr; }
@@ -108,6 +111,7 @@
   .nav__inner { min-height: 64px; gap: 8px; }
   .nav__links { gap: 8px; }
   .nav__web-link,
+  .nav__downloads-link,
   .nav__docs-link { min-height: 34px; padding: 0 10px; }
   .lang-button { padding: 9px 11px; }
   .nav__brand { gap: 8px; }

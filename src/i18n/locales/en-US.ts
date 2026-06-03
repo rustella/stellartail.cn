@@ -12,6 +12,7 @@ export const enUS = {
     screenshots: 'Product screenshots',
     entry: 'Downloads',
     web: 'Web App',
+    downloads: 'Downloads',
     docs: 'API Docs',
     language: 'Language'
   },
@@ -115,32 +116,83 @@ export const enUS = {
     webGearFormAlt: 'Web add-gear form interface'
   },
   entry: {
-    eyebrow: 'Download / mini program entry',
-    title: 'Start with the Web app; mobile entries will be added as they are ready',
-    body: 'The Web app is live for browser-based personal gear organization and public content. Android install and the WeChat Mini Program code will be added here when ready.',
+    eyebrow: 'Downloads',
+    title: 'Mobile entries live on the downloads page',
+    body: 'The Web app is live for browser-based personal gear organization and public content. Android install and WeChat Mini Program entries are grouped on the downloads page.',
     badge: 'Multi-platform',
-    hint: 'No placeholder download or fake mini program code is shown; entries are published only when ready.',
+    hint: 'The homepage does not show placeholder mobile downloads or placeholder mini program codes; mobile entries are updated on the downloads page.',
     channelsLabel: 'Supported platform entries',
     channels: [
       {
         title: 'Web access',
         body: 'The Web app is live for organizing gear and viewing public content on a larger screen.',
         href: 'https://app.stellartrail.cn/',
-        action: 'Open Web app'
+        action: 'Open Web app',
+        external: true
       },
       {
-        title: 'Android install',
-        body: 'Android product views are available as examples. The install entry will be added when ready.',
-        href: null,
-        action: null
-      },
-      {
-        title: 'WeChat Mini Program',
-        body: 'Open quickly inside WeChat. The mini program code will be added when ready.',
-        href: null,
-        action: null
+        title: 'Mobile downloads',
+        body: 'Android install and WeChat Mini Program entries are collected on one page.',
+        href: 'downloads/',
+        action: 'View downloads',
+        external: false
       }
     ]
+  },
+  downloads: {
+    seo: {
+      title: 'StellarTrail | Downloads and mobile entries',
+      description: 'Check StellarTrail Web, Android, and WeChat Mini Program entry status. Mobile entries are grouped on this page.'
+    },
+    nav: {
+      label: 'Downloads navigation',
+      brand: 'StellarTrail',
+      backHome: 'Back to site',
+      web: 'Web App',
+      docs: 'API Docs'
+    },
+    hero: {
+      eyebrow: 'Downloads',
+      title: 'Mobile entries are collected here',
+      body: 'Android install and WeChat Mini Program entries will be updated on this page. The Web app is available now; unpublished mobile entries stay clearly marked as preparing.',
+      primaryCta: 'View mobile entries',
+      secondaryCta: 'Open Web app'
+    },
+    summary: {
+      title: 'Entry status',
+      items: ['Web app available now', 'Android install preparing', 'WeChat Mini Program preparing']
+    },
+    channelsLabel: 'Downloads and entries',
+    channels: {
+      android: {
+        platform: 'Android',
+        status: 'Preparing',
+        title: 'Android install',
+        body: 'Android product views are available as examples. The public package, app-store listing, or install method will be added here when ready.',
+        bullets: ['Central install status', 'No placeholder download link', 'Real entry added after publication'],
+        action: 'Not open yet',
+        note: 'The Android entry will be updated here when ready.'
+      },
+      wechat: {
+        platform: 'WeChat Mini Program',
+        status: 'Preparing',
+        title: 'WeChat Mini Program entry',
+        body: 'Designed for quick access inside WeChat. The mini program code will be shown here when ready.',
+        bullets: ['Central mini program status', 'No placeholder mini program code', 'Real entry added after publication'],
+        action: 'Not open yet',
+        note: 'The WeChat Mini Program entry will be updated here when ready.'
+      },
+      web: {
+        platform: 'Web',
+        status: 'Available now',
+        title: 'Web app',
+        body: 'The Web app is already available for organizing gear and viewing public content in a browser.',
+        bullets: ['Desktop gear organization', 'Public content browsing', 'No install needed'],
+        action: 'Open Web app',
+        note: 'Use the Web app while mobile entries are being prepared.'
+      }
+    },
+    footerNote: 'No fake download link or fake mini program code is shown; unpublished entries are clearly marked.'
   },
   docs: {
     seo: {

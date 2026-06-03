@@ -19,6 +19,13 @@ if (!app) throw new Error('Missing app root');
 
 const listItems = (items: readonly string[]): string => items.map((item) => `<li>${item}</li>`).join('');
 
+const entryHref = (href: string, external: boolean): string => (external ? href : sitePath(`${href}?lang=${activeLocale}`));
+
+const entryLinkAttrs = (href: string, external: boolean): string =>
+  external
+    ? `href="${entryHref(href, external)}" target="_blank" rel="noopener noreferrer"`
+    : `href="${entryHref(href, external)}"`;
+
 const renderCapabilityCards = (m: Messages): string =>
   productCapabilities
     .map((capability) => {
@@ -127,6 +134,7 @@ const render = (): void => {
           </a>
           <div class="nav__links">
             <a class="nav__web-link" href="https://app.stellartrail.cn/" target="_blank" rel="noopener noreferrer">${m.nav.web}</a>
+            <a class="nav__downloads-link" href="${sitePath(`downloads/?lang=${activeLocale}`)}">${m.nav.downloads}</a>
             <a class="nav__docs-link" href="${sitePath(`docs/?lang=${activeLocale}`)}">${m.nav.docs}</a>
             <button class="lang-button" type="button" data-language-toggle aria-label="${m.language.switchTo}">${m.language.current}</button>
           </div>
@@ -153,7 +161,7 @@ const render = (): void => {
             <h1 class="hero__title">${m.hero.title}</h1>
             <p class="hero__subtitle">${m.hero.subtitle}</p>
             <div class="cta-row">
-              <a class="button button--primary" href="#entry">${m.hero.primaryCta}</a>
+              <a class="button button--primary" href="${sitePath(`downloads/?lang=${activeLocale}`)}">${m.hero.primaryCta}</a>
               <a class="button button--ghost" href="#product">${m.hero.secondaryCta}</a>
             </div>
             <span class="hero-note">${m.hero.note}</span>
@@ -244,7 +252,7 @@ const render = (): void => {
                       (channel) => `<li>
                         <strong>${channel.title}</strong>
                         <span>${channel.body}</span>
-                        ${channel.href && channel.action ? `<a class="entry-platforms__link" href="${channel.href}" target="_blank" rel="noopener noreferrer">${channel.action}</a>` : ''}
+                        ${channel.href && channel.action ? `<a class="entry-platforms__link" ${entryLinkAttrs(channel.href, channel.external)}>${channel.action}</a>` : ''}
                       </li>`
                     )
                     .join('')}
