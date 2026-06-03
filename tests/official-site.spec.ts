@@ -52,7 +52,7 @@ test('homepage top bar exposes Web app downloads and API docs entries', async ({
   await expect(zhDocsLink).toBeVisible();
   await expect(zhDocsLink).toHaveAttribute('href', '/docs/?lang=zh-CN');
   await expect(nav.getByRole('button', { name: /Switch to English/ })).toBeVisible();
-  for (const anchor of ['#product', '#gear', '#packing', '#trips', '#skills', '#screenshots', '#entry']) {
+  for (const anchor of ['#product', '#gear', '#packing', '#trips', '#skills', '#entry']) {
     await expect(nav.locator(`a[href="${anchor}"]`)).toHaveCount(0);
   }
   await expect(nav.locator('.nav__links').locator('a')).toHaveCount(3);
@@ -128,7 +128,6 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
     ['装备清单', '#packing'],
     ['行程准备', '#trips'],
     ['绳结技能', '#skills'],
-    ['产品截图', '#screenshots'],
     ['下载入口', '#entry']
   ] as const;
   for (const [item, href] of zhJumpLinks) {
@@ -159,7 +158,6 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
     ['Packing lists', '#packing'],
     ['Trip prep', '#trips'],
     ['Knot skills', '#skills'],
-    ['Product screenshots', '#screenshots'],
     ['Downloads', '#entry']
   ] as const;
   for (const [item, href] of enJumpLinks) {
@@ -277,9 +275,10 @@ test('mobile viewport has no horizontal overflow', async ({ page }) => {
 
 test('desktop page includes all core sections', async ({ page }) => {
   await page.goto('/?lang=en-US');
-  for (const id of ['product', 'gear', 'packing', 'trips', 'skills', 'screenshots', 'entry']) {
+  for (const id of ['product', 'gear', 'packing', 'trips', 'skills', 'entry']) {
     await expect(page.locator(`#${id}`)).toBeVisible();
   }
+  await expect(page.locator('#screenshots')).toHaveCount(0);
 });
 
 test('feature sections keep copy before their screenshots on mobile', async ({ page }) => {
@@ -315,33 +314,27 @@ test('reduced motion preference keeps content visible and minimizes animation', 
   await context.close();
 });
 
-test('homepage copy stays user-facing and separates screenshot platforms', async ({ page }) => {
+test('homepage copy stays user-facing and avoids duplicate screenshot gallery', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   const zhBodyText = await page.locator('body').innerText();
   for (const forbidden of ['官网不依赖后端', '静态方式交付', '部署简单', '后续易维护', '白天模式', '轻量可信', '官网只承诺当前可展示能力', '中英双语', '根据系统语言默认展示', '从当前产品页面', '挑选代表功能', '代表功能', '代表内容', '给你的prompt', 'prompt', '开发文档', '后端接口', 'API Reference']) {
     expect(zhBodyText).not.toContain(forbidden);
   }
 
-  const screenshotGroups = page.locator('.screenshot-group');
-  await expect(screenshotGroups).toHaveCount(3);
-  await expect(screenshotGroups.nth(0).getByRole('heading', { name: 'Android 端', exact: true })).toBeVisible();
-  await expect(screenshotGroups.nth(0).locator('img')).toHaveCount(4);
-  await expect(screenshotGroups.nth(1).getByRole('heading', { name: '微信小程序端', exact: true })).toBeVisible();
-  await expect(screenshotGroups.nth(1).locator('img')).toHaveCount(2);
-  await expect(screenshotGroups.nth(2).getByRole('heading', { name: 'Web 端', exact: true })).toBeVisible();
-  await expect(screenshotGroups.nth(2).locator('img')).toHaveCount(2);
+  await expect(page.locator('#screenshots')).toHaveCount(0);
+  await expect(page.getByText('重点能力的真实界面示例')).toHaveCount(0);
+  await expect(page.getByText('产品截图', { exact: true })).toHaveCount(0);
   const imageSources = await page.locator('img').evaluateAll((images) => images.map((image) => image.getAttribute('src') ?? '').join(' '));
   for (const expected of [
     'android-gear-library-22da64a-zh.png',
     'android-packing-list-22da64a-zh.png',
     'android-trips-22da64a-zh.png',
-    'android-knot-skills-22da64a-zh.png',
-    'wechat-gear-management-a1fc941-zh.png',
-    'wechat-knot-skills-a1fc941-zh.png',
-    'web-gear-management-a1fc941-zh.png',
-    'web-gear-form-a1fc941-zh.png'
+    'android-knot-skills-22da64a-zh.png'
   ]) {
     expect(imageSources).toContain(expected);
+  }
+  for (const duplicateGalleryAsset of ['wechat-gear-management-a1fc941-zh.png', 'wechat-knot-skills-a1fc941-zh.png', 'web-gear-management-a1fc941-zh.png', 'web-gear-form-a1fc941-zh.png']) {
+    expect(imageSources).not.toContain(duplicateGalleryAsset);
   }
   for (const oldMockAsset of ['wechat-gear-management-zh.png', 'wechat-knot-skills-zh.png', 'web-gear-management-zh.png', 'web-gear-form-zh.png', 'wechat-gear-light-zh.png', 'wechat-knots-light-zh.png', 'web-gear-light-zh.png', 'web-skills-light-zh.png']) {
     expect(imageSources).not.toContain(oldMockAsset);

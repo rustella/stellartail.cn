@@ -9,7 +9,6 @@ export const zhCN = {
     packing: '装备清单',
     trips: '行程准备',
     skills: '绳结技能',
-    screenshots: '产品截图',
     entry: '下载入口',
     web: 'Web端',
     downloads: '下载',
@@ -97,15 +96,6 @@ export const zhCN = {
     bullets: ['当前能力：绳结教程', '收藏常用技能', '适合出发前快速复习']
   },
   screenshots: {
-    eyebrow: '产品截图',
-    title: '重点能力的真实界面示例',
-    body: '下面展示 Android 端、微信小程序端和 Web 端的界面示例。Android 截图使用产品演示数据，不包含真实账号信息。',
-    androidTitle: 'Android 端',
-    androidBody: '展示个人装备、打包清单、行程准备和绳结技能等重点能力。',
-    wechatTitle: '微信小程序端',
-    wechatBody: '在微信里快速查看装备管理和绳结技能。',
-    webTitle: 'Web 端',
-    webBody: '在大屏上管理装备列表和添加装备信息。',
     androidGearAlt: 'Android 端个人装备界面',
     androidPackingAlt: 'Android 端打包清单界面',
     androidTripsAlt: 'Android 端行程准备界面',

@@ -9,7 +9,6 @@ export const enUS = {
     packing: 'Packing lists',
     trips: 'Trip prep',
     skills: 'Knot skills',
-    screenshots: 'Product screenshots',
     entry: 'Downloads',
     web: 'Web App',
     downloads: 'Downloads',
@@ -97,15 +96,6 @@ export const enUS = {
     bullets: ['Current capability: knot tutorials', 'Favorite common skills', 'Fast review before departure']
   },
   screenshots: {
-    eyebrow: 'Product screenshots',
-    title: 'Real interface examples for the key features',
-    body: 'The screenshots show Android, WeChat Mini Program, and Web interface examples. Android captures use product demo data and do not contain real account information.',
-    androidTitle: 'Android app',
-    androidBody: 'Personal gear, packing lists, trip prep, and knot skills in the mobile experience.',
-    wechatTitle: 'WeChat Mini Program',
-    wechatBody: 'Open gear management and knot skills quickly inside WeChat.',
-    webTitle: 'Web',
-    webBody: 'Manage gear lists and add detailed gear information on a larger screen.',
     androidGearAlt: 'Android personal gear interface',
     androidPackingAlt: 'Android packing list interface',
     androidTripsAlt: 'Android trip preparation interface',

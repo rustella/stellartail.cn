@@ -116,7 +116,6 @@ const render = (): void => {
     { label: m.nav.packing, href: '#packing' },
     { label: m.nav.trips, href: '#trips' },
     { label: m.nav.skills, href: '#skills' },
-    { label: m.nav.screenshots, href: '#screenshots' },
     { label: m.nav.entry, href: '#entry' }
   ];
   const capabilityCards = renderCapabilityCards(m);
@@ -195,48 +194,6 @@ const render = (): void => {
         </section>
 
         ${capabilitySections}
-
-        <section class="section" id="screenshots">
-          <div class="container" data-reveal>
-            <p class="eyebrow">${m.screenshots.eyebrow}</p>
-            <h2 class="section__title">${m.screenshots.title}</h2>
-            <p class="section__body">${m.screenshots.body}</p>
-            <div class="screenshot-groups">
-              <article class="screenshot-group">
-                <div class="screenshot-group__heading">
-                  <h3>${m.screenshots.androidTitle}</h3>
-                  <p>${m.screenshots.androidBody}</p>
-                </div>
-                <div class="screenshot-grid screenshot-grid--android">
-                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.androidGear)}" alt="${m.screenshots.androidGearAlt}" /></figure>
-                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.androidPacking)}" alt="${m.screenshots.androidPackingAlt}" /></figure>
-                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.androidTrips)}" alt="${m.screenshots.androidTripsAlt}" /></figure>
-                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.androidSkills)}" alt="${m.screenshots.androidSkillsAlt}" /></figure>
-                </div>
-              </article>
-              <article class="screenshot-group">
-                <div class="screenshot-group__heading">
-                  <h3>${m.screenshots.wechatTitle}</h3>
-                  <p>${m.screenshots.wechatBody}</p>
-                </div>
-                <div class="screenshot-grid screenshot-grid--mobile">
-                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.wechatGear)}" alt="${m.screenshots.wechatGearAlt}" /></figure>
-                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.wechatKnots)}" alt="${m.screenshots.wechatKnotsAlt}" /></figure>
-                </div>
-              </article>
-              <article class="screenshot-group">
-                <div class="screenshot-group__heading">
-                  <h3>${m.screenshots.webTitle}</h3>
-                  <p>${m.screenshots.webBody}</p>
-                </div>
-                <div class="screenshot-grid screenshot-grid--web">
-                  <figure class="screenshot-card screenshot-card--wide"><img src="${assetPath(screenshotAssets.webGear)}" alt="${m.screenshots.webGearAlt}" /></figure>
-                  <figure class="screenshot-card screenshot-card--wide"><img src="${assetPath(screenshotAssets.webGearForm)}" alt="${m.screenshots.webGearFormAlt}" /></figure>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
 
         <section class="section" id="entry">
           <div class="container" data-reveal>
