@@ -172,9 +172,10 @@ test('homepage points platform entry to downloads without duplicate hero badges'
   await page.goto('/?lang=zh-CN');
   await expect(page.locator('.hero-note')).toHaveCount(0);
   await expect(page.locator('.platform-list')).toHaveCount(0);
-  await expect(page.locator('.metric strong')).toHaveText(['02', '03', '04']);
-  await expect(page.locator('.metric').filter({ hasText: '重点能力' }).locator('strong')).toHaveText('04');
-  await expect(page.locator('.metric').filter({ hasText: '支持平台' }).locator('strong')).toHaveText('03');
+  await expect(page.locator('.metric strong')).toHaveText(['整理', '确认', '复习']);
+  await expect(page.locator('.metric').filter({ hasText: '装备与清单' }).locator('strong')).toHaveText('整理');
+  await expect(page.locator('.metric').filter({ hasText: '行程准备' }).locator('strong')).toHaveText('确认');
+  await expect(page.locator('.metric').filter({ hasText: '绳结技能' }).locator('strong')).toHaveText('复习');
   await expect(page.getByRole('link', { name: '查看多端入口', exact: true })).toHaveAttribute('href', '/downloads/?lang=zh-CN');
   const zhEntry = page.locator('#entry');
   await expect(zhEntry).toContainText('移动端入口集中在下载页');

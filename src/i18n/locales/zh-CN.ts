@@ -28,9 +28,9 @@ export const zhCN = {
     primaryCta: '查看多端入口',
     secondaryCta: '查看重点能力',
     stats: [
-      { value: '02', label: '当前入口' },
-      { value: '03', label: '支持平台' },
-      { value: '04', label: '重点能力' }
+      { value: '整理', label: '装备与清单' },
+      { value: '确认', label: '行程准备' },
+      { value: '复习', label: '绳结技能' }
     ]
   },
   product: {

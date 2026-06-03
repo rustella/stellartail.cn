@@ -28,9 +28,9 @@ export const enUS = {
     primaryCta: 'View platform entry',
     secondaryCta: 'Explore key features',
     stats: [
-      { value: '02', label: 'Current entries' },
-      { value: '03', label: 'Platforms' },
-      { value: '04', label: 'Key features' }
+      { value: 'Organize', label: 'Gear and lists' },
+      { value: 'Confirm', label: 'Trip prep' },
+      { value: 'Review', label: 'Knot skills' }
     ]
   },
   product: {
