@@ -166,6 +166,7 @@ test('homepage hero exposes download and Web CTAs without capability shortcuts',
   await expect(page.locator('.platform-list')).toHaveCount(0);
   const zhHero = page.locator('.hero');
   await expect(zhHero.locator('.hero-quick-links')).toHaveCount(0);
+  await expect(zhHero.locator('.phone-mock__screen img')).toHaveAttribute('src', /android-home-22da64a-zh\.png/);
   const zhHeroDownloadLink = zhHero.getByRole('link', { name: '查看下载入口', exact: true });
   await expect(zhHeroDownloadLink).toBeVisible();
   await expect(zhHeroDownloadLink).toHaveAttribute('href', '/downloads/?lang=zh-CN');
@@ -202,6 +203,7 @@ test('homepage hero exposes download and Web CTAs without capability shortcuts',
   await expect(page.locator('.platform-list')).toHaveCount(0);
   const enHero = page.locator('.hero');
   await expect(enHero.locator('.hero-quick-links')).toHaveCount(0);
+  await expect(enHero.locator('.phone-mock__screen img')).toHaveAttribute('src', /android-home-22da64a-zh\.png/);
   const enHeroDownloadLink = enHero.getByRole('link', { name: 'View downloads', exact: true });
   await expect(enHeroDownloadLink).toBeVisible();
   await expect(enHeroDownloadLink).toHaveAttribute('href', '/downloads/?lang=en-US');
@@ -342,6 +344,7 @@ test('homepage copy stays user-facing and avoids duplicate screenshot gallery', 
   await expect(page.getByText('产品截图', { exact: true })).toHaveCount(0);
   const imageSources = await page.locator('img').evaluateAll((images) => images.map((image) => image.getAttribute('src') ?? '').join(' '));
   for (const expected of [
+    'android-home-22da64a-zh.png',
     'android-gear-library-22da64a-zh.png',
     'android-packing-list-22da64a-zh.png',
     'android-trips-22da64a-zh.png',

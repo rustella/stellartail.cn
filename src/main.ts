@@ -162,7 +162,7 @@ const render = (): void => {
           <div class="hero-card float-soft" data-reveal>
             <div class="phone-mock" aria-hidden="true">
               <div class="phone-mock__screen">
-                <img src="${assetPath(screenshotAssets.androidTrips)}" alt="" />
+                <img src="${assetPath(screenshotAssets.androidHome)}" alt="" />
               </div>
             </div>
             <div class="metric-row">

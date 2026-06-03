@@ -1,4 +1,5 @@
 export const screenshotAssets = {
+  androidHome: 'assets/screenshots/android-home-22da64a-zh.png',
   androidGear: 'assets/screenshots/android-gear-library-22da64a-zh.png',
   androidPacking: 'assets/screenshots/android-packing-list-22da64a-zh.png',
   androidTrips: 'assets/screenshots/android-trips-22da64a-zh.png',
