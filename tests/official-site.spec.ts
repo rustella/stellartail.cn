@@ -168,7 +168,7 @@ test('right floating breadcrumb pins in-page jump links on click', async ({ page
   await expect(enFloatingNav.getByRole('link', { name: 'API Docs', exact: true })).toHaveCount(0);
 });
 
-test('homepage points platform entry to downloads without duplicate hero badges', async ({ page }) => {
+test('homepage hero exposes capability quick links without duplicate CTA buttons', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   await expect(page.locator('.hero-note')).toHaveCount(0);
   await expect(page.locator('.platform-list')).toHaveCount(0);
@@ -176,7 +176,20 @@ test('homepage points platform entry to downloads without duplicate hero badges'
   await expect(page.locator('.metric').filter({ hasText: '装备与清单' }).locator('strong')).toHaveText('整理');
   await expect(page.locator('.metric').filter({ hasText: '行程准备' }).locator('strong')).toHaveText('确认');
   await expect(page.locator('.metric').filter({ hasText: '绳结技能' }).locator('strong')).toHaveText('复习');
-  await expect(page.getByRole('link', { name: '查看多端入口', exact: true })).toHaveAttribute('href', '/downloads/?lang=zh-CN');
+  await expect(page.getByRole('link', { name: '查看多端入口', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: '查看重点能力', exact: true })).toHaveCount(0);
+  const zhHeroLinks = page.getByRole('navigation', { name: '首屏能力入口' });
+  const zhQuickLinks = [
+    ['个人装备', '#gear'],
+    ['装备清单', '#packing'],
+    ['行程准备', '#trips'],
+    ['绳结技能', '#skills']
+  ] as const;
+  for (const [item, href] of zhQuickLinks) {
+    const link = zhHeroLinks.getByRole('link', { name: item, exact: true });
+    await expect(link).toBeVisible();
+    await expect(link).toHaveAttribute('href', href);
+  }
   const zhEntry = page.locator('#entry');
   await expect(zhEntry).toContainText('移动端入口集中在下载页');
   await expect(zhEntry).toContainText('Web 端已上线');
@@ -195,6 +208,20 @@ test('homepage points platform entry to downloads without duplicate hero badges'
   await page.goto('/?lang=en-US');
   await expect(page.locator('.hero-note')).toHaveCount(0);
   await expect(page.locator('.platform-list')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'View platform entry', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Explore key features', exact: true })).toHaveCount(0);
+  const enHeroLinks = page.getByRole('navigation', { name: 'Hero capability links' });
+  const enQuickLinks = [
+    ['Personal gear', '#gear'],
+    ['Packing lists', '#packing'],
+    ['Trip prep', '#trips'],
+    ['Knot skills', '#skills']
+  ] as const;
+  for (const [item, href] of enQuickLinks) {
+    const link = enHeroLinks.getByRole('link', { name: item, exact: true });
+    await expect(link).toBeVisible();
+    await expect(link).toHaveAttribute('href', href);
+  }
   const enEntry = page.locator('#entry');
   await expect(enEntry).toContainText('Mobile entries live on the downloads page');
   await expect(enEntry).toContainText('The Web app is live');

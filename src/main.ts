@@ -159,10 +159,9 @@ const render = (): void => {
             <p class="eyebrow">${m.hero.eyebrow}</p>
             <h1 class="hero__title">${m.hero.title}</h1>
             <p class="hero__subtitle">${m.hero.subtitle}</p>
-            <div class="cta-row">
-              <a class="button button--primary" href="${sitePath(`downloads/?lang=${activeLocale}`)}">${m.hero.primaryCta}</a>
-              <a class="button button--ghost" href="#product">${m.hero.secondaryCta}</a>
-            </div>
+            <nav class="hero-quick-links" aria-label="${m.hero.quickLinksLabel}">
+              ${m.hero.quickLinks.map((link) => `<a href="${link.href}">${link.label}</a>`).join('')}
+            </nav>
           </div>
           <div class="hero-card float-soft" data-reveal>
             <div class="phone-mock" aria-hidden="true">

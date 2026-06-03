@@ -25,8 +25,13 @@ export const enUS = {
     eyebrow: 'StellarTrail',
     title: 'Prepare gear, lists, trips, and knots before you head out',
     subtitle: 'A lightweight companion for outdoor preparation: track personal gear, confirm packing lists, organize trip prep, and review field-ready knot skills before departure.',
-    primaryCta: 'View platform entry',
-    secondaryCta: 'Explore key features',
+    quickLinksLabel: 'Hero capability links',
+    quickLinks: [
+      { label: 'Personal gear', href: '#gear' },
+      { label: 'Packing lists', href: '#packing' },
+      { label: 'Trip prep', href: '#trips' },
+      { label: 'Knot skills', href: '#skills' }
+    ],
     stats: [
       { value: 'Organize', label: 'Gear and lists' },
       { value: 'Confirm', label: 'Trip prep' },
