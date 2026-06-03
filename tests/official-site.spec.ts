@@ -160,12 +160,22 @@ test('right floating breadcrumb shows in-page jump links by default', async ({ p
   await expect(enFloatingNav.getByRole('link', { name: 'API Docs', exact: true })).toHaveCount(0);
 });
 
-test('homepage hero omits duplicate capability shortcuts and CTA buttons', async ({ page }) => {
+test('homepage hero exposes download and Web CTAs without capability shortcuts', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
   await expect(page.locator('.hero-note')).toHaveCount(0);
   await expect(page.locator('.platform-list')).toHaveCount(0);
   const zhHero = page.locator('.hero');
   await expect(zhHero.locator('.hero-quick-links')).toHaveCount(0);
+  const zhHeroDownloadLink = zhHero.getByRole('link', { name: '查看下载入口', exact: true });
+  await expect(zhHeroDownloadLink).toBeVisible();
+  await expect(zhHeroDownloadLink).toHaveAttribute('href', '/downloads/?lang=zh-CN');
+  await expect(zhHeroDownloadLink).not.toHaveAttribute('target', '_blank');
+  const zhHeroWebLink = zhHero.getByRole('link', { name: '打开 Web 端', exact: true });
+  await expect(zhHeroWebLink).toBeVisible();
+  await expect(zhHeroWebLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
+  await expect(zhHeroWebLink).toHaveAttribute('target', '_blank');
+  await expect(zhHeroWebLink).toHaveAttribute('rel', /noopener/);
+  await expect(zhHeroWebLink).toHaveAttribute('rel', /noreferrer/);
   await expect(page.locator('.metric strong')).toHaveText(['整理', '确认', '复习']);
   await expect(page.locator('.metric').filter({ hasText: '装备与清单' }).locator('strong')).toHaveText('整理');
   await expect(page.locator('.metric').filter({ hasText: '行程准备' }).locator('strong')).toHaveText('确认');
@@ -192,6 +202,16 @@ test('homepage hero omits duplicate capability shortcuts and CTA buttons', async
   await expect(page.locator('.platform-list')).toHaveCount(0);
   const enHero = page.locator('.hero');
   await expect(enHero.locator('.hero-quick-links')).toHaveCount(0);
+  const enHeroDownloadLink = enHero.getByRole('link', { name: 'View downloads', exact: true });
+  await expect(enHeroDownloadLink).toBeVisible();
+  await expect(enHeroDownloadLink).toHaveAttribute('href', '/downloads/?lang=en-US');
+  await expect(enHeroDownloadLink).not.toHaveAttribute('target', '_blank');
+  const enHeroWebLink = enHero.getByRole('link', { name: 'Open Web app', exact: true });
+  await expect(enHeroWebLink).toBeVisible();
+  await expect(enHeroWebLink).toHaveAttribute('href', 'https://app.stellartrail.cn/');
+  await expect(enHeroWebLink).toHaveAttribute('target', '_blank');
+  await expect(enHeroWebLink).toHaveAttribute('rel', /noopener/);
+  await expect(enHeroWebLink).toHaveAttribute('rel', /noreferrer/);
   await expect(page.getByRole('link', { name: 'View platform entry', exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Explore key features', exact: true })).toHaveCount(0);
   const enEntry = page.locator('#entry');

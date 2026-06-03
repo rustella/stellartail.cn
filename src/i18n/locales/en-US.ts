@@ -25,6 +25,8 @@ export const enUS = {
     eyebrow: 'StellarTrail',
     title: 'Prepare gear, lists, trips, and knots before you head out',
     subtitle: 'A lightweight companion for outdoor preparation: track personal gear, confirm packing lists, organize trip prep, and review field-ready knot skills before departure.',
+    primaryCta: 'View downloads',
+    secondaryCta: 'Open Web app',
     stats: [
       { value: 'Organize', label: 'Gear and lists' },
       { value: 'Confirm', label: 'Trip prep' },
