@@ -345,7 +345,7 @@ test('homepage copy stays user-facing and avoids duplicate screenshot gallery', 
     'android-gear-library-22da64a-zh.png',
     'android-packing-list-22da64a-zh.png',
     'android-trips-22da64a-zh.png',
-    'android-knot-detail-22da64a-zh.png'
+    'android-knot-skills-22da64a-zh.png'
   ]) {
     expect(imageSources).toContain(expected);
   }

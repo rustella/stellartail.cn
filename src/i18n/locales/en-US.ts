@@ -96,7 +96,7 @@ export const enUS = {
     androidGearAlt: 'Android personal gear interface',
     androidPackingAlt: 'Android packing list interface',
     androidTripsAlt: 'Android trip preparation interface',
-    androidSkillsAlt: 'Android adjustable knot detail interface',
+    androidSkillsAlt: 'Android knot skills interface',
     wechatGearAlt: 'WeChat Mini Program gear management interface',
     wechatKnotsAlt: 'WeChat Mini Program knot skills interface',
     webGearAlt: 'Web gear management interface',
