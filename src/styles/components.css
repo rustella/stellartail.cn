@@ -98,6 +98,12 @@
   padding: 18px;
   min-height: 500px;
 }
+.phone-mock__screen img {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 22px;
+  object-fit: cover;
+}
 .platform-list {
   display: flex;
   flex-wrap: wrap;
@@ -279,12 +285,59 @@
 }
 .card h3 { margin: 0 0 10px; font-size: 20px; }
 .card p { margin: 0; color: var(--color-muted); line-height: 1.68; }
+.capability-card {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 260px;
+  padding: 22px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow: var(--shadow-card);
+}
+.capability-card h3 {
+  margin: 0;
+  color: var(--color-primary-strong);
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+.capability-card p { margin: 0; color: var(--color-muted); line-height: 1.62; }
+.capability-card__subtitle {
+  color: var(--color-primary) !important;
+  font-size: 14px;
+  font-weight: 800;
+}
+.status-pill {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 30px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 999px;
+  color: var(--color-primary);
+  background: rgba(207, 250, 237, 0.76);
+  border: 1px solid rgba(22, 91, 76, 0.1);
+  font-size: 12px;
+  font-weight: 900;
+}
 .feature-panel {
   padding: 28px;
   border-radius: var(--radius-lg);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(236, 246, 239, 0.78));
   border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow: var(--shadow-soft);
+}
+.feature-panel--phone {
+  width: min(360px, 100%);
+  justify-self: center;
+  padding: 18px;
+}
+.feature-panel--phone img {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 28px;
+  object-fit: cover;
 }
 .bullet-list { display: grid; gap: 12px; margin: 24px 0 0; padding: 0; list-style: none; }
 .bullet-list li {
@@ -329,7 +382,7 @@
   border: 1px solid rgba(255, 255, 255, 0.86);
   box-shadow: var(--shadow-card);
 }
-.screenshot-card img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; }
+.screenshot-card img { width: 100%; aspect-ratio: 9 / 16; object-fit: contain; background: #f7fbf8; }
 .screenshot-card--wide img { aspect-ratio: auto; height: auto; object-fit: contain; background: #fff; }
 .entry-card {
   display: grid;
@@ -401,6 +454,7 @@
 @media (max-width: 620px) {
   .hero__title { letter-spacing: -0.055em; }
   .metric-row { grid-template-columns: 1fr; }
+  .capability-card { min-height: auto; }
   .entry-card { grid-template-columns: 1fr; padding: 24px; }
   .entry-platforms { grid-template-columns: 1fr; }
   .entry-placeholder { width: 100%; max-width: 230px; }

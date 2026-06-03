@@ -8,7 +8,9 @@
 
 ## Current product scope for this website
 
-- Gear library and preparation checklists.
+- Personal gear library.
+- Packing lists and preparation checklists.
+- Trip preparation views, presented as feature preview copy unless a public entry is available.
 - Outdoor skills focused on knots.
 - Knot content focus: adjustable guyline hitch / 可调节帐绳结.
 

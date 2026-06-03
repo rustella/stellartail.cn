@@ -6,7 +6,8 @@ import './styles/motion.css';
 
 import { initReveal } from './effects/reveal';
 import { initStarfield } from './effects/starfield';
-import { getMessages, nextLocale, persistLocale, resolveInitialLocale, type Locale } from './i18n';
+import { getMessages, nextLocale, persistLocale, resolveInitialLocale, type Locale, type Messages } from './i18n';
+import { productCapabilities } from './content/product';
 import { screenshotAssets } from './content/screenshots';
 import { assetPath, sitePath } from './utils/asset';
 
@@ -17,6 +18,56 @@ const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('Missing app root');
 
 const listItems = (items: readonly string[]): string => items.map((item) => `<li>${item}</li>`).join('');
+
+const renderCapabilityCards = (m: Messages): string =>
+  productCapabilities
+    .map((capability) => {
+      const copy = m.product.capabilities[capability.id];
+      const status = m.product.statusLabels[capability.status];
+      return `<article class="capability-card">
+        <span class="status-pill">${status}</span>
+        <h3>${copy.title}</h3>
+        <p class="capability-card__subtitle">${copy.subtitle}</p>
+        <p>${copy.body}</p>
+      </article>`;
+    })
+    .join('');
+
+const renderCapabilitySections = (m: Messages): string => {
+  const sectionCopy = {
+    gear: m.gear,
+    packing: m.packing,
+    trips: m.trips,
+    skills: m.skills
+  };
+  const imageAlt = {
+    gear: m.screenshots.androidGearAlt,
+    packing: m.screenshots.androidPackingAlt,
+    trips: m.screenshots.androidTripsAlt,
+    skills: m.screenshots.androidSkillsAlt
+  };
+
+  return productCapabilities
+    .map((capability, index) => {
+      const copy = sectionCopy[capability.id];
+      const text = `<div data-reveal>
+        <p class="eyebrow">${copy.eyebrow}</p>
+        <h2 class="section__title">${copy.title}</h2>
+        <p class="section__body">${copy.body}</p>
+        <ul class="bullet-list">${listItems(copy.bullets)}</ul>
+      </div>`;
+      const media = `<div class="feature-panel feature-panel--phone float-soft" data-reveal>
+        <img src="${assetPath(screenshotAssets[capability.screenshotKey])}" alt="${imageAlt[capability.id]}" />
+      </div>`;
+
+      return `<section class="section capability-section" id="${capability.sectionId}">
+        <div class="container two-column">
+          ${index % 2 === 0 ? `${text}${media}` : `${media}${text}`}
+        </div>
+      </section>`;
+    })
+    .join('');
+};
 
 const initFloatingBreadcrumb = (): (() => void) | null => {
   const breadcrumb = app.querySelector<HTMLElement>('[data-floating-breadcrumb]');
@@ -55,10 +106,14 @@ const render = (): void => {
     { label: m.jump.home, href: '#top' },
     { label: m.nav.product, href: '#product' },
     { label: m.nav.gear, href: '#gear' },
+    { label: m.nav.packing, href: '#packing' },
+    { label: m.nav.trips, href: '#trips' },
     { label: m.nav.skills, href: '#skills' },
     { label: m.nav.screenshots, href: '#screenshots' },
     { label: m.nav.entry, href: '#entry' }
   ];
+  const capabilityCards = renderCapabilityCards(m);
+  const capabilitySections = renderCapabilitySections(m);
   document.title = m.seo.title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', m.seo.description);
   persistLocale(activeLocale);
@@ -109,13 +164,11 @@ const render = (): void => {
           <div class="hero-card float-soft" data-reveal>
             <div class="phone-mock" aria-hidden="true">
               <div class="phone-mock__screen">
-                <img src="${assetPath(screenshotAssets.wechatGear)}" alt="" />
+                <img src="${assetPath(screenshotAssets.androidTrips)}" alt="" />
               </div>
             </div>
             <div class="metric-row">
-              <div class="metric"><strong>01</strong><span>${m.hero.statGear}</span></div>
-              <div class="metric"><strong>01</strong><span>${m.hero.statSkill}</span></div>
-              <div class="metric"><strong>03</strong><span>${m.hero.statMode}</span></div>
+              ${m.hero.stats.map((stat) => `<div class="metric"><strong>${stat.value}</strong><span>${stat.label}</span></div>`).join('')}
             </div>
           </div>
         </div>
@@ -127,41 +180,13 @@ const render = (): void => {
             <p class="eyebrow">${m.product.eyebrow}</p>
             <h2 class="section__title">${m.product.title}</h2>
             <p class="section__body">${m.product.body}</p>
-            <div class="cards-grid">
-              <article class="card"><h3>${m.product.cards.fast.title}</h3><p>${m.product.cards.fast.body}</p></article>
-              <article class="card"><h3>${m.product.cards.bilingual.title}</h3><p>${m.product.cards.bilingual.body}</p></article>
-              <article class="card"><h3>${m.product.cards.polished.title}</h3><p>${m.product.cards.polished.body}</p></article>
+            <div class="cards-grid cards-grid--capabilities">
+              ${capabilityCards}
             </div>
           </div>
         </section>
 
-        <section class="section" id="gear">
-          <div class="container two-column">
-            <div data-reveal>
-              <p class="eyebrow">${m.gear.eyebrow}</p>
-              <h2 class="section__title">${m.gear.title}</h2>
-              <p class="section__body">${m.gear.body}</p>
-              <ul class="bullet-list">${listItems(m.gear.bullets)}</ul>
-            </div>
-            <div class="feature-panel float-soft" data-reveal>
-              <img src="${assetPath(screenshotAssets.webGear)}" alt="${m.screenshots.webGearAlt}" />
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="skills">
-          <div class="container two-column">
-            <div class="feature-panel float-soft" data-reveal>
-              <img src="${assetPath(screenshotAssets.wechatKnots)}" alt="${m.screenshots.wechatKnotsAlt}" />
-            </div>
-            <div data-reveal>
-              <p class="eyebrow">${m.skills.eyebrow}</p>
-              <h2 class="section__title">${m.skills.title}</h2>
-              <p class="section__body">${m.skills.body}</p>
-              <ul class="bullet-list">${listItems(m.skills.bullets)}</ul>
-            </div>
-          </div>
-        </section>
+        ${capabilitySections}
 
         <section class="section" id="screenshots">
           <div class="container" data-reveal>
@@ -169,6 +194,18 @@ const render = (): void => {
             <h2 class="section__title">${m.screenshots.title}</h2>
             <p class="section__body">${m.screenshots.body}</p>
             <div class="screenshot-groups">
+              <article class="screenshot-group">
+                <div class="screenshot-group__heading">
+                  <h3>${m.screenshots.androidTitle}</h3>
+                  <p>${m.screenshots.androidBody}</p>
+                </div>
+                <div class="screenshot-grid screenshot-grid--android">
+                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.androidGear)}" alt="${m.screenshots.androidGearAlt}" /></figure>
+                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.androidPacking)}" alt="${m.screenshots.androidPackingAlt}" /></figure>
+                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.androidTrips)}" alt="${m.screenshots.androidTripsAlt}" /></figure>
+                  <figure class="screenshot-card"><img src="${assetPath(screenshotAssets.androidSkills)}" alt="${m.screenshots.androidSkillsAlt}" /></figure>
+                </div>
+              </article>
               <article class="screenshot-group">
                 <div class="screenshot-group__heading">
                   <h3>${m.screenshots.wechatTitle}</h3>
