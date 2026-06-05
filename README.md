@@ -12,9 +12,13 @@ Official static website for **StellarTrail / 寻径星野**.
 
 ```bash
 npm install
+cp .env.example .env.local
 npm run dev
 npm run check
 ```
+
+Local deployment-only values belong in ignored `.env.local`. Leave public examples
+blank in Git and set real values locally or in the deployment environment.
 
 ## Validation
 
@@ -50,6 +54,7 @@ Build-time variables:
 
 - `SITE_BASE_PATH`: Vite base path. Defaults to `/`. Use a path only, such as `/`, `/stellartail.cn/`, or `/official/`; do not pass a full URL.
 - `VITE_PUBLIC_SITE_URL`: optional public site URL shown by the UI or used by deployment-specific metadata.
+- `VITE_PUBLIC_ICP_RECORD_NUMBER`: optional ICP record number rendered in the homepage footer. Keep the real value in ignored `.env.local` or deployment environment variables.
 - `EXPECTED_BASE_PATH`: validation-only value for `npm run validate:deploy-base`.
 
 Examples:

@@ -6,6 +6,7 @@ import './styles/motion.css';
 
 import { initReveal } from './effects/reveal';
 import { initStarfield } from './effects/starfield';
+import { deploymentConfig } from './config/deployment';
 import { getMessages, nextLocale, persistLocale, resolveInitialLocale, type Locale, type Messages } from './i18n';
 import { productCapabilities } from './content/product';
 import { screenshotAssets } from './content/screenshots';
@@ -17,7 +18,22 @@ let teardownFloatingBreadcrumb: (() => void) | null = null;
 const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('Missing app root');
 
+const ICP_RECORD_URL = 'https://beian.miit.gov.cn/';
+
+const escapeHtml = (value: string): string =>
+  value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+
 const listItems = (items: readonly string[]): string => items.map((item) => `<li>${item}</li>`).join('');
+
+const renderIcpRecordLink = (): string => {
+  if (!deploymentConfig.icpRecordNumber) return '';
+  return `<a class="footer__icp-link" href="${ICP_RECORD_URL}" target="_blank" rel="noopener noreferrer">${escapeHtml(deploymentConfig.icpRecordNumber)}</a>`;
+};
 
 const entryHref = (href: string, external: boolean): string => (external ? href : sitePath(`${href}?lang=${activeLocale}`));
 
@@ -115,6 +131,7 @@ const render = (): void => {
   ];
   const capabilityCards = renderCapabilityCards(m);
   const capabilitySections = renderCapabilitySections(m);
+  const icpRecordLink = renderIcpRecordLink();
   document.title = m.seo.title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', m.seo.description);
   persistLocale(activeLocale);
@@ -215,8 +232,14 @@ const render = (): void => {
 
       <footer class="footer">
         <div class="container footer__inner">
-          <strong>${m.footer.tagline}</strong>
-          <span>${m.footer.caption} · © ${new Date().getFullYear()} ${m.footer.rights}</span>
+          <div class="footer__brand">
+            <strong>${m.footer.tagline}</strong>
+            <span>${m.footer.caption}</span>
+          </div>
+          <div class="footer__legal">
+            <span>© ${new Date().getFullYear()} ${m.footer.rights}</span>
+            ${icpRecordLink}
+          </div>
         </div>
       </footer>
     </div>

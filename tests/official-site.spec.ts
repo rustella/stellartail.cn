@@ -1,4 +1,22 @@
 import { expect, test } from '@playwright/test';
+import { existsSync, readFileSync } from 'node:fs';
+
+const BEIAN_URL = 'https://beian.miit.gov.cn/';
+const ICP_ENV_KEY = 'VITE_PUBLIC_ICP_RECORD_NUMBER';
+
+const readEnvFileValue = (path: string, key: string): string => {
+  if (!existsSync(path)) return '';
+  const line = readFileSync(path, 'utf8')
+    .split(/\r?\n/)
+    .find((entry) => entry.trim().startsWith(`${key}=`));
+  if (!line) return '';
+  return line.slice(line.indexOf('=') + 1).trim();
+};
+
+const configuredIcpRecordNumber = (): string => {
+  if (Object.prototype.hasOwnProperty.call(process.env, ICP_ENV_KEY)) return process.env[ICP_ENV_KEY]?.trim() ?? '';
+  return readEnvFileValue('.env.local', ICP_ENV_KEY) || readEnvFileValue('.env', ICP_ENV_KEY);
+};
 
 test('renders Chinese content with explicit language', async ({ page }) => {
   await page.goto('/?lang=zh-CN');
@@ -86,6 +104,42 @@ test('homepage top bar exposes Web app downloads and API docs entries', async ({
   const enDocsLink = enNav.getByRole('link', { name: 'API Docs', exact: true });
   await expect(enDocsLink).toBeVisible();
   await expect(enDocsLink).toHaveAttribute('href', '/docs/?lang=en-US');
+});
+
+test('homepage footer renders the configured ICP record link', async ({ page }) => {
+  const icpRecordNumber = configuredIcpRecordNumber();
+  test.skip(!icpRecordNumber, 'ICP record number is not configured for this run');
+
+  await page.goto('/?lang=zh-CN');
+  const footer = page.locator('.footer');
+  const legal = footer.locator('.footer__legal');
+  await expect(footer.locator('.footer__brand')).toContainText('StellarTrail / 寻径星野');
+  await expect(footer.locator('.footer__brand')).toContainText('户外准备，从清单和绳结开始');
+  await expect(legal).toContainText('©');
+  const icpLink = footer.getByRole('link', { name: icpRecordNumber, exact: true });
+  await expect(icpLink).toBeVisible();
+  await expect(legal.getByRole('link', { name: icpRecordNumber, exact: true })).toBeVisible();
+  await expect(icpLink).toHaveAttribute('href', BEIAN_URL);
+  await expect(icpLink).toHaveAttribute('target', '_blank');
+  await expect(icpLink).toHaveAttribute('rel', /noopener/);
+  await expect(icpLink).toHaveAttribute('rel', /noreferrer/);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(icpLink).toBeVisible();
+  await expect
+    .poll(async () => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1))
+    .toBe(true);
+});
+
+test('homepage footer omits the ICP link when config is empty', async ({ page }) => {
+  test.skip(Boolean(configuredIcpRecordNumber()), 'ICP record number is configured for this run');
+
+  await page.goto('/?lang=zh-CN');
+  await expect(page.locator('.footer__icp-link')).toHaveCount(0);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect
+    .poll(async () => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1))
+    .toBe(true);
 });
 
 
