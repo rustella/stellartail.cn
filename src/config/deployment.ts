@@ -12,6 +12,9 @@ const normalizeSiteUrl = (value: string | undefined): string => {
   }
 };
 
+const normalizeIcpRecordNumber = (value: string | undefined): string => value?.trim() ?? '';
+
 export const deploymentConfig = {
-  publicSiteUrl: normalizeSiteUrl(import.meta.env.VITE_PUBLIC_SITE_URL)
+  publicSiteUrl: normalizeSiteUrl(import.meta.env.VITE_PUBLIC_SITE_URL),
+  icpRecordNumber: normalizeIcpRecordNumber(import.meta.env.VITE_PUBLIC_ICP_RECORD_NUMBER)
 } as const;
