@@ -41,6 +41,7 @@ jobs:
         env:
           SITE_BASE_PATH: /stellartail.cn/
           VITE_PUBLIC_SITE_URL: https://rustella.github.io/stellartail.cn/
+          VITE_PUBLIC_ICP_RECORD_NUMBER: ${{ vars.VITE_PUBLIC_ICP_RECORD_NUMBER }}
 
       - name: Verify configurable base for GitHub Pages
         run: npm run validate:deploy-base
