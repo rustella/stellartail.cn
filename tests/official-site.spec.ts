@@ -54,7 +54,8 @@ test('persists language switch preference', async ({ page }) => {
   expect(stored).toBe('en-US');
 });
 
-test('homepage top bar exposes Web app downloads and API docs entries', async ({ page }) => {
+test('homepage top bar exposes Web app downloads and API docs entries', async ({ page }, testInfo) => {
+  const isMobile = testInfo.project.name.includes('mobile');
   await page.goto('/?lang=zh-CN');
   const nav = page.locator('.nav');
   const zhWebLink = nav.getByRole('link', { name: 'Web端', exact: true });
@@ -69,11 +70,15 @@ test('homepage top bar exposes Web app downloads and API docs entries', async ({
   const zhDocsLink = nav.getByRole('link', { name: '接口文档', exact: true });
   await expect(zhDocsLink).toBeVisible();
   await expect(zhDocsLink).toHaveAttribute('href', '/docs/?lang=zh-CN');
+  const zhPrivacyLink = nav.locator('.nav__privacy-link');
+  await expect(zhPrivacyLink).toHaveText('隐私政策');
+  await expect(zhPrivacyLink).toHaveAttribute('href', '/privacy/?lang=zh-CN');
+  if (!isMobile) await expect(zhPrivacyLink).toBeVisible();
   await expect(nav.getByRole('button', { name: /Switch to English/ })).toBeVisible();
   for (const anchor of ['#product', '#gear', '#packing', '#trips', '#skills', '#entry']) {
     await expect(nav.locator(`a[href="${anchor}"]`)).toHaveCount(0);
   }
-  await expect(nav.locator('.nav__links').locator('a')).toHaveCount(3);
+  await expect(nav.locator('.nav__links').locator('a')).toHaveCount(4);
 
   await page.evaluate(() => window.scrollTo(0, 980));
   await expect(nav).toBeVisible();
@@ -85,11 +90,13 @@ test('homepage top bar exposes Web app downloads and API docs entries', async ({
   await expect(zhWebLink).toBeVisible();
   await expect(zhDownloadsLink).toBeVisible();
   await expect(zhDocsLink).toBeVisible();
+  await expect(zhPrivacyLink).toHaveAttribute('href', '/privacy/?lang=zh-CN');
   await expect
     .poll(async () => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1))
     .toBe(true);
 
   await page.evaluate(() => window.localStorage.clear());
+  if (!isMobile) await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('/?lang=en-US');
   const enNav = page.locator('.nav');
   const enWebLink = enNav.getByRole('link', { name: 'Web App', exact: true });
@@ -104,6 +111,10 @@ test('homepage top bar exposes Web app downloads and API docs entries', async ({
   const enDocsLink = enNav.getByRole('link', { name: 'API Docs', exact: true });
   await expect(enDocsLink).toBeVisible();
   await expect(enDocsLink).toHaveAttribute('href', '/docs/?lang=en-US');
+  const enPrivacyLink = enNav.locator('.nav__privacy-link');
+  await expect(enPrivacyLink).toHaveText('Privacy Policy');
+  await expect(enPrivacyLink).toHaveAttribute('href', '/privacy/?lang=en-US');
+  if (!isMobile) await expect(enPrivacyLink).toBeVisible();
 });
 
 test('homepage footer renders the configured ICP record link', async ({ page }) => {
@@ -116,6 +127,7 @@ test('homepage footer renders the configured ICP record link', async ({ page }) 
   await expect(footer.locator('.footer__brand')).toContainText('StellarTrail / 寻径星野');
   await expect(footer.locator('.footer__brand')).toContainText('户外准备，从清单和绳结开始');
   await expect(legal).toContainText('©');
+  await expect(legal.getByRole('link', { name: '隐私政策', exact: true })).toHaveAttribute('href', '/privacy/?lang=zh-CN');
   const icpLink = footer.getByRole('link', { name: icpRecordNumber, exact: true });
   await expect(icpLink).toBeVisible();
   await expect(legal.getByRole('link', { name: icpRecordNumber, exact: true })).toBeVisible();
@@ -136,6 +148,8 @@ test('homepage footer omits the ICP link when config is empty', async ({ page })
 
   await page.goto('/?lang=zh-CN');
   await expect(page.locator('.footer__icp-link')).toHaveCount(0);
+  await expect(page.locator('.footer__privacy-link')).toHaveText('隐私政策');
+  await expect(page.locator('.footer__privacy-link')).toHaveAttribute('href', '/privacy/?lang=zh-CN');
   await page.setViewportSize({ width: 390, height: 844 });
   await expect
     .poll(async () => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1))
@@ -292,6 +306,10 @@ test('downloads page groups mobile entries without placeholder links', async ({ 
   const zhNav = page.getByRole('navigation', { name: '下载页导航' });
   await expect(zhNav.locator('.nav__brand')).toHaveAttribute('href', '/?lang=zh-CN');
   await expect(zhNav.locator('.nav__links').getByRole('link', { name: '接口文档', exact: true })).toHaveAttribute('href', '/docs/?lang=zh-CN');
+  await expect(zhNav.locator('.nav__privacy-link')).toHaveText('隐私政策');
+  await expect(zhNav.locator('.nav__privacy-link')).toHaveAttribute('href', '/privacy/?lang=zh-CN');
+  await expect(page.locator('.footer__privacy-link')).toHaveText('隐私政策');
+  await expect(page.locator('.footer__privacy-link')).toHaveAttribute('href', '/privacy/?lang=zh-CN');
 
   const downloads = page.locator('#mobile-downloads');
   await expect(downloads).toContainText('Android 安装包');
@@ -309,8 +327,66 @@ test('downloads page groups mobile entries without placeholder links', async ({ 
   await page.goto('/downloads/?lang=en-US');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en-US');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Mobile entries are collected here');
+  const enNav = page.getByRole('navigation', { name: 'Downloads navigation' });
+  await expect(enNav.locator('.nav__privacy-link')).toHaveText('Privacy Policy');
+  await expect(enNav.locator('.nav__privacy-link')).toHaveAttribute('href', '/privacy/?lang=en-US');
+  await expect(page.locator('.footer__privacy-link')).toHaveText('Privacy Policy');
+  await expect(page.locator('.footer__privacy-link')).toHaveAttribute('href', '/privacy/?lang=en-US');
   await expect(page.locator('#mobile-downloads')).toContainText('Android install');
   await expect(page.locator('#mobile-downloads')).toContainText('WeChat Mini Program entry');
+});
+
+test('privacy page renders bilingual policy with account deletion support', async ({ page }) => {
+  const backendRequests: string[] = [];
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (url.pathname === '/healthz' || url.pathname.startsWith('/api/')) backendRequests.push(request.url());
+  });
+
+  await page.goto('/privacy/?lang=zh-CN');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('隐私政策');
+  await expect(page.locator('.privacy-meta')).toContainText('寻径星野/StellarTrail');
+  await expect(page.locator('.privacy-meta')).toContainText('2026-06-15');
+  await expect(page.locator('.privacy-meta').getByRole('link', { name: 'abuse@stellartrail.cn' })).toHaveAttribute('href', 'mailto:abuse@stellartrail.cn');
+  await expect(page.locator('#data')).toContainText('SHA-256 Hash');
+  await expect(page.locator('#data')).toContainText('不保存明文密码');
+  await expect(page.locator('#security')).toContainText('密码 SHA-256 Hash 入库');
+  await expect(page.locator('#delete-account')).toContainText('支持删除账号');
+  await expect(page.locator('#delete-account')).toContainText('应用内发起账号删除');
+  await expect(page.locator('#delete-account')).toContainText('abuse@stellartrail.cn');
+  await expect(page).toHaveURL(/\/privacy\/\?lang=zh-CN$/);
+  await page.goto('/privacy/?lang=zh-CN#delete-account');
+  await expect(page.locator('#delete-account')).toBeVisible();
+  await expect(page).toHaveURL(/\/privacy\/\?lang=zh-CN#delete-account$/);
+
+  await page.evaluate(() => window.localStorage.clear());
+  await page.goto('/privacy/?lang=en-US');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en-US');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Privacy Policy');
+  await expect(page.locator('.privacy-meta')).toContainText('寻径星野/StellarTrail');
+  await expect(page.locator('.privacy-meta')).toContainText('2026-06-15');
+  await expect(page.locator('.privacy-meta').getByRole('link', { name: 'abuse@stellartrail.cn' })).toHaveAttribute('href', 'mailto:abuse@stellartrail.cn');
+  await expect(page.locator('#data')).toContainText('SHA-256 hashing');
+  await expect(page.locator('#data')).toContainText('plaintext passwords are not stored');
+  await expect(page.locator('#security')).toContainText('SHA-256 password hashing before database storage');
+  await expect(page.locator('#delete-account')).toContainText('StellarTrail supports account deletion');
+  await expect(page.locator('#delete-account')).toContainText('start account deletion in the app');
+  expect(backendRequests).toEqual([]);
+});
+
+test('privacy page stays static and fits mobile viewport', async ({ page }) => {
+  const blocked: string[] = [];
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (url.pathname === '/healthz' || url.pathname.startsWith('/api/')) blocked.push(request.url());
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/privacy/?lang=zh-CN');
+  await page.waitForLoadState('load');
+  expect(blocked).toEqual([]);
+  const fits = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
+  expect(fits).toBe(true);
 });
 
 test('downloads page stays static and fits mobile viewport', async ({ page }) => {

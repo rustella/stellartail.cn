@@ -147,6 +147,7 @@ const render = (): void => {
             <a class="nav__web-link" href="https://app.stellartrail.cn/" target="_blank" rel="noopener noreferrer">${m.nav.web}</a>
             <a class="nav__downloads-link" href="${sitePath(`downloads/?lang=${activeLocale}`)}">${m.nav.downloads}</a>
             <a class="nav__docs-link" href="${sitePath(`docs/?lang=${activeLocale}`)}">${m.nav.docs}</a>
+            <a class="nav__privacy-link" href="${sitePath(`privacy/?lang=${activeLocale}`)}">${m.nav.privacy}</a>
             <button class="lang-button" type="button" data-language-toggle aria-label="${m.language.switchTo}">${m.language.current}</button>
           </div>
         </div>
@@ -238,6 +239,7 @@ const render = (): void => {
           </div>
           <div class="footer__legal">
             <span>© ${new Date().getFullYear()} ${m.footer.rights}</span>
+            <a class="footer__privacy-link" href="${sitePath(`privacy/?lang=${activeLocale}`)}">${m.footer.privacyPolicy}</a>
             ${icpRecordLink}
           </div>
         </div>
