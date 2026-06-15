@@ -1,0 +1,148 @@
+.privacy-shell {
+  min-height: 100vh;
+}
+
+.privacy-hero {
+  padding: 82px 0 56px;
+}
+
+.privacy-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.5fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.privacy-hero__title {
+  margin: 0;
+  max-width: 760px;
+  color: var(--color-primary-strong);
+  font-size: 68px;
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.privacy-hero__body {
+  max-width: 760px;
+  margin: 24px 0 0;
+  color: var(--color-muted);
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.78;
+}
+
+.privacy-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 880px;
+  margin: 30px 0 0;
+}
+
+.privacy-meta div,
+.privacy-summary,
+.privacy-section {
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: var(--shadow-card);
+}
+
+.privacy-meta div {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+}
+
+.privacy-meta dt {
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.privacy-meta dd {
+  margin: 0;
+  color: var(--color-primary-strong);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.privacy-meta a,
+.privacy-section a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.privacy-summary {
+  padding: 24px;
+}
+
+.privacy-summary h2 {
+  margin: 0 0 16px;
+  color: var(--color-primary-strong);
+  font-size: 22px;
+}
+
+.privacy-summary ul,
+.privacy-section ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--color-muted);
+  line-height: 1.72;
+}
+
+.privacy-main {
+  display: grid;
+  gap: 18px;
+  padding-bottom: 76px;
+}
+
+.privacy-section {
+  padding: 28px;
+}
+
+.privacy-section h2 {
+  margin: 0 0 14px;
+  color: var(--color-primary-strong);
+  font-size: 32px;
+  letter-spacing: 0;
+}
+
+.privacy-section p {
+  margin: 0 0 14px;
+  color: var(--color-muted);
+  line-height: 1.78;
+}
+
+.privacy-section p:last-child,
+.privacy-section ul:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 920px) {
+  .privacy-hero__grid,
+  .privacy-meta {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .privacy-hero {
+    padding: 52px 0 38px;
+  }
+
+  .privacy-hero__title {
+    font-size: 42px;
+  }
+
+  .privacy-section h2 {
+    font-size: 26px;
+  }
+
+  .privacy-section,
+  .privacy-summary {
+    padding: 22px;
+  }
+}

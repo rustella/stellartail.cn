@@ -13,6 +13,7 @@ export const enUS = {
     web: 'Web App',
     downloads: 'Downloads',
     docs: 'API Docs',
+    privacy: 'Privacy Policy',
     language: 'Language'
   },
   jump: {
@@ -136,7 +137,8 @@ export const enUS = {
       brand: 'StellarTrail',
       backHome: 'Back to site',
       web: 'Web App',
-      docs: 'API Docs'
+      docs: 'API Docs',
+      privacy: 'Privacy Policy'
     },
     hero: {
       eyebrow: 'Downloads',
@@ -180,6 +182,82 @@ export const enUS = {
       }
     },
     footerNote: 'No fake download link or fake mini program code is shown; unpublished entries are clearly marked.'
+  },
+  privacy: {
+    seo: {
+      title: 'StellarTrail | Privacy Policy',
+      description: 'Learn how 寻径星野/StellarTrail collects, uses, stores, protects, and deletes personal information.'
+    },
+    nav: {
+      label: 'Privacy policy navigation',
+      brand: 'StellarTrail',
+      backHome: 'Back to site',
+      downloads: 'Downloads',
+      docs: 'API Docs'
+    },
+    hero: {
+      eyebrow: 'Privacy',
+      title: 'Privacy Policy',
+      body: 'This policy explains how 寻径星野/StellarTrail handles information related to you when providing account, gear, packing list, trip preparation, trail, knot skill, and feedback services.'
+    },
+    meta: {
+      label: 'Policy information',
+      operator: 'Operator',
+      operatorName: '寻径星野/StellarTrail',
+      effectiveDate: 'Effective date',
+      effectiveDateValue: '2026-06-15',
+      contact: 'Privacy contact',
+      contactEmail: 'abuse@stellartrail.cn'
+    },
+    summary: {
+      title: 'Key points',
+      items: ['We process personal information only for accounts, sync, product features, security, support, and compliance needs.', 'We do not sell personal information or use it for third-party advertising profiles.', 'Account deletion is supported: you can start deletion in the app or contact abuse@stellartrail.cn for help.']
+    },
+    sections: [
+      {
+        id: 'scope',
+        title: '1. Scope',
+        paragraphs: ['This policy applies to StellarTrail official site, Web app, Android app, iOS app, macOS app, WeChat Mini Program, and related product entries. Feature availability may differ by platform, and the information handled depends on the features you use.']
+      },
+      {
+        id: 'data',
+        title: '2. Information We May Handle',
+        paragraphs: ['To provide account sign-in, data sync, outdoor preparation, and customer support, we may handle the following information:'],
+        bullets: ['Account and sign-in information: username, nickname, email address, phone number, WeChat login identifier, verification result, access-token hash, and session state. For password-based sign-in, user passwords are stored only after server-side SHA-256 hashing; plaintext passwords are not stored.', 'Profile and outdoor profile information: avatar, real name, gender, birth date, height, contact details, emergency contact, blood type, medical history, allergy history, diet preference, insurance information, and outdoor experience notes that you choose to provide.', 'Product content data: personal gear, gear weight and price, storage location, packing lists, trip preparation, member collaboration, trail files, map annotations, knot favorites, product-plan votes or subscriptions, and related content.', 'Uploads and feedback: avatar images, feedback images, feedback text, contact details, page path, client platform, client version, and device model.', 'Permissions and device-related data: the Android app may use coarse or precise location after your authorization for map, trail, or current-location features; when you import GPX, KML, KMZ, FIT, or similar files, we read the files you choose or share with the app.', 'Security and statistics: to protect service security and understand API operation, we record minimized aggregate API usage statistics such as authenticated user ID, HTTP method, endpoint pattern, status code, date bucket, and request count; we do not record request bodies, response bodies, tokens, cookies, IP addresses, or User-Agent values.']
+      },
+      {
+        id: 'use',
+        title: '3. How We Use Information',
+        paragraphs: ['We use the information above for these purposes:'],
+        bullets: ['Create and maintain accounts, complete sign-in, verify codes, reset passwords, and bind email addresses or phone numbers.', 'Sync and display your gear, packing lists, trips, trails, knot favorites, and other outdoor preparation content.', 'Process avatars, feedback images, and feedback content so we can investigate issues and respond to support requests.', 'Maintain service security, identify abnormal sign-ins, prevent abuse, troubleshoot failures, and satisfy audit or legal compliance requirements.', 'Generate aggregate statistics without directly identifying individuals, helping us understand feature usage and service stability.']
+      },
+      {
+        id: 'sharing',
+        title: '4. Sharing and Processing by Service Providers',
+        paragraphs: ['We do not sell personal information. To provide the service, we may use the following providers or disclose necessary information within the required scope:'],
+        bullets: ['Cloud servers, databases, object storage, and CDN services used to store account data, images, trail files, and public content media.', 'Email and SMS providers used to send registration, login, binding, or password reset verification codes.', 'WeChat platform capabilities used to complete WeChat Mini Program sign-in and account identification.', 'App stores, review platforms, or compliance organizations used for app publication, review, dispute handling, and safety compliance.', 'Information required by applicable laws, regulations, regulators, courts, or administrative authorities.']
+      },
+      {
+        id: 'security',
+        title: '5. Retention and Security',
+        paragraphs: ['We use reasonable technical and organizational safeguards to protect personal information, including access control, encrypted transmission, SHA-256 password hashing before database storage, token-hash storage, image type validation, upload quotas, and minimized logging. We retain information only for as long as needed for the purposes described in this policy. When information is no longer needed, or when you lawfully request deletion and no retention reason applies, we delete or anonymize it.']
+      },
+      {
+        id: 'delete-account',
+        title: '6. Access, Correction, and Account Deletion',
+        paragraphs: ['StellarTrail supports account deletion. You can start account deletion in the app. If you cannot use the in-app entry, contact abuse@stellartrail.cn and we will handle account and related personal-data deletion requests.', 'You may also use the same email address to request access, correction, completion, deletion, authorization withdrawal, or privacy help. To protect account security, we may verify your account identity before processing the request.']
+      },
+      {
+        id: 'children',
+        title: '7. Children',
+        paragraphs: ['StellarTrail is intended for users who can reasonably judge outdoor activity risks. If you are under 14, use the service only with guardian consent and guidance. Guardians may contact abuse@stellartrail.cn if they believe a child’s information was submitted improperly.']
+      },
+      {
+        id: 'updates',
+        title: '8. Updates and Contact',
+        paragraphs: ['We may update this policy when product features, laws, or operations change. Material changes will be communicated through the official site or appropriate in-product notices. For privacy questions, complaints, account deletion, or personal information rights requests, contact abuse@stellartrail.cn.']
+      }
+    ]
   },
   docs: {
     seo: {
@@ -324,7 +402,8 @@ export const enUS = {
   footer: {
     tagline: 'StellarTrail',
     caption: 'Outdoor preparation starts with checklists and knots',
-    rights: 'All rights reserved.'
+    rights: 'All rights reserved.',
+    privacyPolicy: 'Privacy Policy'
   },
   language: {
     current: 'English',

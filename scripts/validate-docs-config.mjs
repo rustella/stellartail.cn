@@ -76,7 +76,7 @@ const containsConfiguredOrigin = (file) => {
 };
 
 if (configuredOrigin) {
-  const sourceCandidates = collectTextFiles(['src', 'docs', 'public', 'scripts', '.agent', 'config/docs.example.json', 'README.md', 'package.json', 'vite.config.ts', 'tests']);
+  const sourceCandidates = collectTextFiles(['src', 'docs', 'downloads', 'privacy', 'public', 'scripts', '.agent', 'config/docs.example.json', 'README.md', 'package.json', 'vite.config.ts', 'tests']);
   const sourceLeaks = sourceCandidates.filter(containsConfiguredOrigin);
   if (sourceLeaks.length) {
     console.error('Docs production origin leaked into public source candidates:');

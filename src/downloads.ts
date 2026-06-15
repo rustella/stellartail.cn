@@ -70,6 +70,7 @@ const renderDownloads = (): void => {
             <a href="${sitePath(`?lang=${activeLocale}`)}">${downloads.nav.backHome}</a>
             <a class="nav__web-link" href="https://app.stellartrail.cn/" target="_blank" rel="noopener noreferrer">${downloads.nav.web}</a>
             <a class="nav__docs-link" href="${sitePath(`docs/?lang=${activeLocale}`)}">${downloads.nav.docs}</a>
+            <a class="nav__privacy-link" href="${sitePath(`privacy/?lang=${activeLocale}`)}">${downloads.nav.privacy}</a>
             <button class="lang-button" type="button" data-language-toggle aria-label="${m.language.switchTo}">${m.language.current}</button>
           </div>
         </div>
@@ -101,6 +102,19 @@ const renderDownloads = (): void => {
         </div>
         <p class="downloads-note">${downloads.footerNote}</p>
       </main>
+
+      <footer class="footer">
+        <div class="container footer__inner">
+          <div class="footer__brand">
+            <strong>${downloads.nav.brand}</strong>
+            <span>${m.footer.caption}</span>
+          </div>
+          <div class="footer__legal">
+            <span>© ${new Date().getFullYear()} ${m.footer.rights}</span>
+            <a class="footer__privacy-link" href="${sitePath(`privacy/?lang=${activeLocale}`)}">${m.footer.privacyPolicy}</a>
+          </div>
+        </div>
+      </footer>
     </div>
   `;
 
