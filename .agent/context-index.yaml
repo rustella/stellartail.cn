@@ -6,13 +6,6 @@ topics:
   brand-content:
     docs:
       - .agent/knowledge/brand-and-content.md
-  docs-api-page:
-    docs:
-      - .agent/knowledge/docs-api-page.md
-      - docs/index.html
-      - src/docs.ts
-      - src/content/api-docs.ts
-      - config/docs.example.json
   deployment:
     docs:
       - .agent/knowledge/deployment.md
@@ -52,15 +45,3 @@ tasks:
       - .agent/knowledge/deployment.md
       - .github/workflows/deploy-pages.yml
       - scripts/validate-deploy-base.mjs
-  docs-api-page:
-    docs:
-      - .agent/knowledge/docs-api-page.md
-      - src/content/api-docs.ts
-      - docs/index.html
-      - scripts/validate-docs-config.mjs
-  docs-deploy-config:
-    docs:
-      - .agent/knowledge/docs-api-page.md
-      - config/docs.example.json
-      - .gitignore
-      - scripts/validate-docs-config.mjs

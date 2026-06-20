@@ -3,11 +3,11 @@
 ```text
 .
 ├── index.html
-├── docs/                    # Static API reference page entry
+├── product/                 # Product introduction page
 ├── downloads/               # Static downloads and mobile entries page
 ├── src/
-│   ├── main.ts                 # Homepage rendering and language binding
-│   ├── docs.ts                 # Docs page rendering and language binding
+│   ├── main.ts                 # Minimal homepage rendering and language binding
+│   ├── product.ts              # Product introduction rendering and language binding
 │   ├── downloads.ts            # Downloads page rendering and language binding
 │   ├── config/                 # Deployment-facing runtime config helpers
 │   ├── i18n/                   # Locale resolution and bilingual copy

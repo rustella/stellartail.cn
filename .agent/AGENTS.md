@@ -13,7 +13,7 @@ This file is a lightweight router for agents working in the `stellartail.cn` sta
 
 - Code comments must be English.
 - User-visible copy must live in `src/i18n/locales/*`.
-- Keep the site static. Do not add automatic backend API calls, committed API base URLs, axios, or runtime server requirements. `/docs/` may include a user-initiated request runner that only calls an http(s) service origin typed by the reader.
+- Keep the site static. Do not add automatic backend API calls, committed API base URLs, axios, or runtime server requirements.
 - Do not market unavailable product capabilities; the site currently presents gear and knot skills only.
 - Motion must be tasteful, performant, and respect `prefers-reduced-motion`.
 - Do not commit secrets, tokens, credentials, or deployment keys.
@@ -24,5 +24,3 @@ This file is a lightweight router for agents working in the `stellartail.cn` sta
 - Copy/i18n work: read `.agent/knowledge/brand-and-content.md` and run `npm run validate:i18n`.
 - Visual changes: read `.agent/agents/visual-reviewer.md` and run Playwright checks.
 - Context changes: update `.agent/manifest.yaml`, `.agent/context-index.yaml`, and `.agent/commands.yaml` when commands or structure change.
-
-- Docs API page work: read `.agent/knowledge/docs-api-page.md`; never commit or render the real docs origin.

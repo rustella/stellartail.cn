@@ -12,6 +12,9 @@
   border-bottom: 1px solid var(--color-line);
 }
 .nav__inner {
+  width: calc(100% - 40px);
+  max-width: none;
+  margin: 0 auto;
   min-height: 72px;
   display: flex;
   align-items: center;
@@ -20,11 +23,12 @@
 }
 .nav__brand { display: inline-flex; align-items: center; min-width: 0; gap: 12px; font-weight: 800; letter-spacing: -0.02em; }
 .nav__brand img { width: 38px; height: 38px; flex: 0 0 auto; }
+.nav__brand-label--short { display: none; }
 .nav__links { display: flex; align-items: center; gap: 18px; color: var(--color-muted); font-size: 14px; }
 .nav__links a:hover { color: var(--color-primary); }
+.nav__product-link,
 .nav__web-link,
 .nav__downloads-link,
-.nav__docs-link,
 .nav__privacy-link {
   display: inline-flex;
   align-items: center;
@@ -37,9 +41,9 @@
   background: rgba(22, 91, 76, 0.08);
   border: 1px solid rgba(22, 91, 76, 0.14);
 }
+.nav__product-link:hover,
 .nav__web-link:hover,
 .nav__downloads-link:hover,
-.nav__docs-link:hover,
 .nav__privacy-link:hover { background: rgba(22, 91, 76, 0.12); }
 .lang-button {
   border: 1px solid rgba(22, 91, 76, 0.18);
@@ -131,9 +135,9 @@
 }
 @media (max-width: 920px) {
   .nav__links a { display: none; }
+  .nav__links a.nav__product-link,
   .nav__links a.nav__web-link,
-  .nav__links a.nav__downloads-link,
-  .nav__links a.nav__docs-link { display: inline-flex; }
+  .nav__links a.nav__downloads-link { display: inline-flex; }
   .hero { min-height: auto; padding: 64px 0; }
   .hero__grid, .two-column { grid-template-columns: 1fr; }
   .cards-grid, .cards-grid--capabilities { grid-template-columns: 1fr 1fr; }
@@ -142,15 +146,14 @@
 }
 @media (max-width: 620px) {
   .container { width: min(100% - 28px, var(--container)); }
-  .nav__inner { min-height: 64px; gap: 8px; }
+  .nav__inner { width: calc(100% - 28px); min-height: 64px; gap: 8px; }
   .nav__links { gap: 8px; }
   .nav__web-link,
   .nav__downloads-link,
-  .nav__docs-link,
   .nav__privacy-link { min-height: 34px; padding: 0 10px; }
   .lang-button { padding: 9px 11px; }
   .nav__brand { gap: 8px; }
-  .nav__brand span { max-width: 84px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .nav__brand-label { max-width: 84px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .hero { padding: 46px 0 54px; }
   .section { padding: 64px 0; }
   .cards-grid,
@@ -163,5 +166,7 @@
 }
 
 @media (max-width: 460px) {
-  .nav__brand span { display: none; }
+  .nav__brand-label--full { display: none; }
+  .nav__brand-label--short { display: inline; max-width: 92px; }
+  .landing-shell .nav__links a.nav__web-link { display: none; }
 }

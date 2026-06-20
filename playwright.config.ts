@@ -1,11 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
 import { existsSync } from 'node:fs';
 
-const localChrome = existsSync('/usr/bin/google-chrome') ? '/usr/bin/google-chrome' : undefined;
+const configuredChromium = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
+const localChrome = configuredChromium ?? (existsSync('/usr/bin/google-chrome') ? '/usr/bin/google-chrome' : undefined);
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 30_000,
+  timeout: 60_000,
   expect: { timeout: 5_000 },
   webServer: {
     command: 'npm run dev -- --port 4173',

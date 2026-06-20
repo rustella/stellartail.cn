@@ -1,0 +1,797 @@
+body {
+  background:
+    radial-gradient(circle at 12% 4%, rgba(200, 248, 238, 0.74), transparent 30rem),
+    radial-gradient(circle at 84% 2%, rgba(254, 243, 199, 0.58), transparent 25rem),
+    linear-gradient(180deg, #dff0eb 0%, #f6fffc 46%, #effaf6 100%);
+  color: #0f172a;
+}
+
+.site-shell,
+.downloads-shell,
+.privacy-shell {
+  overflow-x: clip;
+  background:
+    linear-gradient(135deg, rgba(11, 118, 107, 0.045) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(11, 118, 107, 0.035) 25%, transparent 25%);
+  background-position: 0 0, 18px 18px;
+  background-size: 36px 36px;
+}
+
+.nav {
+  background: rgba(246, 255, 252, 0.86);
+  border-bottom-color: rgba(216, 240, 234, 0.9);
+}
+
+.nav__links {
+  gap: 8px;
+}
+
+.nav__links > a,
+.lang-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(11, 118, 107, 0.13);
+  border-radius: 999px;
+  color: #0b766b;
+  background: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  font-weight: 850;
+  white-space: nowrap;
+  box-shadow: none;
+}
+
+.nav__web-link,
+.nav__downloads-link,
+.nav__privacy-link {
+  background: rgba(204, 251, 241, 0.66) !important;
+  border-color: rgba(11, 118, 107, 0.16) !important;
+}
+
+.hero {
+  min-height: auto;
+  padding: 72px 0 42px;
+}
+
+.hero__grid--workbench {
+  grid-template-columns: minmax(0, 0.96fr) minmax(340px, 0.74fr);
+  align-items: start;
+}
+
+.hero__title,
+.section__title,
+.downloads-hero__title,
+.privacy-hero__title {
+  color: #0f172a;
+  letter-spacing: 0;
+}
+
+.hero__title {
+  font-size: clamp(40px, 6vw, 70px);
+  line-height: 1.02;
+}
+
+.section__title,
+.downloads-hero__title,
+.privacy-hero__title {
+  line-height: 1.05;
+}
+
+.button {
+  min-height: 46px;
+  border-radius: 16px;
+  overflow-wrap: anywhere;
+}
+
+.button--primary {
+  background: linear-gradient(135deg, #0b766b, #0f8b7e);
+  box-shadow: 0 16px 34px rgba(11, 118, 107, 0.22);
+}
+
+.button--quiet,
+.button--ghost {
+  color: #0b766b;
+  background: rgba(255, 255, 255, 0.84);
+  border-color: rgba(11, 118, 107, 0.15);
+}
+
+.button--text {
+  color: #0b766b;
+  background: rgba(204, 251, 241, 0.42);
+  box-shadow: none;
+}
+
+.workbench-icon {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.workbench-icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 15px;
+  color: #0b766b;
+  background: rgba(204, 251, 241, 0.62);
+}
+
+.hero-phone-stage,
+.task-panel,
+.downloads-status,
+.download-card,
+.privacy-meta div,
+.privacy-summary,
+.privacy-section {
+  border: 1px solid rgba(216, 240, 234, 0.95);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 20px 58px rgba(15, 139, 126, 0.1);
+}
+
+.hero-phone-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 640px;
+  padding: 28px 0;
+  border-radius: 42px;
+  background:
+    radial-gradient(circle at 76% 12%, rgba(228, 178, 77, 0.2), transparent 12rem),
+    radial-gradient(circle at 20% 84%, rgba(45, 212, 191, 0.16), transparent 13rem),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(241, 255, 251, 0.5));
+}
+
+.hero-phone-stage::before {
+  content: '';
+  position: absolute;
+  inset: 46px 34px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.9), transparent 9rem),
+    radial-gradient(circle at 50% 58%, rgba(15, 118, 107, 0.14), transparent 13rem);
+  filter: blur(10px);
+}
+
+.hero-phone-stage::after {
+  content: '';
+  position: absolute;
+  right: 18%;
+  bottom: 24px;
+  left: 18%;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(15, 118, 107, 0.14);
+  filter: blur(18px);
+}
+
+.iphone-device {
+  position: relative;
+  z-index: 2;
+  width: min(340px, 86%);
+  aspect-ratio: 430 / 932;
+  padding: 2px;
+  border: 0;
+  border-radius: 55px;
+  background:
+    linear-gradient(90deg, #9aa6b5, #f8fafc 3%, #cbd5e1 7%, #f1f5f9 49%, #cbd5e1 91%, #f8fafc 96%, #8c98a7),
+    #e5e7eb;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.62),
+    inset 0 0 0 2px rgba(100, 116, 139, 0.18),
+    0 24px 54px rgba(15, 118, 107, 0.16),
+    0 8px 18px rgba(15, 23, 42, 0.12);
+}
+
+.iphone-device::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 1px solid rgba(15, 23, 42, 0.72);
+  border-radius: 52px;
+  pointer-events: none;
+}
+
+.iphone-device__screen {
+  position: relative;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+  border: 4px solid #050814;
+  border-radius: 53px;
+  background: #020617;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.035),
+    inset 0 0 12px rgba(2, 6, 23, 0.42);
+}
+
+.iphone-device__screen img {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 48px;
+  transform: scale(1.012);
+  transform-origin: center top;
+}
+
+.iphone-device__status-mask {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  left: 5px;
+  z-index: 2;
+  height: 34px;
+  border-radius: 45px 45px 12px 12px;
+  background:
+    linear-gradient(90deg, rgba(237, 255, 250, 0.98), rgba(238, 255, 250, 0.92) 52%, rgba(235, 255, 249, 0.98)),
+    #edfffa;
+  pointer-events: none;
+}
+
+.iphone-device__status-bar {
+  position: absolute;
+  top: 17px;
+  right: 18px;
+  left: 18px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 15px;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0;
+  pointer-events: none;
+}
+
+.iphone-device__status-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #0f172a;
+}
+
+.iphone-device__status-icon {
+  display: block;
+  color: currentColor;
+  flex: 0 0 auto;
+}
+
+.iphone-device__status-icon--cellular {
+  width: 18px;
+  height: 12px;
+  fill: currentColor;
+}
+
+.iphone-device__status-icon--wifi {
+  width: 16px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.1;
+  stroke-linecap: round;
+}
+
+.iphone-device__status-icon--battery {
+  width: 24px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.iphone-device__battery-fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+.iphone-device__island {
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  z-index: 5;
+  width: 84px;
+  height: 23px;
+  border-radius: 999px;
+  background: #020617;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 1px 5px rgba(15, 23, 42, 0.28);
+  transform: translateX(-50%);
+}
+
+.iphone-device__button {
+  position: absolute;
+  z-index: 1;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f8fafc, #9ca3af 48%, #64748b);
+  box-shadow:
+    inset 1px 0 1px rgba(255, 255, 255, 0.72),
+    0 0 0 1px rgba(100, 116, 139, 0.22);
+}
+
+.iphone-device__button--mute {
+  top: 112px;
+  left: -2px;
+  height: 28px;
+}
+
+.iphone-device__button--volume-up {
+  top: 166px;
+  left: -3px;
+  height: 60px;
+}
+
+.iphone-device__button--volume-down {
+  top: 246px;
+  left: -3px;
+  height: 60px;
+}
+
+.iphone-device__button--power {
+  top: 190px;
+  right: -3px;
+  height: 84px;
+}
+
+.iphone-device__button--camera-control {
+  top: 382px;
+  right: -3px;
+  height: 72px;
+  opacity: 0.88;
+}
+
+.phone-mock--prototype,
+.feature-panel--prototype {
+  aspect-ratio: 390 / 844;
+  padding: 0;
+  border: 0;
+  border-radius: 38px;
+  background: transparent;
+  box-shadow: 0 24px 64px rgba(15, 118, 107, 0.18);
+}
+
+.phone-mock--prototype::before,
+.feature-panel--prototype::before {
+  display: none;
+}
+
+.phone-mock--prototype .phone-mock__screen,
+.feature-panel--prototype img {
+  overflow: hidden;
+  border: 0;
+  border-radius: 38px;
+  background: transparent;
+}
+
+.phone-mock--prototype .phone-mock__screen img,
+.feature-panel--prototype img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.workbench-capability {
+  grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
+  min-height: 292px;
+}
+
+.context-link {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  align-self: end;
+  margin-top: 2px;
+  padding: 0 12px;
+  border-radius: 999px;
+  color: #0b766b;
+  background: rgba(204, 251, 241, 0.52);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.context-link .workbench-icon {
+  width: 15px;
+  height: 15px;
+  transition: transform 160ms ease;
+}
+
+.context-link:hover .workbench-icon {
+  transform: translateX(2px);
+}
+
+.task-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.46fr);
+  gap: 18px 30px;
+  align-items: center;
+  padding: 28px;
+  border-radius: 30px;
+}
+
+.task-panel--gallery {
+  grid-template-columns: minmax(0, 0.72fr) minmax(520px, 1fr);
+  align-items: start;
+}
+
+.task-panel--packing-gallery {
+  grid-template-columns: minmax(0, 0.78fr) minmax(330px, 0.62fr);
+}
+
+.task-panel .feature-panel {
+  grid-row: span 2;
+}
+
+.task-panel--gallery .gear-screenshot-gallery,
+.task-panel--gallery .trips-screenshot-gallery,
+.task-panel--gallery .skills-screenshot-gallery {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.task-panel--packing-gallery .packing-screenshot-gallery {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.gear-screenshot-gallery,
+.trips-screenshot-gallery,
+.skills-screenshot-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(132px, 1fr));
+  gap: clamp(10px, 1.2vw, 16px);
+  align-self: center;
+  align-items: start;
+  width: 100%;
+  max-width: 610px;
+  margin: 8px auto 0;
+}
+
+.gear-screenshot-gallery .feature-panel,
+.trips-screenshot-gallery .feature-panel,
+.skills-screenshot-gallery .feature-panel {
+  grid-row: auto;
+  width: 100%;
+  max-width: 192px;
+  justify-self: center;
+}
+
+.packing-screenshot-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(132px, 1fr));
+  gap: clamp(12px, 1.4vw, 18px);
+  align-self: center;
+  align-items: start;
+  width: 100%;
+  max-width: 430px;
+  margin: 8px auto 0;
+}
+
+.packing-screenshot-gallery .feature-panel {
+  grid-row: auto;
+  width: 100%;
+  max-width: 198px;
+  justify-self: center;
+}
+
+.screenshot-preview-trigger {
+  appearance: none;
+  border: 0;
+  font: inherit;
+  cursor: zoom-in;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.screenshot-preview-trigger:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 30px 74px rgba(15, 118, 107, 0.22);
+}
+
+.screenshot-preview-trigger:focus-visible {
+  outline: 3px solid rgba(15, 139, 126, 0.34);
+  outline-offset: 5px;
+}
+
+.gear-screenshot-gallery__item--1,
+.gear-screenshot-gallery__item--3,
+.trips-screenshot-gallery__item--1,
+.trips-screenshot-gallery__item--3,
+.skills-screenshot-gallery__item--1,
+.skills-screenshot-gallery__item--3,
+.packing-screenshot-gallery__item--2 {
+  margin-top: 34px;
+}
+
+.screenshot-lightbox[hidden] {
+  display: none;
+}
+
+.screenshot-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  isolation: isolate;
+}
+
+.screenshot-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(6, 28, 24, 0.62);
+  backdrop-filter: blur(14px);
+  cursor: zoom-out;
+}
+
+.screenshot-lightbox__frame {
+  position: relative;
+  z-index: 1;
+  width: min(430px, 88vw);
+  max-height: min(88vh, 880px);
+  display: flex;
+  justify-content: center;
+}
+
+.screenshot-lightbox__frame img {
+  display: block;
+  width: 100%;
+  max-height: calc(100vh - 76px);
+  object-fit: contain;
+  border-radius: 36px;
+  cursor: zoom-out;
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, 0.38),
+    0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+
+.screenshot-lightbox__close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(216, 240, 234, 0.92);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.screenshot-lightbox__close::before,
+.screenshot-lightbox__close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: #0f172a;
+}
+
+.screenshot-lightbox__close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.screenshot-lightbox__close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.screenshot-lightbox__close:focus-visible {
+  outline: 3px solid rgba(204, 251, 241, 0.8);
+  outline-offset: 4px;
+}
+
+.downloads-hero,
+.privacy-hero {
+  padding: 64px 0 36px;
+}
+
+.download-card {
+  border-radius: 28px;
+}
+
+.download-card--android .download-card__media,
+.download-card--wechat .download-card__media {
+  width: min(216px, 100%);
+  border: 0;
+  border-radius: 30px;
+  background: transparent;
+  box-shadow: 0 24px 64px rgba(15, 118, 107, 0.14);
+}
+
+.download-card--android .download-card__media img,
+.download-card--wechat .download-card__media img {
+  aspect-ratio: 390 / 844;
+  border-radius: 30px;
+  object-fit: contain;
+}
+
+.download-action {
+  min-height: 46px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0b766b, #0f8b7e);
+}
+
+.download-action--disabled {
+  color: #64748b;
+  background: rgba(100, 116, 139, 0.1);
+}
+
+.privacy-main {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.privacy-section {
+  border-radius: 24px;
+}
+
+.privacy-section h2::before {
+  content: '';
+  display: inline-flex;
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: #0b766b;
+  box-shadow: 0 0 0 6px rgba(204, 251, 241, 0.78);
+  vertical-align: middle;
+}
+
+@media (max-width: 980px) {
+  .hero__grid--workbench,
+  .downloads-hero__grid,
+  .privacy-hero__grid,
+  .task-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .task-panel .feature-panel {
+    grid-row: auto;
+  }
+
+  .task-panel--gallery .gear-screenshot-gallery,
+  .task-panel--gallery .trips-screenshot-gallery,
+  .task-panel--gallery .skills-screenshot-gallery,
+  .task-panel--packing-gallery .packing-screenshot-gallery {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .gear-screenshot-gallery,
+  .trips-screenshot-gallery,
+  .skills-screenshot-gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 620px;
+  }
+
+  .packing-screenshot-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 680px) {
+  .nav__inner {
+    min-height: auto;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 12px 0;
+  }
+
+  .nav__links {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .nav__links > a,
+  .lang-button {
+    min-height: 36px;
+    padding: 0 11px;
+    font-size: 13px;
+  }
+
+  .hero {
+    padding: 42px 0 28px;
+  }
+
+  .task-panel,
+  .download-card,
+  .privacy-section,
+  .privacy-summary {
+    padding: 20px;
+    border-radius: 24px;
+  }
+
+  .download-card__footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .download-action {
+    width: 100%;
+  }
+
+  .gear-screenshot-gallery,
+  .trips-screenshot-gallery,
+  .skills-screenshot-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .gear-screenshot-gallery .feature-panel,
+  .trips-screenshot-gallery .feature-panel,
+  .skills-screenshot-gallery .feature-panel {
+    max-width: 172px;
+  }
+
+  .packing-screenshot-gallery {
+    gap: 12px;
+  }
+
+  .packing-screenshot-gallery .feature-panel {
+    max-width: 172px;
+  }
+
+  .gear-screenshot-gallery__item--1,
+  .gear-screenshot-gallery__item--3,
+  .trips-screenshot-gallery__item--1,
+  .trips-screenshot-gallery__item--3,
+  .skills-screenshot-gallery__item--1,
+  .skills-screenshot-gallery__item--3,
+  .packing-screenshot-gallery__item--2 {
+    margin-top: 0;
+  }
+
+  .screenshot-lightbox {
+    padding: 14px;
+  }
+
+  .screenshot-lightbox__frame {
+    width: min(330px, 92vw);
+  }
+
+  .screenshot-lightbox__frame img {
+    border-radius: 30px;
+  }
+
+  .screenshot-lightbox__close {
+    top: -10px;
+    right: -8px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .privacy-hero__title,
+  .downloads-hero__title {
+    font-size: 38px;
+  }
+}

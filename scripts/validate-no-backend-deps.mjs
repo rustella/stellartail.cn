@@ -1,10 +1,10 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, normalize } from 'node:path';
 
-const roots = ['src', 'docs', 'downloads', 'privacy', 'index.html', 'vite.config.ts'];
-const fetchAllowedFiles = new Set([normalize('src/docs.ts')]);
+const roots = ['src', 'downloads', 'privacy', 'index.html', 'vite.config.ts'];
+const fetchAllowedFiles = new Set();
 const bannedEverywhere = [/axios/i, /VITE_API_BASE_URL/i, /API_BASE_URL/i, /localhost:\d+/i];
-const apiPathAllowedFiles = new Set([normalize('src/content/api-docs.ts'), normalize('src/docs.ts')]);
+const apiPathAllowedFiles = new Set();
 
 const files = [];
 const walk = (path) => {
@@ -22,7 +22,7 @@ const issues = [];
 for (const file of files) {
   const text = readFileSync(file, 'utf8');
   if (/fetch\s*\(/i.test(text) && !fetchAllowedFiles.has(normalize(file))) {
-    issues.push(`${file}: fetch() is only allowed in the user-initiated docs request runner`);
+    issues.push(`${file}: fetch() is not allowed in static site source`);
   }
   for (const pattern of bannedEverywhere) {
     if (pattern.test(text)) issues.push(`${file}: ${pattern}`);

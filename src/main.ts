@@ -2,23 +2,40 @@ import './styles/tokens.css';
 import './styles/base.css';
 import './styles/layout.css';
 import './styles/components.css';
+import './styles/downloads.css';
+import './styles/landing.css';
 import './styles/motion.css';
 
-import { initReveal } from './effects/reveal';
-import { initStarfield } from './effects/starfield';
 import { deploymentConfig } from './config/deployment';
+import { deviceBezelAssets, screenshotAssets } from './content/screenshots';
 import { getMessages, nextLocale, persistLocale, resolveInitialLocale, type Locale, type Messages } from './i18n';
-import { productCapabilities } from './content/product';
-import { screenshotAssets } from './content/screenshots';
 import { assetPath, sitePath } from './utils/asset';
 
 let activeLocale: Locale = resolveInitialLocale();
-let teardownFloatingBreadcrumb: (() => void) | null = null;
 
 const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('Missing app root');
 
 const ICP_RECORD_URL = 'https://beian.miit.gov.cn/';
+const IOS_APP_STORE_URL = 'https://apps.apple.com/app/stellartrail';
+const MAC_APP_STORE_URL = 'https://apps.apple.com/app/stellartrail';
+const GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=cn.stellartrail';
+const ANDROID_APK_PATH = 'downloads/stellartrail-android.apk';
+const WEB_APP_URL = 'https://app.stellartrail.cn/';
+
+type StoreKey = 'ios' | 'macos' | 'android';
+
+const storeLinks = {
+  ios: IOS_APP_STORE_URL,
+  macos: MAC_APP_STORE_URL,
+  android: GOOGLE_PLAY_URL
+} as const;
+
+const storeBadgeAssets = {
+  ios: 'assets/store/app-store-badge.svg',
+  macos: 'assets/store/app-store-badge.svg',
+  android: 'assets/store/google-play-badge.svg'
+} as const;
 
 const escapeHtml = (value: string): string =>
   value
@@ -28,207 +45,126 @@ const escapeHtml = (value: string): string =>
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 
-const listItems = (items: readonly string[]): string => items.map((item) => `<li>${item}</li>`).join('');
-
 const renderIcpRecordLink = (): string => {
   if (!deploymentConfig.icpRecordNumber) return '';
   return `<a class="footer__icp-link" href="${ICP_RECORD_URL}" target="_blank" rel="noopener noreferrer">${escapeHtml(deploymentConfig.icpRecordNumber)}</a>`;
 };
 
-const entryHref = (href: string, external: boolean): string => (external ? href : sitePath(`${href}?lang=${activeLocale}`));
+const renderStoreBadge = (store: StoreKey, badge: Messages['downloads']['storeBadges'][StoreKey]): string =>
+  `<a class="store-badge store-badge--${store}" href="${storeLinks[store]}" target="_blank" rel="noopener noreferrer" aria-label="${badge.ariaLabel}" data-store-badge="${store}">
+    <img class="store-badge__image" src="${assetPath(storeBadgeAssets[store])}" alt="" aria-hidden="true" />
+  </a>`;
 
-const entryLinkAttrs = (href: string, external: boolean): string =>
-  external
-    ? `href="${entryHref(href, external)}" target="_blank" rel="noopener noreferrer"`
-    : `href="${entryHref(href, external)}"`;
+const renderSoonStoreBadge = (label: string): string =>
+  `<span class="store-badge store-badge--watch store-badge--disabled landing-entry__disabled-badge" aria-label="${label}" aria-disabled="true" data-store-badge="watchos">
+    <img class="store-badge__image" src="${assetPath(storeBadgeAssets.ios)}" alt="" aria-hidden="true" />
+  </span>`;
 
-const renderCapabilityCards = (m: Messages): string =>
-  productCapabilities
-    .map((capability) => {
-      const copy = m.product.capabilities[capability.id];
-      const status = m.product.statusLabels[capability.status];
-      return `<article class="capability-card">
-        <span class="status-pill">${status}</span>
-        <h3>${copy.title}</h3>
-        <p class="capability-card__subtitle">${copy.subtitle}</p>
-        <p>${copy.body}</p>
-      </article>`;
-    })
-    .join('');
-
-const renderCapabilitySections = (m: Messages): string => {
-  const sectionCopy = {
-    gear: m.gear,
-    packing: m.packing,
-    trips: m.trips,
-    skills: m.skills
-  };
-  const imageAlt = {
-    gear: m.screenshots.androidGearAlt,
-    packing: m.screenshots.androidPackingAlt,
-    trips: m.screenshots.androidTripsAlt,
-    skills: m.screenshots.androidSkillsAlt
-  };
-
-  return productCapabilities
-    .map((capability) => {
-      const copy = sectionCopy[capability.id];
-      const text = `<div data-reveal>
-        <p class="eyebrow">${copy.eyebrow}</p>
-        <h2 class="section__title">${copy.title}</h2>
-        <p class="section__body">${copy.body}</p>
-        <ul class="bullet-list">${listItems(copy.bullets)}</ul>
-      </div>`;
-      const media = `<div class="feature-panel feature-panel--phone float-soft" data-reveal>
-        <img src="${assetPath(screenshotAssets[capability.screenshotKey])}" alt="${imageAlt[capability.id]}" />
-      </div>`;
-
-      return `<section class="section capability-section" id="${capability.sectionId}">
-        <div class="container two-column">
-          ${text}${media}
+const renderDeviceShowcase = (m: Messages): string => `
+  <section class="device-showcase" aria-label="${m.home.devices.label}">
+    <div class="device-stage" aria-label="${m.home.devices.label}">
+      <figure class="device-frame device-frame--mac">
+        <div class="device-frame__screen">
+          <img src="${assetPath(screenshotAssets.webGear)}" alt="${m.screenshots.webGearAlt}" />
         </div>
-      </section>`;
-    })
-    .join('');
-};
-
-const initFloatingBreadcrumb = (): (() => void) | null => {
-  const breadcrumb = app.querySelector<HTMLElement>('[data-floating-breadcrumb]');
-  const trigger = breadcrumb?.querySelector<HTMLButtonElement>('[data-breadcrumb-toggle]');
-  if (!breadcrumb || !trigger) return null;
-
-  const setPinned = (pinned: boolean): void => {
-    breadcrumb.dataset.pinned = pinned ? 'true' : 'false';
-    trigger.setAttribute('aria-expanded', String(pinned));
-  };
-  const togglePinned = (): void => setPinned(breadcrumb.dataset.pinned !== 'true');
-  const closeOnEscape = (event: KeyboardEvent): void => {
-    if (event.key === 'Escape') setPinned(false);
-  };
-
-  setPinned(true);
-  trigger.addEventListener('click', togglePinned);
-  document.addEventListener('keydown', closeOnEscape);
-
-  return () => {
-    trigger.removeEventListener('click', togglePinned);
-    document.removeEventListener('keydown', closeOnEscape);
-  };
-};
+        <img class="device-frame__bezel" src="${assetPath(deviceBezelAssets.macbook)}" alt="" aria-hidden="true" />
+      </figure>
+      <figure class="device-frame device-frame--ipad">
+        <div class="device-frame__screen">
+          <img src="${assetPath(screenshotAssets.androidTrips)}" alt="${m.screenshots.androidTripsAlt}" />
+        </div>
+        <img class="device-frame__bezel" src="${assetPath(deviceBezelAssets.ipad)}" alt="" aria-hidden="true" />
+      </figure>
+      <figure class="device-frame device-frame--phone">
+        <div class="device-frame__screen">
+          <img src="${assetPath(screenshotAssets.androidGear)}" alt="${m.screenshots.androidGearAlt}" />
+        </div>
+        <img class="device-frame__bezel" src="${assetPath(deviceBezelAssets.iphone)}" alt="" aria-hidden="true" />
+      </figure>
+      <figure class="device-frame device-frame--watch">
+        <div class="device-frame__screen">
+          <div class="watch-face" aria-label="${m.home.devices.watch}">
+            <span class="watch-face__brand">${m.home.devices.watchBrand}</span>
+            <div class="watch-face__metric">
+              <span>${m.home.devices.watchGear}<strong>${m.home.devices.watchGearValue}</strong></span>
+              <span>${m.home.devices.watchReady}<strong>${m.home.devices.watchReadyValue}</strong></span>
+            </div>
+          </div>
+        </div>
+        <img class="device-frame__bezel" src="${assetPath(deviceBezelAssets.watch)}" alt="" aria-hidden="true" />
+      </figure>
+    </div>
+  </section>`;
 
 const render = (): void => {
-  teardownFloatingBreadcrumb?.();
-  teardownFloatingBreadcrumb = null;
   const m = getMessages(activeLocale);
-  const jumpLinks = [
-    { label: m.jump.home, href: '#top' },
-    { label: m.nav.product, href: '#product' },
-    { label: m.nav.gear, href: '#gear' },
-    { label: m.nav.packing, href: '#packing' },
-    { label: m.nav.trips, href: '#trips' },
-    { label: m.nav.skills, href: '#skills' },
-    { label: m.nav.entry, href: '#entry' }
-  ];
-  const capabilityCards = renderCapabilityCards(m);
-  const capabilitySections = renderCapabilitySections(m);
   const icpRecordLink = renderIcpRecordLink();
-  document.title = m.seo.title;
-  document.querySelector('meta[name="description"]')?.setAttribute('content', m.seo.description);
+  document.title = m.home.seo.title;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', m.home.seo.description);
   persistLocale(activeLocale);
+
   app.innerHTML = `
-    <div class="site-shell">
+    <div class="landing-shell">
       <nav class="nav" aria-label="${m.nav.language}">
         <div class="container nav__inner">
-          <a class="nav__brand" href="#top" aria-label="${m.footer.tagline}">
+          <a class="nav__brand" href="${sitePath(`?lang=${activeLocale}`)}" aria-label="${m.footer.tagline}">
             <img src="${assetPath('assets/brand/logo.svg')}" alt="" />
-            <span>${m.footer.tagline}</span>
+            <span class="nav__brand-label nav__brand-label--full">${m.footer.tagline}</span>
+            <span class="nav__brand-label nav__brand-label--short">${m.footer.shortName}</span>
           </a>
           <div class="nav__links">
-            <a class="nav__web-link" href="https://app.stellartrail.cn/" target="_blank" rel="noopener noreferrer">${m.nav.web}</a>
+            <a class="nav__product-link" href="${sitePath(`product/?lang=${activeLocale}`)}">${m.nav.product}</a>
+            <a class="nav__web-link" href="${WEB_APP_URL}" target="_blank" rel="noopener noreferrer">${m.nav.web}</a>
             <a class="nav__downloads-link" href="${sitePath(`downloads/?lang=${activeLocale}`)}">${m.nav.downloads}</a>
-            <a class="nav__docs-link" href="${sitePath(`docs/?lang=${activeLocale}`)}">${m.nav.docs}</a>
             <a class="nav__privacy-link" href="${sitePath(`privacy/?lang=${activeLocale}`)}">${m.nav.privacy}</a>
             <button class="lang-button" type="button" data-language-toggle aria-label="${m.language.switchTo}">${m.language.current}</button>
           </div>
         </div>
       </nav>
 
-      <nav class="floating-breadcrumb" aria-label="${m.jump.label}" data-floating-breadcrumb data-pinned="true">
-        <button class="floating-breadcrumb__trigger" type="button" aria-label="${m.jump.trigger}" aria-haspopup="true" aria-expanded="true" aria-controls="floating-breadcrumb-panel" data-breadcrumb-toggle>
-          <span class="floating-breadcrumb__icon" aria-hidden="true"><span></span><span></span><span></span></span>
-        </button>
-        <div class="floating-breadcrumb__panel" id="floating-breadcrumb-panel">
-          <span class="floating-breadcrumb__title">${m.jump.title}</span>
-          <ol>
-            ${jumpLinks.map((link) => `<li><a href="${link.href}">${link.label}</a></li>`).join('')}
-          </ol>
-        </div>
-      </nav>
-
-      <header class="hero" id="top">
-        <canvas class="hero__canvas" data-starfield aria-hidden="true"></canvas>
-        <div class="container hero__grid">
-          <div data-reveal>
-            <p class="eyebrow">${m.hero.eyebrow}</p>
-            <h1 class="hero__title">${m.hero.title}</h1>
-            <p class="hero__subtitle">${m.hero.subtitle}</p>
-            <div class="cta-row">
-              <a class="button button--primary" href="${sitePath(`downloads/?lang=${activeLocale}`)}">${m.hero.primaryCta}</a>
-              <a class="button button--ghost" href="https://app.stellartrail.cn/" target="_blank" rel="noopener noreferrer">${m.hero.secondaryCta}</a>
-            </div>
-          </div>
-          <div class="hero-card float-soft" data-reveal>
-            <div class="phone-mock" aria-hidden="true">
-              <div class="phone-mock__screen">
-                <img src="${assetPath(screenshotAssets.androidHome)}" alt="" />
+      <main class="container landing-main" id="top">
+        <section class="landing-hero" aria-labelledby="landing-title">
+          <img class="landing-hero__logo" src="${assetPath('assets/brand/logo.svg')}" alt="" />
+          <h1 class="landing-hero__title" id="landing-title">${m.home.title}</h1>
+          <p class="landing-hero__slogan">${m.home.slogan}</p>
+          <div class="landing-entry" aria-label="${m.home.entry.label}">
+            <section class="landing-entry-card landing-entry-card--mobile" aria-labelledby="landing-entry-mobile-title">
+              <h2 id="landing-entry-mobile-title">${m.home.entry.mobileTitle}</h2>
+              <div class="landing-entry__stores" aria-label="${m.home.entry.appLabel}">
+                ${renderStoreBadge('ios', m.downloads.storeBadges.ios)}
+                ${renderStoreBadge('android', m.downloads.storeBadges.android)}
+                <a class="landing-entry__apk" href="${assetPath(ANDROID_APK_PATH)}" download="stellartrail-android.apk">${m.home.entry.apk}</a>
               </div>
-            </div>
-            <div class="metric-row">
-              ${m.hero.stats.map((stat) => `<div class="metric"><strong>${stat.value}</strong><span>${stat.label}</span></div>`).join('')}
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main>
-        <section class="section section--tight" id="product">
-          <div class="container" data-reveal>
-            <p class="eyebrow">${m.product.eyebrow}</p>
-            <h2 class="section__title">${m.product.title}</h2>
-            <p class="section__body">${m.product.body}</p>
-            <div class="cards-grid cards-grid--capabilities">
-              ${capabilityCards}
-            </div>
+            </section>
+            <section class="landing-entry-card landing-entry-card--desktop" aria-labelledby="landing-entry-desktop-title">
+              <h2 id="landing-entry-desktop-title">${m.home.entry.desktopTitle}</h2>
+              <div class="landing-entry__stores" aria-label="${m.home.entry.desktopTitle}">
+                ${renderStoreBadge('macos', m.downloads.storeBadges.macos)}
+                <button class="landing-entry__soon" type="button" disabled>${m.home.entry.windowsSoon}</button>
+              </div>
+            </section>
+            <section class="landing-entry-card landing-entry-card--watch" aria-labelledby="landing-entry-watch-title">
+              <h2 id="landing-entry-watch-title">${m.home.entry.watchTitle}</h2>
+              <div class="landing-entry__stores" aria-label="${m.home.entry.watchTitle}">
+                ${renderSoonStoreBadge(m.home.entry.watchAriaLabel)}
+                <button class="landing-entry__soon" type="button" disabled>${m.home.entry.watchSoon}</button>
+              </div>
+            </section>
+            <section class="landing-entry-card landing-entry-card--web" aria-labelledby="landing-entry-web-title">
+              <h2 id="landing-entry-web-title">${m.home.entry.webTitle}</h2>
+              <a class="landing-entry__web" href="${WEB_APP_URL}" target="_blank" rel="noopener noreferrer">${m.home.entry.web}</a>
+            </section>
+            <section class="landing-entry-card landing-entry-card--wechat" aria-labelledby="landing-entry-wechat-title">
+              <h2 id="landing-entry-wechat-title">${m.home.entry.wechatTitle}</h2>
+              <div class="landing-entry__qr">
+                <img src="${assetPath(screenshotAssets.wechatMiniProgramCode)}" alt="${m.screenshots.wechatMiniProgramCodeAlt}" />
+                <span>${m.home.entry.wechat}</span>
+              </div>
+            </section>
           </div>
         </section>
 
-        ${capabilitySections}
-
-        <section class="section" id="entry">
-          <div class="container" data-reveal>
-            <div class="entry-card">
-              <div>
-                <span class="entry-badge">${m.entry.badge}</span>
-                <p class="eyebrow">${m.entry.eyebrow}</p>
-                <h2 class="section__title">${m.entry.title}</h2>
-                <p class="section__body">${m.entry.body}</p>
-                <ul class="entry-platforms" aria-label="${m.entry.channelsLabel}">
-                  ${m.entry.channels
-                    .map(
-                      (channel) => `<li>
-                        <strong>${channel.title}</strong>
-                        <span>${channel.body}</span>
-                        ${channel.href && channel.action ? `<a class="entry-platforms__link" ${entryLinkAttrs(channel.href, channel.external)}>${channel.action}</a>` : ''}
-                      </li>`
-                    )
-                    .join('')}
-                </ul>
-                <p>${m.entry.hint}</p>
-              </div>
-              <img class="entry-placeholder" src="${assetPath('assets/entry/miniprogram-placeholder.png')}" alt="${m.entry.title}" />
-            </div>
-          </div>
-        </section>
+        ${renderDeviceShowcase(m)}
       </main>
 
       <footer class="footer">
@@ -251,9 +187,6 @@ const render = (): void => {
     activeLocale = nextLocale(activeLocale);
     render();
   });
-  teardownFloatingBreadcrumb = initFloatingBreadcrumb();
-  initReveal();
-  initStarfield();
 };
 
 render();

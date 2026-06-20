@@ -1,3 +1,4 @@
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 import { defineConfig } from 'vite';
@@ -22,15 +23,46 @@ const normalizeBasePath = (value: string | undefined): string => {
   return normalized;
 };
 
+type LocalDeploymentConfig = {
+  icpRecordNumber?: string;
+  privacyContactEmail?: string;
+};
+
+const loadLocalDeploymentConfig = (): LocalDeploymentConfig => {
+  const configPath = fileURLToPath(new URL('config/deployment.local.json', import.meta.url));
+  if (!existsSync(configPath)) return {};
+
+  try {
+    const parsed = JSON.parse(readFileSync(configPath, 'utf8')) as Record<string, unknown>;
+    return {
+      icpRecordNumber: typeof parsed.icpRecordNumber === 'string' ? parsed.icpRecordNumber.trim() : undefined,
+      privacyContactEmail: typeof parsed.privacyContactEmail === 'string' ? parsed.privacyContactEmail.trim() : undefined
+    };
+  } catch (error) {
+    throw new Error(`Unable to read config/deployment.local.json: ${error instanceof Error ? error.message : String(error)}`);
+  }
+};
+
+const localDeploymentConfig = loadLocalDeploymentConfig();
+const localDeploymentDefines = {
+  ...(localDeploymentConfig.icpRecordNumber
+    ? { 'import.meta.env.VITE_PUBLIC_ICP_RECORD_NUMBER': JSON.stringify(localDeploymentConfig.icpRecordNumber) }
+    : {}),
+  ...(localDeploymentConfig.privacyContactEmail
+    ? { 'import.meta.env.VITE_PUBLIC_PRIVACY_CONTACT_EMAIL': JSON.stringify(localDeploymentConfig.privacyContactEmail) }
+    : {})
+};
+
 export default defineConfig({
   base: normalizeBasePath(process.env.SITE_BASE_PATH),
+  define: Object.keys(localDeploymentDefines).length ? localDeploymentDefines : undefined,
   build: {
     target: 'es2022',
     sourcemap: true,
     rollupOptions: {
       input: {
         main: fileURLToPath(new URL('index.html', import.meta.url)),
-        docs: fileURLToPath(new URL('docs/index.html', import.meta.url)),
+        product: fileURLToPath(new URL('product/index.html', import.meta.url)),
         downloads: fileURLToPath(new URL('downloads/index.html', import.meta.url)),
         privacy: fileURLToPath(new URL('privacy/index.html', import.meta.url))
       }
