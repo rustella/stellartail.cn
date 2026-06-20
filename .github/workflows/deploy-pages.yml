@@ -35,12 +35,17 @@ jobs:
 
       - name: Run quality gate
         run: npm run check
+        env:
+          VITE_PUBLIC_ICP_RECORD_NUMBER: ${{ secrets.VITE_PUBLIC_ICP_RECORD_NUMBER }}
+          VITE_PUBLIC_PRIVACY_CONTACT_EMAIL: ${{ secrets.VITE_PUBLIC_PRIVACY_CONTACT_EMAIL }}
 
       - name: Build GitHub Pages artifact
         run: npm run build
         env:
           SITE_BASE_PATH: /stellartail.cn/
           VITE_PUBLIC_SITE_URL: https://rustella.github.io/stellartail.cn/
+          VITE_PUBLIC_ICP_RECORD_NUMBER: ${{ secrets.VITE_PUBLIC_ICP_RECORD_NUMBER }}
+          VITE_PUBLIC_PRIVACY_CONTACT_EMAIL: ${{ secrets.VITE_PUBLIC_PRIVACY_CONTACT_EMAIL }}
 
       - name: Verify configurable base for GitHub Pages
         run: npm run validate:deploy-base

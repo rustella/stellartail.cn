@@ -1,0 +1,394 @@
+.landing-shell {
+  min-height: 100vh;
+  overflow-x: clip;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(197, 235, 224, 0.86), transparent 28rem),
+    radial-gradient(circle at 84% 16%, rgba(239, 157, 67, 0.15), transparent 26rem),
+    linear-gradient(180deg, #fbfffc 0%, var(--color-bg) 48%, #ffffff 100%);
+}
+
+.landing-main {
+  display: grid;
+  gap: 34px;
+  padding: 76px 0 84px;
+}
+
+.landing-hero {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.landing-hero__logo {
+  width: clamp(104px, 14vw, 164px);
+  height: clamp(104px, 14vw, 164px);
+  border-radius: clamp(22px, 3vw, 34px);
+  filter: drop-shadow(0 24px 52px rgba(22, 91, 76, 0.18));
+}
+
+.landing-hero__title {
+  margin: 24px 0 0;
+  color: var(--color-primary-strong);
+  font-size: clamp(44px, 7vw, 78px);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.landing-hero__slogan {
+  max-width: 760px;
+  margin: 18px auto 0;
+  color: var(--color-muted);
+  font-size: clamp(18px, 2.2vw, 24px);
+  line-height: 1.66;
+}
+
+.landing-entry {
+  display: grid;
+  grid-template-columns: 232px 232px 190px 178px 154px;
+  gap: 14px;
+  align-items: stretch;
+  justify-content: center;
+  margin-top: 34px;
+  padding: 14px;
+  border: 1px solid rgba(22, 91, 76, 0.11);
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 28px 76px rgba(22, 91, 76, 0.12);
+  backdrop-filter: blur(18px);
+}
+
+.landing-entry-card {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(22, 91, 76, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.landing-entry-card h2 {
+  margin: 0;
+  color: var(--color-primary-strong);
+  font-size: 14px;
+  font-weight: 950;
+  line-height: 1.2;
+}
+
+.landing-entry__stores {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  justify-items: stretch;
+}
+
+.landing-entry__stores .store-badge {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 54px;
+  border-radius: 13px;
+  background: #000;
+  box-shadow: none;
+}
+
+.landing-entry__stores .store-badge__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.landing-entry__disabled-badge {
+  opacity: 0.58;
+  filter: grayscale(1);
+  cursor: not-allowed;
+}
+
+.landing-entry__web {
+  display: inline-flex;
+  min-height: 54px;
+  height: 54px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border-radius: 13px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-primary), #0b766b);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.landing-entry__apk {
+  display: inline-flex;
+  width: max-content;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  padding: 2px 6px;
+  border: 0;
+  color: rgba(13, 51, 45, 0.72);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.25;
+  text-decoration-line: underline;
+  text-decoration-color: rgba(15, 139, 126, 0.28);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+
+.landing-entry__apk:hover {
+  color: var(--color-primary);
+  text-decoration-color: rgba(15, 139, 126, 0.55);
+}
+
+.landing-entry__soon {
+  display: inline-flex;
+  width: 100%;
+  height: 54px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 13px;
+  color: rgba(13, 51, 45, 0.68);
+  background: rgba(22, 91, 76, 0.1);
+  font: inherit;
+  font-weight: 950;
+  white-space: nowrap;
+  cursor: not-allowed;
+}
+
+.landing-entry__qr {
+  display: grid;
+  gap: 8px;
+  align-content: center;
+  justify-items: center;
+  min-height: 118px;
+  padding: 10px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.64);
+  border: 1px solid rgba(22, 91, 76, 0.12);
+}
+
+.landing-entry__qr img {
+  display: block;
+  width: 78px;
+  height: 78px;
+  border-radius: 12px;
+}
+
+.landing-entry__qr span {
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.device-showcase {
+  position: relative;
+  min-height: 620px;
+  margin-top: 6px;
+}
+
+.device-showcase__intro {
+  max-width: 760px;
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
+.device-showcase__intro h2 {
+  margin: 0;
+  color: var(--color-primary-strong);
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.device-showcase__intro p {
+  margin: 16px 0 0;
+  color: var(--color-muted);
+  font-size: 18px;
+  line-height: 1.68;
+}
+
+.device-stage {
+  position: relative;
+  max-width: 1220px;
+  min-height: 540px;
+  margin: 0 auto;
+}
+
+.device-frame {
+  position: absolute;
+  margin: 0;
+  background: transparent;
+  filter: drop-shadow(0 34px 46px rgba(18, 39, 35, 0.18));
+}
+
+.device-frame__bezel {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.device-frame__screen {
+  position: absolute;
+  z-index: 1;
+  overflow: hidden;
+  background: #f6fffb;
+}
+
+.device-frame__screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.device-frame--mac {
+  left: 0;
+  top: 42px;
+  width: min(760px, 64vw);
+}
+
+.device-frame--mac .device-frame__screen {
+  inset: 11.34% 10.83%;
+}
+
+.device-frame--ipad {
+  left: 44%;
+  top: 164px;
+  z-index: 2;
+  width: min(420px, 36vw);
+}
+
+.device-frame--ipad .device-frame__screen {
+  inset: 5.64% 4.17%;
+  border-radius: 4%;
+}
+
+.device-frame--phone {
+  right: 82px;
+  top: 72px;
+  z-index: 3;
+  width: min(280px, 24vw);
+}
+
+.device-frame--phone .device-frame__screen {
+  inset: 2.2% 5.1%;
+  border-radius: 8%;
+}
+
+.device-frame--watch {
+  right: 0;
+  bottom: 64px;
+  z-index: 4;
+  width: 168px;
+}
+
+.device-frame--watch .device-frame__screen {
+  inset: 21.82% 12.86%;
+  border-radius: 24%;
+}
+
+.watch-face {
+  display: grid;
+  gap: 9px;
+  width: 100%;
+  height: 100%;
+  padding: 18px 14px;
+  color: #eafff5;
+  background: #070b0a;
+}
+
+.watch-face__brand {
+  color: #f3bf55;
+  font-weight: 950;
+  font-size: 13px;
+}
+
+.watch-face__metric {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.watch-face__metric span {
+  display: grid;
+  gap: 3px;
+  min-height: 46px;
+  align-content: center;
+  padding: 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 11px;
+}
+
+.watch-face__metric strong {
+  color: #fff;
+  font-size: 17px;
+}
+
+@media (max-width: 980px) {
+  .landing-main { padding-top: 54px; }
+  .landing-entry {
+    grid-template-columns: 1fr;
+    width: min(340px, 100%);
+  }
+  .landing-entry__web {
+    width: 100%;
+  }
+  .landing-entry-card {
+    padding: 16px;
+  }
+  .landing-entry__qr img {
+    width: 132px;
+    height: 132px;
+  }
+  .device-showcase {
+    min-height: 0;
+  }
+  .device-stage {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    min-height: 0;
+  }
+  .device-frame {
+    position: relative;
+    inset: auto;
+    width: 100%;
+  }
+  .device-frame--mac,
+  .device-frame--ipad,
+  .device-frame--phone,
+  .device-frame--watch {
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    margin: 0 auto;
+  }
+  .device-frame--mac { max-width: 760px; }
+  .device-frame--ipad { max-width: 520px; }
+  .device-frame--phone { max-width: 300px; }
+  .device-frame--watch { max-width: 172px; margin-top: 28px; }
+}
+
+@media (max-width: 620px) {
+  .landing-main { padding: 42px 0 64px; }
+  .landing-hero__title {
+    font-size: 42px;
+  }
+  .landing-hero__slogan,
+  .device-showcase__intro p {
+    font-size: 17px;
+  }
+}

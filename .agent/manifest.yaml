@@ -18,7 +18,7 @@ stack:
   testing: playwright
 source_roots:
   - src
-  - docs
+  - product
   - downloads
   - public
   - scripts
@@ -30,7 +30,6 @@ config_paths:
   - playwright.config.ts
   - .github/workflows/ci.yml
   - .github/workflows/deploy-pages.yml
-  - config/docs.example.json
 generated_paths:
   - node_modules
   - dist
@@ -40,8 +39,8 @@ generated_paths:
 entrypoints:
   app: src/main.ts
   html: index.html
-  docs_html: docs/index.html
-  docs_app: src/docs.ts
+  product_html: product/index.html
+  product_app: src/product.ts
   downloads_html: downloads/index.html
   downloads_app: src/downloads.ts
 policies:
@@ -53,12 +52,9 @@ policies:
   reduced_motion_required: true
   custom_domain_configured: false
   deployment_base_must_be_configurable: true
-  docs_origin_committed: false
-  docs_runtime_backend_requests_allowed: user_initiated_only
 validation:
   canonical: npm run check
   deploy_base: npm run validate:deploy-base
-  docs_config: npm run validate:docs-config
 freshness:
-  last_updated: 2026-05-17
-  source: implementation from Hermes plan 2026-05-17_162238-docs-api-reference-page.md plus current code inspection
+  last_updated: 2026-06-20
+  source: current code inspection after removing the public API reference page

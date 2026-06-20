@@ -3,8 +3,10 @@ import './styles/base.css';
 import './styles/layout.css';
 import './styles/components.css';
 import './styles/privacy.css';
+import './styles/workbench.css';
 import './styles/motion.css';
 
+import { deploymentConfig } from './config/deployment';
 import { getMessages, nextLocale, persistLocale, resolveInitialLocale, type Locale, type Messages } from './i18n';
 import { assetPath, sitePath } from './utils/asset';
 
@@ -13,17 +15,39 @@ let activeLocale: Locale = resolveInitialLocale();
 const app = document.querySelector<HTMLDivElement>('#privacy-app');
 if (!app) throw new Error('Missing privacy app root');
 
+const CONTACT_EMAIL_TOKEN = '{privacyContactEmail}';
+
+const escapeHtml = (value: string): string =>
+  value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+
 const listItems = (items: readonly string[]): string => items.map((item) => `<li>${item}</li>`).join('');
 
-const renderSections = (sections: Messages['privacy']['sections']): string =>
+const contactEmail = deploymentConfig.privacyContactEmail;
+
+const renderContactEmail = (fallback: string): string => {
+  if (!contactEmail) return escapeHtml(fallback);
+  const safeEmail = escapeHtml(contactEmail);
+  return `<a href="mailto:${safeEmail}">${safeEmail}</a>`;
+};
+
+const renderPrivacyText = (value: string, fallback: string): string =>
+  escapeHtml(value).replaceAll(CONTACT_EMAIL_TOKEN, renderContactEmail(fallback));
+
+const renderSections = (sections: Messages['privacy']['sections'], contactFallback: string): string =>
   sections
-    .map(
-      (section) => `<section class="privacy-section" id="${section.id}">
-        <h2>${section.title}</h2>
-        ${section.paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join('')}
-        ${'bullets' in section ? `<ul>${listItems(section.bullets)}</ul>` : ''}
-      </section>`
-    )
+    .map((section) => {
+      const bullets = 'bullets' in section && Array.isArray(section.bullets) ? section.bullets : [];
+      return `<section class="privacy-section" id="${section.id}">
+        <h2>${escapeHtml(section.title)}</h2>
+        ${section.paragraphs.map((paragraph) => `<p>${renderPrivacyText(paragraph, contactFallback)}</p>`).join('')}
+        ${bullets.length ? `<ul>${listItems(bullets.map((bullet) => renderPrivacyText(bullet, contactFallback)))}</ul>` : ''}
+      </section>`;
+    })
     .join('');
 
 const renderPrivacy = (): void => {
@@ -39,12 +63,12 @@ const renderPrivacy = (): void => {
         <div class="container nav__inner">
           <a class="nav__brand" href="${sitePath(`?lang=${activeLocale}`)}" aria-label="${privacy.nav.backHome}">
             <img src="${assetPath('assets/brand/logo.svg')}" alt="" />
-            <span>${privacy.nav.brand}</span>
+            <span class="nav__brand-label nav__brand-label--full">${privacy.nav.brand}</span>
+            <span class="nav__brand-label nav__brand-label--short">${m.footer.shortName}</span>
           </a>
           <div class="nav__links">
             <a href="${sitePath(`?lang=${activeLocale}`)}">${privacy.nav.backHome}</a>
             <a class="nav__downloads-link" href="${sitePath(`downloads/?lang=${activeLocale}`)}">${privacy.nav.downloads}</a>
-            <a class="nav__docs-link" href="${sitePath(`docs/?lang=${activeLocale}`)}">${privacy.nav.docs}</a>
             <button class="lang-button" type="button" data-language-toggle aria-label="${m.language.switchTo}">${m.language.current}</button>
           </div>
         </div>
@@ -67,7 +91,7 @@ const renderPrivacy = (): void => {
               </div>
               <div>
                 <dt>${privacy.meta.contact}</dt>
-                <dd><a href="mailto:${privacy.meta.contactEmail}">${privacy.meta.contactEmail}</a></dd>
+                <dd>${renderContactEmail(privacy.meta.contactFallback)}</dd>
               </div>
             </dl>
           </div>
@@ -79,7 +103,7 @@ const renderPrivacy = (): void => {
       </header>
 
       <main class="container privacy-main">
-        ${renderSections(privacy.sections)}
+        ${renderSections(privacy.sections, privacy.meta.contactFallback)}
       </main>
     </div>
   `;

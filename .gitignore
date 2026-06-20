@@ -9,9 +9,10 @@ playwright-report/
 !.env.example
 artifacts/
 
-# Local/production-only docs deployment config. Do not commit real docs origins.
+# Local-only agent and deployment config. Do not commit real production values.
 .agent/local/
 config/*.local.json
 config/*.production.json
 .env.docs*.local
 !config/docs.example.json
+!config/deployment.example.json

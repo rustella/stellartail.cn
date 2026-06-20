@@ -14,7 +14,7 @@ This repository is a static Vite website for StellarTrail / 寻径星野. The sa
 
 ## Runtime flow
 
-`index.html` loads `src/main.ts`. The app resolves locale, sets `<html lang>`, renders static sections, binds language switching, then initializes reveal and starfield effects.
+`index.html` loads `src/main.ts` for the minimal homepage. `product/index.html` loads `src/product.ts` for the product introduction sections. Each app resolves locale, sets `<html lang>`, renders static content, and binds language switching. The product introduction page also initializes reveal and starfield effects.
 
 ## Deployment base flow
 
@@ -22,7 +22,3 @@ This repository is a static Vite website for StellarTrail / 寻径星野. The sa
 - Application code reads `import.meta.env.BASE_URL` through `src/utils/asset.ts` when rendering public assets.
 - Optional public site display uses `VITE_PUBLIC_SITE_URL` through `src/config/deployment.ts`.
 - GitHub Pages sets these variables in `.github/workflows/deploy-pages.yml`; other static hosts must set their own values during build.
-
-## Docs page
-
-`docs/index.html` loads `src/docs.ts` as a separate Vite page at `/docs/`. It renders static API reference data from `src/content/api-docs.ts`. Page load must not request backend paths; the docs request runner may send user-initiated requests only to the shared service address typed by the reader. The real production docs origin is deployment-only/local config and must not be committed or bundled.

@@ -1,20 +1,56 @@
 export const enUS = {
   seo: {
     title: 'StellarTrail | Outdoor preparation companion',
-    description: 'StellarTrail helps you manage personal gear, confirm packing lists, organize trip prep, and review practical knot skills before heading outdoors.'
+    description: 'StellarTrail helps you manage personal gear, confirm packing lists, organize trip prep, and review practical outdoor skills before heading outdoors.'
   },
   nav: {
     product: 'Product intro',
     gear: 'Personal gear',
     packing: 'Packing lists',
     trips: 'Trip prep',
-    skills: 'Knot skills',
+    skills: 'Outdoor skills',
     entry: 'Downloads',
     web: 'Web App',
     downloads: 'Downloads',
-    docs: 'API Docs',
     privacy: 'Privacy Policy',
     language: 'Language'
+  },
+  home: {
+    seo: {
+      title: 'StellarTrail | Outdoor preparation companion',
+      description: 'StellarTrail helps you manage gear, lists, trips, and outdoor skills across mobile, Web, WeChat Mini Program, and desktop devices.'
+    },
+    title: 'StellarTrail',
+    slogan: 'Prepare gear, lists, trips, and outdoor skills before you head out.',
+    entry: {
+      label: 'StellarTrail download and access entries',
+      appLabel: 'App download entries',
+      mobileTitle: 'Mobile downloads',
+      desktopTitle: 'Desktop downloads',
+      watchTitle: 'Watch downloads',
+      webTitle: 'Web entry',
+      wechatTitle: 'WeChat Mini Program',
+      windowsSoon: 'Windows coming soon',
+      watchSoon: 'watchOS coming soon',
+      watchAriaLabel: 'Apple Watch version coming soon',
+      apk: 'Download APK',
+      web: 'Open Web app',
+      wechat: 'Scan with WeChat'
+    },
+    devices: {
+      label: 'Multi-device product screenshots',
+      title: 'Check your preparation from phone to desktop',
+      body: 'Gear libraries, packing lists, trip prep, and outdoor skills share one lightweight workflow across devices.',
+      mac: 'Mac',
+      ipad: 'iPad',
+      iphone: 'iPhone',
+      watch: 'Apple Watch',
+      watchBrand: 'StellarTrail',
+      watchGear: 'Gear',
+      watchGearValue: '18 items',
+      watchReady: 'Ready',
+      watchReadyValue: 'Today'
+    }
   },
   jump: {
     label: 'Page quick jumps',
@@ -22,26 +58,28 @@ export const enUS = {
     title: 'On this page',
     home: 'Home'
   },
+  workbench: {
+    learnMore: 'View',
+    openScreenshot: 'Open preview',
+    screenshotPreview: 'Product screenshot preview',
+    closeScreenshot: 'Close preview'
+  },
   hero: {
     eyebrow: 'StellarTrail',
-    title: 'Prepare gear, lists, trips, and knots before you head out',
-    subtitle: 'A lightweight companion for outdoor preparation: track personal gear, confirm packing lists, organize trip prep, and review field-ready knot skills before departure.',
+    title: 'Prepare gear, lists, trips, and outdoor skills before you head out',
+    subtitle: 'A lightweight companion for outdoor preparation: track personal gear, confirm packing lists, organize trip prep, and review field-ready outdoor skills before departure.',
     primaryCta: 'View downloads',
     secondaryCta: 'Open Web app',
     stats: [
       { value: 'Organize', label: 'Gear and lists' },
       { value: 'Confirm', label: 'Trip prep' },
-      { value: 'Review', label: 'Knot skills' }
+      { value: 'Review', label: 'Outdoor skills' }
     ]
   },
   product: {
     eyebrow: 'Product focus',
     title: 'Turn scattered pre-departure tasks into steps you can check',
-    body: 'StellarTrail focuses on the preparation phase before heading outdoors. The site highlights product-visible capabilities and separates available entries from feature previews with clear status labels.',
-    statusLabels: {
-      available: 'Available now',
-      preview: 'Feature preview'
-    },
+    body: 'StellarTrail focuses on the preparation phase before heading outdoors, making gear, lists, trips, and outdoor skills easier to check.',
     capabilities: {
       gear: {
         title: 'Personal gear',
@@ -57,12 +95,12 @@ export const enUS = {
       },
       trips: {
         title: 'Trip prep',
-        subtitle: 'Keep solo prep and group coordination in one view.',
+        subtitle: 'Trips support both solo preparation and group coordination.',
         body: 'Trip pages collect dates, members, and readiness signals so you can confirm gear, skills, weather, and safety prep before departure.',
-        bullets: ['Solo prep and group coordination', 'Member and day summaries', 'Readiness cues']
+        bullets: ['Solo and group trip support', 'Member and day summaries', 'Readiness cues']
       },
       skills: {
-        title: 'Knot skills',
+        title: 'Outdoor skills',
         subtitle: 'Review practical outdoor skills before departure.',
         body: 'The current skill library focuses on knots for camping, fishing, connecting, and securing, with quick entry into detailed practice views.',
         bullets: ['Knot category entry', 'Favorite skills list', 'Fast review before departure']
@@ -85,30 +123,39 @@ export const enUS = {
     eyebrow: 'Trip prep',
     title: 'Make trip details, members, and readiness easier to see',
     body: 'Trip prep gathers dates, members, and readiness progress so you can quickly see what still needs attention before departure.',
-    bullets: ['Solo prep and group coordination entries', 'Date, member, and day summaries', 'Pre-departure checks for gear, skills, weather, and safety']
+    bullets: ['Solo prep and group coordination support', 'Date, member, and day summaries', 'Pre-departure checks for gear, skills, weather, and safety']
   },
   skills: {
-    eyebrow: 'Knot skills',
+    eyebrow: 'Outdoor skills',
     title: 'Start with knots that are useful in the field',
     body: 'The current skill library focuses on knots for camping, fishing, connecting, and securing, making it useful for quick review before heading outdoors.',
     bullets: ['Current capability: knot tutorials', 'Favorite common skills', 'Fast review before departure']
   },
   screenshots: {
+    iosAppAlt: 'StellarTrail iOS app interface',
     androidGearAlt: 'Android personal gear interface',
+    androidGearDetailAlt: 'Android gear detail interface',
+    androidGearNewAlt: 'Android add gear interface',
     androidPackingAlt: 'Android packing list interface',
+    androidPackingDetailAlt: 'Android packing list detail interface',
     androidTripsAlt: 'Android trip preparation interface',
-    androidSkillsAlt: 'Android knot skills interface',
+    androidTripCreateAlt: 'Android trip creation interface',
+    androidTripDetailAlt: 'Android trip detail interface',
+    androidSkillsAlt: 'Android outdoor skills interface',
+    androidKnotListAlt: 'Android knot list interface',
+    androidKnotDetailAlt: 'Android knot detail interface',
+    wechatMiniProgramCodeAlt: 'StellarTrail WeChat Mini Program code',
     wechatGearAlt: 'WeChat Mini Program gear management interface',
-    wechatKnotsAlt: 'WeChat Mini Program knot skills interface',
+    wechatKnotsAlt: 'WeChat Mini Program outdoor skills interface',
     webGearAlt: 'Web gear management interface',
     webGearFormAlt: 'Web add-gear form interface'
   },
   entry: {
     eyebrow: 'Downloads',
-    title: 'Mobile entries live on the downloads page',
-    body: 'The Web app is live for browser-based personal gear organization and public content. Android install and WeChat Mini Program entries are grouped on the downloads page.',
+    title: 'All platform entries live on the downloads page',
+    body: 'iOS, Android, Web, and WeChat Mini Program entries are grouped on the downloads page so each device has a clear next step.',
     badge: 'Multi-platform',
-    hint: 'The homepage does not show placeholder mobile downloads or placeholder mini program codes; mobile entries are updated on the downloads page.',
+    hint: 'Use the App Store, Google Play, or WeChat scan entry on mobile; open the Web app on desktop.',
     channelsLabel: 'Supported platform entries',
     channels: [
       {
@@ -119,86 +166,130 @@ export const enUS = {
         external: true
       },
       {
-        title: 'Mobile downloads',
-        body: 'Android install and WeChat Mini Program entries are collected on one page.',
+        title: 'App downloads',
+        body: 'iOS and Android store entries are both shown at the top of the downloads page.',
         href: 'downloads/',
         action: 'View downloads',
         external: false
+      },
+      {
+        title: 'WeChat scan',
+        body: 'Open the mini program code, then scan it with WeChat to launch StellarTrail.',
+        action: 'View scan entry',
+        qr: true
       }
     ]
   },
   downloads: {
     seo: {
-      title: 'StellarTrail | Downloads and mobile entries',
-      description: 'Check StellarTrail Web, Android, and WeChat Mini Program entry status. Mobile entries are grouped on this page.'
+      title: 'StellarTrail | App Download Center',
+      description: 'Get StellarTrail through the App Store, Google Play, Web app, and WeChat Mini Program entry status.'
     },
     nav: {
       label: 'Downloads navigation',
       brand: 'StellarTrail',
       backHome: 'Back to site',
       web: 'Web App',
-      docs: 'API Docs',
       privacy: 'Privacy Policy'
     },
     hero: {
-      eyebrow: 'Downloads',
-      title: 'Mobile entries are collected here',
-      body: 'Android install and WeChat Mini Program entries will be updated on this page. The Web app is available now; unpublished mobile entries stay clearly marked as preparing.',
-      primaryCta: 'View mobile entries',
+      eyebrow: 'Download center',
+      title: 'Choose your device and get StellarTrail',
+      body: 'Get the iOS and Android apps through their stores, open the Web app directly, or scan the WeChat Mini Program code on this page.',
+      primaryCta: 'View all platforms',
       secondaryCta: 'Open Web app'
     },
-    summary: {
-      title: 'Entry status',
-      items: ['Web app available now', 'Android install preparing', 'WeChat Mini Program preparing']
+    recommended: {
+      label: 'Recommended download entries',
+      badge: 'Recommended',
+      body: 'Install the iPhone or Android app for quick gear, packing, and outdoor skill checks before heading out; open the Web app when you want a larger desktop workspace.',
+      note: 'The App Store and Google Play entries take you to the corresponding store pages.'
+    },
+    storeBadges: {
+      ios: {
+        ariaLabel: 'Open StellarTrail in the App Store',
+        eyebrow: 'Download on the',
+        label: 'App Store'
+      },
+      macos: {
+        ariaLabel: 'Open StellarTrail in the Mac App Store',
+        eyebrow: 'Download on the',
+        label: 'Mac App Store'
+      },
+      android: {
+        ariaLabel: 'Open StellarTrail on Google Play',
+        eyebrow: 'GET IT ON',
+        label: 'Google Play'
+      },
+      appgallery: {
+        ariaLabel: 'AppGallery version coming soon',
+        eyebrow: 'COMING SOON ON',
+        label: 'AppGallery',
+        statusLabel: 'Coming soon'
+      }
     },
     channelsLabel: 'Downloads and entries',
+    catalog: {
+      eyebrow: 'All platforms',
+      body: 'Each platform keeps the clearest next step, with store downloads, macOS builds, Web access, and WeChat scanning grouped separately.'
+    },
     channels: {
-      android: {
-        platform: 'Android',
-        status: 'Preparing',
-        title: 'Android install',
-        body: 'Android product views are available as examples. The public package, app-store listing, or install method will be added here when ready.',
-        bullets: ['Central install status', 'No placeholder download link', 'Real entry added after publication'],
-        action: 'Not open yet',
-        note: 'The Android entry will be updated here when ready.'
+      mobile: {
+        platform: 'Mobile app',
+        status: 'Stores listed',
+        title: 'iPhone and Android phones',
+        body: 'Best for checking gear, packing progress, and outdoor skills from your phone. iPhone users can open the App Store, while Android users can use Google Play or download the APK for manual installation.',
+        bullets: ['App Store and Google Play entries', 'Android APK for manual install', 'HarmonyOS version coming soon'],
+        action: 'Mobile app store entries',
+        apkAction: 'Download APK'
       },
-      wechat: {
-        platform: 'WeChat Mini Program',
-        status: 'Preparing',
-        title: 'WeChat Mini Program entry',
-        body: 'Designed for quick access inside WeChat. The mini program code will be shown here when ready.',
-        bullets: ['Central mini program status', 'No placeholder mini program code', 'Real entry added after publication'],
-        action: 'Not open yet',
-        note: 'The WeChat Mini Program entry will be updated here when ready.'
+      macos: {
+        platform: 'macOS',
+        status: 'Coming soon',
+        title: 'macOS app',
+        body: 'Designed for organizing your gear library, maintaining lists, and doing focused pre-departure prep on a Mac. Once the macOS app is ready, choose the build that matches your chip.',
+        bullets: ['Intel build planned', 'Apple Silicon build planned', 'Focused desktop organization'],
+        action: 'macOS build options',
+        options: {
+          intel: 'Intel build',
+          appleSilicon: 'Apple Silicon build'
+        },
+        note: 'The macOS app is coming soon.'
       },
       web: {
         platform: 'Web',
-        status: 'Available now',
         title: 'Web app',
-        body: 'The Web app is already available for organizing gear and viewing public content in a browser.',
-        bullets: ['Desktop gear organization', 'Public content browsing', 'No install needed'],
+        body: 'Best for organizing your gear library, viewing public content, and doing focused pre-departure maintenance on a larger screen.',
+        bullets: ['Desktop gear organization', 'Public content browsing', 'No install, opens directly'],
         action: 'Open Web app',
-        note: 'Use the Web app while mobile entries are being prepared.'
+        note: 'The Web app remains the desktop companion entry.'
+      },
+      wechat: {
+        platform: 'WeChat Mini Program',
+        title: 'WeChat Mini Program entry',
+        body: 'Designed for quick access inside WeChat. Scan the mini program code on this page with WeChat to open StellarTrail.',
+        bullets: ['Scan with WeChat', 'No extra app install required', 'Quick gear and outdoor skill content access'],
+        action: 'Scan with WeChat',
+        note: 'Open WeChat Scan and scan the code on the right.'
       }
     },
-    footerNote: 'No fake download link or fake mini program code is shown; unpublished entries are clearly marked.'
+    footerNote: 'Mobile app, Web, and WeChat Mini Program entries are available from this page; macOS and HarmonyOS are coming soon.'
   },
   privacy: {
     seo: {
       title: 'StellarTrail | Privacy Policy',
-      description: 'Learn how 寻径星野/StellarTrail collects, uses, stores, protects, and deletes personal information.'
+      description: 'Read the StellarTrail privacy policy and learn how the operator collects, uses, stores, protects, and handles personal information.'
     },
     nav: {
       label: 'Privacy policy navigation',
       brand: 'StellarTrail',
       backHome: 'Back to site',
-      downloads: 'Downloads',
-      docs: 'API Docs'
+      downloads: 'Downloads'
     },
     hero: {
       eyebrow: 'Privacy',
       title: 'Privacy Policy',
-      body: 'This policy explains how 寻径星野/StellarTrail handles information related to you when providing account, gear, packing list, trip preparation, trail, knot skill, and feedback services.'
+      body: 'This policy explains how the platform operator collects, uses, stores, protects, and handles your personal information.'
     },
     meta: {
       label: 'Policy information',
@@ -207,201 +298,79 @@ export const enUS = {
       effectiveDate: 'Effective date',
       effectiveDateValue: '2026-06-15',
       contact: 'Privacy contact',
-      contactEmail: 'abuse@stellartrail.cn'
+      contactFallback: 'in-product settings or feedback'
     },
     summary: {
       title: 'Key points',
-      items: ['We process personal information only for accounts, sync, product features, security, support, and compliance needs.', 'We do not sell personal information or use it for third-party advertising profiles.', 'Account deletion is supported: you can start deletion in the app or contact abuse@stellartrail.cn for help.']
+      items: ['We try to follow the principles of data minimization, clear purpose, transparency, and security protection.', 'ID numbers, health notes, blood type, emergency contacts, tracks, and location information may be sensitive personal information.', 'You may request access, correction, completion, deletion, authorization withdrawal, account cancellation, or an explanation of personal information handling rules.']
     },
     sections: [
       {
-        id: 'scope',
-        title: '1. Scope',
-        paragraphs: ['This policy applies to StellarTrail official site, Web app, Android app, iOS app, macOS app, WeChat Mini Program, and related product entries. Feature availability may differ by platform, and the information handled depends on the features you use.']
+        id: 'intro',
+        title: 'Introduction',
+        paragraphs: ['This privacy policy applies to StellarTrail and related services. The platform operator values your personal information protection and explains in this policy how it collects, uses, stores, protects, and handles your personal information.', 'When you use StellarTrail services, we process necessary information according to service needs and try to follow the principles of data minimization, clear purpose, transparency, and security protection.']
       },
       {
         id: 'data',
-        title: '2. Information We May Handle',
-        paragraphs: ['To provide account sign-in, data sync, outdoor preparation, and customer support, we may handle the following information:'],
-        bullets: ['Account and sign-in information: username, nickname, email address, phone number, WeChat login identifier, verification result, access-token hash, and session state. For password-based sign-in, user passwords are stored only after server-side SHA-256 hashing; plaintext passwords are not stored.', 'Profile and outdoor profile information: avatar, real name, gender, birth date, height, contact details, emergency contact, blood type, medical history, allergy history, diet preference, insurance information, and outdoor experience notes that you choose to provide.', 'Product content data: personal gear, gear weight and price, storage location, packing lists, trip preparation, member collaboration, trail files, map annotations, knot favorites, product-plan votes or subscriptions, and related content.', 'Uploads and feedback: avatar images, feedback images, feedback text, contact details, page path, client platform, client version, and device model.', 'Permissions and device-related data: the Android app may use coarse or precise location after your authorization for map, trail, or current-location features; when you import GPX, KML, KMZ, FIT, or similar files, we read the files you choose or share with the app.', 'Security and statistics: to protect service security and understand API operation, we record minimized aggregate API usage statistics such as authenticated user ID, HTTP method, endpoint pattern, status code, date bucket, and request count; we do not record request bodies, response bodies, tokens, cookies, IP addresses, or User-Agent values.']
+        title: 'Information We Collect',
+        paragraphs: ['Account and binding information: username, nickname, phone number, email address, verification-code status, avatar, and other information used for registration, sign-in, binding, and account identification.', 'Profile and outdoor profile information: outdoor name, real name, gender, height, weight, personal phone number, ID number, emergency contact, contact phone number, relationship, blood type, health notes, allergies and contraindications, prior injuries, and other information you actively provide.', 'Usage content and records: gear, trips, tracks, skill favorites, offline cache, feedback content, feedback images, page information, client platform, client version, and device information needed to provide services or handle feedback.']
+      },
+      {
+        id: 'sensitive',
+        title: 'Sensitive Personal Information',
+        paragraphs: ['ID numbers, health notes, allergies and contraindications, prior injuries, blood type, emergency contacts, tracks, or location information may be sensitive personal information or relatively sensitive data.', 'We process this information only when you actively fill it in, import it, choose to sync it, or use related functions, and only for scenarios connected to the functions you explicitly use, such as outdoor profiles, team trips, emergency viewing, trip records, or safety reminders.', 'You may choose not to fill in non-essential sensitive information. Not providing it may affect the completeness of related functions, but it will not affect basic browsing and general use.']
       },
       {
         id: 'use',
-        title: '3. How We Use Information',
-        paragraphs: ['We use the information above for these purposes:'],
-        bullets: ['Create and maintain accounts, complete sign-in, verify codes, reset passwords, and bind email addresses or phone numbers.', 'Sync and display your gear, packing lists, trips, trails, knot favorites, and other outdoor preparation content.', 'Process avatars, feedback images, and feedback content so we can investigate issues and respond to support requests.', 'Maintain service security, identify abnormal sign-ins, prevent abuse, troubleshoot failures, and satisfy audit or legal compliance requirements.', 'Generate aggregate statistics without directly identifying individuals, helping us understand feature usage and service stability.']
+        title: 'How We Use Information',
+        paragraphs: ['We use your information to complete account registration, login verification, phone or email binding, profile display, avatar display, team trip import, gear and skill management, feedback handling, service maintenance, and security risk control.', 'We use necessary device, log, and version information to troubleshoot issues, protect service security, identify abnormal requests, improve the product experience, and maintain service stability.', 'We do not use your personal information for purposes unrelated to StellarTrail services unless we obtain your authorization or laws and regulations require otherwise.']
       },
       {
         id: 'sharing',
-        title: '4. Sharing and Processing by Service Providers',
-        paragraphs: ['We do not sell personal information. To provide the service, we may use the following providers or disclose necessary information within the required scope:'],
-        bullets: ['Cloud servers, databases, object storage, and CDN services used to store account data, images, trail files, and public content media.', 'Email and SMS providers used to send registration, login, binding, or password reset verification codes.', 'WeChat platform capabilities used to complete WeChat Mini Program sign-in and account identification.', 'App stores, review platforms, or compliance organizations used for app publication, review, dispute handling, and safety compliance.', 'Information required by applicable laws, regulations, regulators, courts, or administrative authorities.']
+        title: 'Information Storage and Security',
+        paragraphs: ['We retain personal information for a reasonable period needed to achieve service purposes, satisfy legal and regulatory requirements, or protect security audit needs.', 'Passwords and other authentication credentials are not stored in plaintext. We process them with irreversible methods such as hashing before storing them in the database, and stored credential data cannot be restored to the original password.', 'We use measures such as access control, permission isolation, encryption or desensitization, log audit, backup, and security monitoring to protect personal information and reduce the risk of unauthorized access, leakage, tampering, or loss.']
       },
       {
-        id: 'security',
-        title: '5. Retention and Security',
-        paragraphs: ['We use reasonable technical and organizational safeguards to protect personal information, including access control, encrypted transmission, SHA-256 password hashing before database storage, token-hash storage, image type validation, upload quotas, and minimized logging. We retain information only for as long as needed for the purposes described in this policy. When information is no longer needed, or when you lawfully request deletion and no retention reason applies, we delete or anonymize it.']
+        id: 'third-party-sharing',
+        title: 'Third-party Sharing',
+        paragraphs: ['We do not sell your personal information or use your personal information for independent third-party marketing.', 'Unless we obtain your authorization, need to comply with laws and regulations, or must complete a service you actively use, we do not share your personal information with third parties.', 'When third-party service support is necessary, we require the relevant service provider to process information only within the necessary scope and to take agreed security protection measures.']
       },
       {
-        id: 'delete-account',
-        title: '6. Access, Correction, and Account Deletion',
-        paragraphs: ['StellarTrail supports account deletion. You can start account deletion in the app. If you cannot use the in-app entry, contact abuse@stellartrail.cn and we will handle account and related personal-data deletion requests.', 'You may also use the same email address to request access, correction, completion, deletion, authorization withdrawal, or privacy help. To protect account security, we may verify your account identity before processing the request.']
+        id: 'third-party-services',
+        title: 'Third-party Services',
+        paragraphs: ['StellarTrail may rely on WeChat, app stores, SMS or email services, map or system capabilities, network services, and other third-party capabilities.', 'Third-party services may process necessary information according to their own agreements and privacy rules. You can review the corresponding third-party service rules before using related capabilities.', 'If a third-party service has an outage, interruption, or rule change, verification codes, avatars, images, maps, tracks, cache, or other related functions may be affected.']
+      },
+      {
+        id: 'retention',
+        title: 'Retention Period',
+        paragraphs: ['We retain personal information only for the period necessary to achieve the purposes described in this policy, or for the period required by laws, regulations, dispute resolution, or security audit needs.', 'After the retention period expires, we delete or anonymize related personal information unless laws and regulations require otherwise.', 'When you delete content, withdraw authorization, or cancel your account, we handle related information according to applicable rules.']
+      },
+      {
+        id: 'rights',
+        title: 'Your Rights',
+        paragraphs: ['You may request access, correction, completion, deletion of your personal information, withdraw non-essential authorization, apply for account cancellation, or ask us to explain personal information handling rules.', 'You may exercise these rights through in-product settings, related function entries, or by contacting {privacyContactEmail}.', 'To protect account and information security, we may need to verify your identity before handling related requests.']
       },
       {
         id: 'children',
-        title: '7. Children',
-        paragraphs: ['StellarTrail is intended for users who can reasonably judge outdoor activity risks. If you are under 14, use the service only with guardian consent and guidance. Guardians may contact abuse@stellartrail.cn if they believe a child’s information was submitted improperly.']
+        title: 'Minors',
+        paragraphs: ['Minors should use StellarTrail services with the consent and guidance of a parent or other guardian.', 'Guardians should help minors understand personal information protection requirements, outdoor activity risks, and network safety precautions.']
       },
       {
-        id: 'updates',
-        title: '8. Updates and Contact',
-        paragraphs: ['We may update this policy when product features, laws, or operations change. Material changes will be communicated through the official site or appropriate in-product notices. For privacy questions, complaints, account deletion, or personal information rights requests, contact abuse@stellartrail.cn.']
+        id: 'policy-updates',
+        title: 'Policy Updates',
+        paragraphs: ['We update this privacy policy as needed based on laws and regulations, product features, and service operations.', 'After the policy is updated, we will notify you through page display or other reasonable methods. If you continue using the service after the updated policy takes effect, you are deemed to have understood the updated content.']
+      },
+      {
+        id: 'contact',
+        title: 'Contact Us',
+        paragraphs: ['If you have questions about this privacy policy, personal information handling, or account security, you can contact the platform operator at {privacyContactEmail}.', 'After receiving your request, we will verify and handle it, then respond within a reasonable period.']
       }
     ]
   },
-  docs: {
-    seo: {
-      title: 'StellarTrail API Reference',
-      description: 'A static API reference generated from the current StellarTrail backend source: registered paths, request bodies, responses, and errors.'
-    },
-    nav: {
-      label: 'API reference navigation',
-      brand: 'StellarTrail Docs',
-      backHome: 'Back to site'
-    },
-    hero: {
-      eyebrow: 'Developer docs',
-      title: 'API Reference',
-      body: 'This page lists the service endpoints registered in the current backend source. Examples use paths and placeholder values only; the production origin is not displayed here.'
-    },
-    toc: {
-      label: 'Table of contents'
-    },
-    source: {
-      title: 'Source information',
-      repository: 'Source repository',
-      inspectedHead: 'Inspected version',
-      inspectedAt: 'Inspected date',
-      endpointCount: 'Endpoint count'
-    },
-    sections: {
-      overview: {
-        title: 'Overview',
-        body: 'This reference is synchronized from the backend Axum registration, request DTOs, response DTOs, and common error model. It covers service status, authentication, public content, knot skills, gear library, uploads, and feedback.',
-        count: '{count} registered endpoints are listed.',
-        note: 'Page load does not request the service. A request is sent only after you enter a service origin and click send.'
-      },
-      authentication: {
-        title: 'Authentication',
-        body: 'Public endpoints do not require sign-in. User-scoped endpoints use Authorization Bearer. Administrator endpoints require an authenticated administrator. Skill content accepts X-StellarTrail-Locale or Accept-Language for zh-CN / en.'
-      },
-      endpoints: {
-        title: 'Endpoints',
-        body: 'Registered request paths are grouped by capability below.'
-      },
-      errors: {
-        title: 'Error responses',
-        body: 'Service errors use a common JSON shape with code and message, plus fields, captcha, or parameter when applicable.'
-      },
-      config: {
-        title: 'Access configuration',
-        body: 'The production origin is stored only in deployment-side or ignored local config. It must not be committed, rendered, or bundled. Use your own environment variable and append the path when calling the service.'
-      }
-    },
-    groupTitles: {
-      system: 'System status',
-      auth: 'Authentication and account',
-      content: 'Public content',
-      skills: 'Knot skills',
-      admin: 'Admin content',
-      gear: 'Gear library',
-      uploads: 'Image uploads',
-      feedback: 'User feedback'
-    },
-    authLabels: {
-      public: 'Public',
-      bearer: 'Bearer sign-in required',
-      admin: 'Administrator required'
-    },
-    endpointSummaries: {
-      healthz: 'Service health',
-      meta: 'Service metadata',
-      authWechatLogin: 'WeChat Mini Program login',
-      authEmailVerificationCode: 'Send registration email code',
-      authEmailLoginCode: 'Send email login code',
-      authEmailLogin: 'Email code login',
-      authPasswordResetCode: 'Send password reset code',
-      authPasswordReset: 'Reset password',
-      authRegister: 'Register account',
-      authPasswordLogin: 'Account password login',
-      authRefresh: 'Refresh session',
-      authCaptcha: 'Create image captcha',
-      gearTemplatesList: 'Gear preparation template list',
-      gearTemplatesDetail: 'Gear preparation template detail',
-      skillsCategories: 'Outdoor skill categories',
-      skillsKnotsList: 'Knot list',
-      skillsKnotsDetail: 'Knot detail',
-      adminKnotMediaUpload: 'Upload knot media asset',
-      gearsCategories: 'My gear category counts',
-      gearsStats: 'My gear statistics',
-      gearsExport: 'Export gear CSV',
-      gearsImport: 'Import gear JSON',
-      gearsList: 'My gear list',
-      gearsCreate: 'Create gear',
-      gearsDetail: 'Gear detail',
-      gearsUpdate: 'Update gear',
-      gearsArchive: 'Archive gear',
-      gearsRestore: 'Restore gear',
-      uploadsCreate: 'Upload feedback image',
-      uploadsDownload: 'Read uploaded image',
-      feedbackCreate: 'Submit feedback'
-    },
-    labels: {
-      group: 'Group',
-      auth: 'Auth',
-      responseStatus: 'Response status',
-      contentType: 'Content type',
-      responseType: 'Response type',
-      query: 'Query parameters',
-      headers: 'Headers',
-      requestBody: 'Request body',
-      responseBody: 'Response body',
-      noBody: 'No response body',
-      tryRequest: 'Try request',
-      tryRequestNote: 'Uses the shared service address above. Requests are sent only after you click send; the page does not save the address, headers, or response.',
-      serviceOrigin: 'Shared service address',
-      serviceOriginPlaceholder: 'https://your-api.example.com',
-      serviceOriginHelp: 'Enter this once and all endpoint runners below will reuse it. The page does not save this address.',
-      pathParams: 'Path parameters',
-      pathParamLabel: '{name} path parameter',
-      queryParams: 'Query parameter input',
-      queryParamLabel: '{name} query parameter',
-      extraQuery: 'Additional query string',
-      extraQueryPlaceholder: 'foo=bar&limit=20',
-      headersInput: 'Header input',
-      headersPlaceholder: 'Authorization: Bearer ...\nX-StellarTrail-Locale: en',
-      requestBodyInput: 'Request body input',
-      fileInput: 'File',
-      sendRequest: 'Send request',
-      sending: 'Sending…',
-      requestUrl: 'Request URL',
-      response: 'Response',
-      responseHeaders: 'Response headers',
-      responseBodyResult: 'Response body',
-      fillServiceOrigin: 'Fill in the service address first',
-      invalidServiceOrigin: 'Service address must be an http(s) URL without query string or fragment.',
-      fillPathParam: 'Fill in the {name} path parameter',
-      invalidHeader: 'Header format must be Name: value',
-      invalidJson: 'Request body must be valid JSON',
-      networkError: 'Request failed: {message}',
-      noResponseBody: 'No response body',
-      serviceSettingsTitle: 'Shared service address',
-      serviceSettingsNote: 'Fill in the service address once here. Every endpoint runner below will reuse it, and leaving it empty prevents requests.'
-    }
-  },
   footer: {
     tagline: 'StellarTrail',
-    caption: 'Outdoor preparation starts with checklists and knots',
+    shortName: 'StellarTrail',
+    caption: 'Outdoor preparation starts with checklists and outdoor skills',
     rights: 'All rights reserved.',
     privacyPolicy: 'Privacy Policy'
   },
