@@ -615,6 +615,36 @@ test('product intro page includes all core sections', async ({ page }) => {
   await expect(page.locator('#screenshots')).toHaveCount(0);
 });
 
+test('iOS knot detail screenshot includes visible knot media', async ({ page }) => {
+  await page.goto('/product/?lang=zh-CN');
+  const visibleKnotPixels = await page.evaluate(async () => {
+    const image = new Image();
+    image.src = new URL('/assets/screenshots/ios-knot-detail-signed-in-light.png', window.location.href).toString();
+    await image.decode();
+
+    const canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('Canvas context unavailable');
+
+    context.drawImage(image, 0, 0);
+    const sample = context.getImageData(80, 300, 530, 260).data;
+    let saturatedPixels = 0;
+    for (let index = 0; index < sample.length; index += 4) {
+      const red = sample[index];
+      const green = sample[index + 1];
+      const blue = sample[index + 2];
+      const max = Math.max(red, green, blue);
+      const min = Math.min(red, green, blue);
+      if (max - min > 40 && max < 250 && min < 245) saturatedPixels += 1;
+    }
+    return saturatedPixels;
+  });
+
+  expect(visibleKnotPixels).toBeGreaterThan(5000);
+});
+
 test('packing trips and skills sections keep copy on the left on desktop', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/product/?lang=zh-CN');
