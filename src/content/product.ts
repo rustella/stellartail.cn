@@ -2,22 +2,22 @@ export const productCapabilities = [
   {
     id: 'gear',
     sectionId: 'gear',
-    screenshotKey: 'androidGear'
+    screenshotKey: 'iosGear'
   },
   {
     id: 'packing',
     sectionId: 'packing',
-    screenshotKey: 'androidPacking'
+    screenshotKey: 'iosPacking'
   },
   {
     id: 'trips',
     sectionId: 'trips',
-    screenshotKey: 'androidTrips'
+    screenshotKey: 'iosTrips'
   },
   {
     id: 'skills',
     sectionId: 'skills',
-    screenshotKey: 'androidSkills'
+    screenshotKey: 'iosSkills'
   }
 ] as const;
 export type ProductCapability = (typeof productCapabilities)[number];

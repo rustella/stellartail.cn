@@ -40,7 +40,17 @@ const capabilityIconMap: Record<string, FigmaIconName> = {
   skills: 'book-open'
 };
 
+const iosTabIconMap: Record<string, FigmaIconName> = {
+  home: 'circle-check-big',
+  gear: 'backpack',
+  trips: 'map',
+  skills: 'book-open',
+  profile: 'shield-check'
+};
+
 const capabilityIcon = (id: string): FigmaIconName => capabilityIconMap[id] ?? 'map';
+
+const iosTabIcon = (id: string): FigmaIconName => iosTabIconMap[id] ?? 'circle-check-big';
 
 const renderIcpRecordLink = (): string => {
   if (!deploymentConfig.icpRecordNumber) return '';
@@ -87,6 +97,69 @@ const renderCapabilityCards = (m: Messages): string =>
     })
     .join('');
 
+const renderIosOverview = (m: Messages): string => {
+  const source = assetPath(screenshotAssets.iosHome);
+  return `<section class="section section--ios-overview" id="ios">
+    <div class="container ios-overview" data-reveal>
+      <div class="ios-overview__media">
+        <button class="feature-panel feature-panel--phone feature-panel--prototype ios-overview__phone screenshot-preview-trigger" type="button" data-screenshot-preview data-screenshot-src="${source}" data-screenshot-alt="${escapeHtml(m.screenshots.iosHomeAlt)}" aria-label="${m.workbench.openScreenshot}: ${escapeHtml(m.screenshots.iosHomeAlt)}">
+          <img src="${source}" alt="${escapeHtml(m.screenshots.iosHomeAlt)}" />
+        </button>
+      </div>
+      <div class="ios-overview__copy">
+        <p class="eyebrow">${m.product.ios.eyebrow}</p>
+        <h2 class="section__title">${m.product.ios.title}</h2>
+        <p class="section__body">${m.product.ios.body}</p>
+        <div class="ios-tab-list" aria-label="${m.product.ios.tabsLabel}">
+          ${m.product.ios.tabs
+            .map(
+              (tab) => `<article class="ios-tab-card">
+                <span class="workbench-icon-chip">${renderFigmaIcon(iosTabIcon(tab.id))}</span>
+                <div>
+                  <h3>${tab.title}</h3>
+                  <p>${tab.body}</p>
+                </div>
+              </article>`
+            )
+            .join('')}
+        </div>
+      </div>
+    </div>
+  </section>`;
+};
+
+const renderAssistantSection = (m: Messages): string => {
+  const source = assetPath(screenshotAssets.iosAiChat);
+  return `<section class="section assistant-section" id="assistant">
+    <div class="container assistant-showcase">
+      <div class="assistant-showcase__copy" data-reveal>
+        <p class="eyebrow">${m.assistant.eyebrow}</p>
+        <h2 class="section__title">${m.assistant.title}</h2>
+        <p class="section__body">${m.assistant.body}</p>
+        <div class="assistant-pills" aria-label="${m.assistant.pillsLabel}">
+          ${m.assistant.pills.map((pill) => `<span>${pill}</span>`).join('')}
+        </div>
+        <div class="assistant-flow" aria-label="${m.assistant.flowLabel}">
+          ${m.assistant.flow
+            .map(
+              (item, index) => `<article class="assistant-flow-card">
+                <span class="assistant-flow-card__index">${index + 1}</span>
+                <h3>${item.title}</h3>
+                <p>${item.body}</p>
+              </article>`
+            )
+            .join('')}
+        </div>
+      </div>
+      <div class="assistant-showcase__media" data-reveal>
+        <button class="feature-panel feature-panel--phone feature-panel--prototype assistant-phone screenshot-preview-trigger" type="button" data-screenshot-preview data-screenshot-src="${source}" data-screenshot-alt="${escapeHtml(m.screenshots.iosAiChatAlt)}" aria-label="${m.workbench.openScreenshot}: ${escapeHtml(m.screenshots.iosAiChatAlt)}">
+          <img src="${source}" alt="${escapeHtml(m.screenshots.iosAiChatAlt)}" />
+        </button>
+      </div>
+    </div>
+  </section>`;
+};
+
 const renderCapabilitySections = (m: Messages): string => {
   const sectionCopy = {
     gear: m.gear,
@@ -108,9 +181,9 @@ const renderCapabilitySections = (m: Messages): string => {
   };
   const renderGearScreenshotGallery = (): string => {
     const screenshots = [
-      { src: screenshotAssets.androidGear, alt: m.screenshots.androidGearAlt },
-      { src: screenshotAssets.androidGearDetail, alt: m.screenshots.androidGearDetailAlt },
-      { src: screenshotAssets.androidGearNew, alt: m.screenshots.androidGearNewAlt }
+      { src: screenshotAssets.iosGear, alt: m.screenshots.iosGearAlt },
+      { src: screenshotAssets.iosGearDetail, alt: m.screenshots.iosGearDetailAlt },
+      { src: screenshotAssets.iosGearAtlas, alt: m.screenshots.iosGearAtlasAlt }
     ];
     return `<div class="gear-screenshot-gallery" aria-label="${m.gear.title}">
       ${screenshots.map((screenshot, index) => renderPhonePanel(screenshot.src, screenshot.alt, `gear-screenshot-gallery__item gear-screenshot-gallery__item--${index + 1}`, true)).join('')}
@@ -118,8 +191,8 @@ const renderCapabilitySections = (m: Messages): string => {
   };
   const renderPackingScreenshotGallery = (): string => {
     const screenshots = [
-      { src: screenshotAssets.androidPacking, alt: m.screenshots.androidPackingAlt },
-      { src: screenshotAssets.androidPackingDetail, alt: m.screenshots.androidPackingDetailAlt }
+      { src: screenshotAssets.iosPacking, alt: m.screenshots.iosPackingAlt },
+      { src: screenshotAssets.iosPackingDetail, alt: m.screenshots.iosPackingDetailAlt }
     ];
     return `<div class="packing-screenshot-gallery" aria-label="${m.packing.title}">
       ${screenshots.map((screenshot, index) => renderPhonePanel(screenshot.src, screenshot.alt, `packing-screenshot-gallery__item packing-screenshot-gallery__item--${index + 1}`, true)).join('')}
@@ -127,9 +200,9 @@ const renderCapabilitySections = (m: Messages): string => {
   };
   const renderTripsScreenshotGallery = (): string => {
     const screenshots = [
-      { src: screenshotAssets.androidTrips, alt: m.screenshots.androidTripsAlt },
-      { src: screenshotAssets.androidTripCreate, alt: m.screenshots.androidTripCreateAlt },
-      { src: screenshotAssets.androidTripDetail, alt: m.screenshots.androidTripDetailAlt }
+      { src: screenshotAssets.iosTrips, alt: m.screenshots.iosTripsAlt },
+      { src: screenshotAssets.iosTrailLibrary, alt: m.screenshots.iosTrailLibraryAlt },
+      { src: screenshotAssets.iosTripDetail, alt: m.screenshots.iosTripDetailAlt }
     ];
     return `<div class="trips-screenshot-gallery" aria-label="${m.trips.title}">
       ${screenshots.map((screenshot, index) => renderPhonePanel(screenshot.src, screenshot.alt, `trips-screenshot-gallery__item trips-screenshot-gallery__item--${index + 1}`, true)).join('')}
@@ -137,9 +210,9 @@ const renderCapabilitySections = (m: Messages): string => {
   };
   const renderSkillsScreenshotGallery = (): string => {
     const screenshots = [
-      { src: screenshotAssets.androidSkills, alt: m.screenshots.androidSkillsAlt },
-      { src: screenshotAssets.androidKnotList, alt: m.screenshots.androidKnotListAlt },
-      { src: screenshotAssets.androidKnotDetail, alt: m.screenshots.androidKnotDetailAlt }
+      { src: screenshotAssets.iosSkills, alt: m.screenshots.iosSkillsAlt },
+      { src: screenshotAssets.iosKnotList, alt: m.screenshots.iosKnotListAlt },
+      { src: screenshotAssets.iosKnotDetail, alt: m.screenshots.iosKnotDetailAlt }
     ];
     return `<div class="skills-screenshot-gallery" aria-label="${m.skills.title}">
       ${screenshots.map((screenshot, index) => renderPhonePanel(screenshot.src, screenshot.alt, `skills-screenshot-gallery__item skills-screenshot-gallery__item--${index + 1}`, true)).join('')}
@@ -273,6 +346,8 @@ const render = (): void => {
   const m = getMessages(activeLocale);
   const jumpLinks = [
     { label: m.jump.home, href: '#top' },
+    { label: m.product.ios.navLabel, href: '#ios' },
+    { label: m.assistant.navLabel, href: '#assistant' },
     { label: m.nav.product, href: '#product' },
     { label: m.nav.gear, href: '#gear' },
     { label: m.nav.packing, href: '#packing' },
@@ -282,6 +357,8 @@ const render = (): void => {
   ];
   const capabilityCards = renderCapabilityCards(m);
   const capabilitySections = renderCapabilitySections(m);
+  const iosOverview = renderIosOverview(m);
+  const assistantSection = renderAssistantSection(m);
   const icpRecordLink = renderIcpRecordLink();
   document.title = m.seo.title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', m.seo.description);
@@ -359,7 +436,7 @@ const render = (): void => {
                   </span>
                 </span>
                 <span class="iphone-device__island"></span>
-                <img src="${assetPath(screenshotAssets.androidGear)}" alt="" />
+                <img src="${assetPath(screenshotAssets.iosHome)}" alt="" />
               </div>
             </div>
           </aside>
@@ -367,6 +444,9 @@ const render = (): void => {
       </header>
 
       <main>
+        ${iosOverview}
+        ${assistantSection}
+
         <section class="section section--tight" id="product">
           <div class="container" data-reveal>
             <p class="eyebrow">${m.product.eyebrow}</p>

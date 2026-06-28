@@ -218,6 +218,8 @@ test('product intro floating breadcrumb stays collapsed on the hero and opens in
 
   const zhJumpLinks = [
     ['首页', '#top'],
+    ['iOS 主入口', '#ios'],
+    ['AI助手', '#assistant'],
     ['产品介绍', '#product'],
     ['个人装备', '#gear'],
     ['装备清单', '#packing'],
@@ -254,6 +256,8 @@ test('product intro floating breadcrumb stays collapsed on the hero and opens in
   await expect(enPanel).toBeVisible();
   const enJumpLinks = [
     ['Home', '#top'],
+    ['iOS entries', '#ios'],
+    ['AI assistant', '#assistant'],
     ['Product intro', '#product'],
     ['Personal gear', '#gear'],
     ['Packing lists', '#packing'],
@@ -607,10 +611,40 @@ test('mobile viewport has no horizontal overflow', async ({ page }) => {
 
 test('product intro page includes all core sections', async ({ page }) => {
   await page.goto('/product/?lang=en-US');
-  for (const id of ['product', 'gear', 'packing', 'trips', 'skills', 'entry']) {
+  for (const id of ['ios', 'assistant', 'product', 'gear', 'packing', 'trips', 'skills', 'entry']) {
     await expect(page.locator(`#${id}`)).toBeVisible();
   }
   await expect(page.locator('#screenshots')).toHaveCount(0);
+});
+
+test('iOS knot detail screenshot includes visible knot media', async ({ page }) => {
+  await page.goto('/product/?lang=zh-CN');
+  const visibleKnotPixels = await page.evaluate(async () => {
+    const image = new Image();
+    image.src = new URL('/assets/screenshots/ios-knot-detail-signed-in-light.png', window.location.href).toString();
+    await image.decode();
+
+    const canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('Canvas context unavailable');
+
+    context.drawImage(image, 0, 0);
+    const sample = context.getImageData(80, 300, 530, 260).data;
+    let saturatedPixels = 0;
+    for (let index = 0; index < sample.length; index += 4) {
+      const red = sample[index];
+      const green = sample[index + 1];
+      const blue = sample[index + 2];
+      const max = Math.max(red, green, blue);
+      const min = Math.min(red, green, blue);
+      if (max - min > 40 && max < 250 && min < 245) saturatedPixels += 1;
+    }
+    return saturatedPixels;
+  });
+
+  expect(visibleKnotPixels).toBeGreaterThan(5000);
 });
 
 test('packing trips and skills sections keep copy on the left on desktop', async ({ page }) => {
@@ -662,7 +696,7 @@ test('reduced motion preference keeps content visible and minimizes animation', 
   const context = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
   await page.goto('/product/?lang=en-US');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Prepare gear');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Bring pre-departure');
   const animationDurationMs = await page.locator('.float-soft').first().evaluate((element) => {
     const value = window.getComputedStyle(element).animationDuration;
     return value.endsWith('ms') ? Number.parseFloat(value) : Number.parseFloat(value) * 1000;
@@ -685,8 +719,18 @@ test('product intro copy stays user-facing and avoids duplicate screenshot galle
   await expect(page.getByText('重点能力的真实界面示例')).toHaveCount(0);
   await expect(page.getByText('产品截图', { exact: true })).toHaveCount(0);
   await expect(page.getByText('把单人准备和多人协作放到同一个视图里。')).toHaveCount(0);
-  await expect(page.getByText('绳结技能')).toHaveCount(0);
   await expect(page.locator('#product').getByRole('heading', { name: '户外技能' })).toBeVisible();
+  const iosOverview = page.locator('#ios');
+  await expect(iosOverview.getByRole('heading', { name: '五个底部入口，覆盖出发前的主要准备动作' })).toBeVisible();
+  await expect(iosOverview.locator('img')).toHaveAttribute('src', /ios-home-signed-in-light\.png/);
+  for (const entry of ['首页', '装备', '行程', '技能', '我的']) {
+    await expect(iosOverview.getByText(entry, { exact: true })).toBeVisible();
+  }
+  const assistantSection = page.locator('#assistant');
+  await expect(assistantSection.getByRole('heading', { name: 'AI助手是出发前准备的主入口' })).toBeVisible();
+  await expect(assistantSection.getByText('确认后写入', { exact: true })).toBeVisible();
+  await expect(assistantSection.getByText('最近会话', { exact: true })).toHaveCount(0);
+  await expect(assistantSection.locator('img')).toHaveAttribute('src', /ios-ai-chat-signed-in-light\.png/);
   const imageSources = await page.locator('img').evaluateAll((images) => images.map((image) => image.getAttribute('src') ?? '').join(' '));
   await expect(page.locator('#gear .gear-screenshot-gallery img')).toHaveCount(3);
   await expect(page.locator('#packing .packing-screenshot-gallery img')).toHaveCount(2);
@@ -702,25 +746,26 @@ test('product intro copy stays user-facing and avoids duplicate screenshot galle
   const figmaIconNames = await page.locator('[data-icon-source="figma-make-lucide"]').evaluateAll((icons) =>
     icons.map((icon) => icon.getAttribute('data-icon-name'))
   );
-  expect(figmaIconNames).toHaveLength(8);
-  expect(figmaIconNames).toEqual(expect.arrayContaining(['backpack', 'circle-check-big', 'map', 'book-open', 'arrow-right']));
+  expect(figmaIconNames).toHaveLength(13);
+  expect(figmaIconNames).toEqual(expect.arrayContaining(['backpack', 'circle-check-big', 'map', 'book-open', 'shield-check', 'arrow-right']));
   expect(figmaIconNames.filter((name) => name === 'arrow-right')).toHaveLength(4);
   expect(figmaIconNames).not.toContain('globe');
   expect(figmaIconNames).not.toContain('download');
   expect(figmaIconNames).not.toContain('file-text');
-  expect(figmaIconNames).not.toContain('shield-check');
   for (const expected of [
-    'prototype-mobile-gear.png',
-    'prototype-mobile-gear-detail.png',
-    'prototype-mobile-gear-new.png',
-    'prototype-mobile-packing.png',
-    'prototype-mobile-packing-detail.png',
-    'prototype-mobile-trips.png',
-    'prototype-mobile-trip-create.png',
-    'prototype-mobile-trip-detail.png',
-    'prototype-mobile-skills.png',
-    'prototype-mobile-knot-list.png',
-    'prototype-mobile-knot-detail.png'
+    'ios-home-signed-in-light.png',
+    'ios-ai-chat-signed-in-light.png',
+    'ios-gear-signed-in-light.png',
+    'ios-gear-atlas-detail-signed-in-light.png',
+    'ios-gear-atlas-signed-in-light.png',
+    'ios-packing-signed-in-light.png',
+    'ios-packing-detail-signed-in-light.png',
+    'ios-trips-signed-in-light.png',
+    'ios-trail-library-signed-in-light.png',
+    'ios-trip-detail-map-signed-in-light.png',
+    'ios-skills-signed-in-light.png',
+    'ios-knot-list-signed-in-light.png',
+    'ios-knot-detail-signed-in-light.png'
   ]) {
     expect(imageSources).toContain(expected);
   }
@@ -750,8 +795,15 @@ test('product intro copy stays user-facing and avoids duplicate screenshot galle
   expect(enBodyText).not.toContain('Available now');
   expect(enBodyText).not.toContain('Feature preview');
   expect(enBodyText).not.toContain('Keep solo prep and group coordination in one view.');
-  expect(enBodyText).not.toContain('Knot skills');
+  const enAssistantSection = page.locator('#assistant');
+  await expect(enAssistantSection.getByRole('heading', { name: 'The AI assistant is the starting point for pre-departure prep' })).toBeVisible();
+  await expect(enAssistantSection.getByText('Confirm before changes', { exact: true })).toBeVisible();
   await expect(page.locator('#product').getByRole('heading', { name: 'Outdoor skills' })).toBeVisible();
+  const enIosOverview = page.locator('#ios');
+  await expect(enIosOverview.getByRole('heading', { name: 'Five bottom entries cover the main preparation actions' })).toBeVisible();
+  for (const entry of ['Home', 'Gear', 'Trips', 'Skills', 'Profile']) {
+    await expect(enIosOverview.getByText(entry, { exact: true })).toBeVisible();
+  }
   const imageAlts = await page.locator('img[alt]').evaluateAll((images) => images.map((image) => image.getAttribute('alt') ?? '').join(' '));
   expect(imageAlts.toLowerCase()).not.toContain('day mode');
   expect(imageAlts.toLowerCase()).not.toContain('day-mode');
@@ -766,7 +818,7 @@ test('gear screenshots open enlarged previews', async ({ page }) => {
 
   const lightbox = page.locator('[data-screenshot-lightbox]');
   await expect(lightbox).toBeVisible();
-  await expect(lightbox.locator('[data-screenshot-lightbox-image]')).toHaveAttribute('src', /prototype-mobile-gear\.png/);
+  await expect(lightbox.locator('[data-screenshot-lightbox-image]')).toHaveAttribute('src', /ios-gear-signed-in-light\.png/);
 
   const previewBox = await lightbox.locator('[data-screenshot-lightbox-image]').boundingBox();
   const triggerBox = await trigger.boundingBox();

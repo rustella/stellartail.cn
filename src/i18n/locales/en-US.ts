@@ -66,73 +66,143 @@ export const enUS = {
   },
   hero: {
     eyebrow: 'StellarTrail',
-    title: 'Prepare gear, lists, trips, and outdoor skills before you head out',
-    subtitle: 'A lightweight companion for outdoor preparation: track personal gear, confirm packing lists, organize trip prep, and review field-ready outdoor skills before departure.',
+    title: 'Bring pre-departure checks into five iPhone entries',
+    subtitle: 'The latest iOS app centers preparation around Home, Gear, Trips, Skills, and Profile: start with the assistant and recent trip context, then review gear, lists, tracks, and knot skills before heading out.',
     primaryCta: 'View downloads',
     secondaryCta: 'Open Web app',
     stats: [
-      { value: 'Organize', label: 'Gear and lists' },
-      { value: 'Confirm', label: 'Trip prep' },
-      { value: 'Review', label: 'Outdoor skills' }
+      { value: '5', label: 'iOS entries' },
+      { value: 'Tracks', label: 'Trip overview' },
+      { value: 'Cache', label: 'Knot review' }
     ]
   },
   product: {
     eyebrow: 'Product focus',
-    title: 'Turn scattered pre-departure tasks into steps you can check',
-    body: 'StellarTrail focuses on the preparation phase before heading outdoors, making gear, lists, trips, and outdoor skills easier to check.',
+    title: 'Shape pre-departure work around the current iOS feature set',
+    body: 'StellarTrail focuses on the preparation phase before heading outdoors. This product page now follows the latest iOS app, highlighting the home assistant, gear locker, packing lists, trip tracks, knot skills, and outdoor profile already represented in the interface.',
+    ios: {
+      navLabel: 'iOS entries',
+      eyebrow: 'Current iOS structure',
+      title: 'Five bottom entries cover the main preparation actions',
+      body: 'The iOS app separates the lightweight home surface, gear management, trip tracks, skill review, and outdoor profile into stable entries, then expands into the AI assistant, recent trips, gear atlas, track library, offline cache, and outdoor profile context.',
+      tabsLabel: 'Five iOS primary entries',
+      tabs: [
+        {
+          id: 'home',
+          title: 'Home',
+          body: 'The assistant, recent trip preview, and AI assistant entry sit up front for context before preparation starts.'
+        },
+        {
+          id: 'gear',
+          title: 'Gear',
+          body: 'The gear locker connects personal gear, packing lists, and the gear atlas around weight, status, and storage details.'
+        },
+        {
+          id: 'trips',
+          title: 'Trips',
+          body: 'Trips brings solo/group prep, track overview, the track library, and team coordination into one place.'
+        },
+        {
+          id: 'skills',
+          title: 'Skills',
+          body: 'Skills starts with knots and supports favorites, search, category filters, and offline caching.'
+        },
+        {
+          id: 'profile',
+          title: 'Profile',
+          body: 'Profile manages the account and outdoor profile.'
+        }
+      ]
+    },
     capabilities: {
       gear: {
-        title: 'Personal gear',
-        subtitle: 'Track each item by category, status, weight, value, and storage location.',
-        body: 'Keep headlamps, packs, stoves, and other recurring gear in one personal library so pre-departure checks start from your own inventory.',
-        bullets: ['Gear counts and weight summaries', 'Category, status, and search filters', 'Gear detail and editing flow']
+        title: 'Gear locker',
+        subtitle: 'Track each item by category, status, weight, value, tags, and storage location.',
+        body: 'The iOS Gear entry keeps inventory summaries, filters, gear detail, add/edit flows, the gear atlas, and packing-list entry in one preparation chain.',
+        bullets: ['Gear counts, categories, total weight, and value', 'Category, status, tag, search, and sort controls', 'Gear atlas items can move into personal gear or packing lists']
       },
       packing: {
         title: 'Packing lists',
-        subtitle: 'Confirm departure items by trip and scenario.',
-        body: 'Turn personal gear into a packing list, then check total weight, packed weight, and missing items before you leave.',
-        bullets: ['Build lists by scenario', 'Mark packed items one by one', 'Track weight and progress']
+        subtitle: 'Confirm departure items through personal or shared lists.',
+        body: 'Packing lists live one level below the iOS Gear entry, with list type, day, tag, and weight controls that also support shared team supplies.',
+        bullets: ['Create personal or shared lists', 'Filter and sort by day count, tags, and update time', 'Track total weight, packed weight, and progress']
       },
       trips: {
         title: 'Trip prep',
-        subtitle: 'Trips support both solo preparation and group coordination.',
-        body: 'Trip pages collect dates, members, and readiness signals so you can confirm gear, skills, weather, and safety prep before departure.',
-        bullets: ['Solo and group trip support', 'Member and day summaries', 'Readiness cues']
+        subtitle: 'Solo prep, group coordination, and track assets stay visible together.',
+        body: 'The iOS Trips entry shows a trip track overview, recent trips, create/join flows, the track library, map state, and team modules for the final preparation check.',
+        bullets: ['Solo and group trip support', 'Track overview, track library, and local 3D map fallback', 'Team info, shared gear, and invitation flows']
       },
       skills: {
         title: 'Outdoor skills',
-        subtitle: 'Review practical outdoor skills before departure.',
-        body: 'The current skill library focuses on knots for camping, fishing, connecting, and securing, with quick entry into detailed practice views.',
-        bullets: ['Knot category entry', 'Favorite skills list', 'Fast review before departure']
+        subtitle: 'Start with knots, then keep favorites, search, and offline cache.',
+        body: 'The iOS Skills entry opens with a skill catalog. The current available path enters knots, where users can filter, favorite, and cache content for pre-departure review.',
+        bullets: ['Current capability: knot skills', 'Favorites, search, and category filters', 'Skill content cache and safety prompts']
       }
     }
   },
+  assistant: {
+    navLabel: 'AI assistant',
+    eyebrow: 'AI assistant',
+    title: 'The AI assistant is the starting point for pre-departure prep',
+    body: 'The Home AI assistant brings recent trips, gear summaries, and packing-list status into one preparation context. It helps break questions into a checkable plan, then routes confirmed actions back to gear, lists, or trips.',
+    pillsLabel: 'AI assistant focus areas',
+    pills: ['Preparation context', 'Plan generation', 'Confirm before changes'],
+    flowLabel: 'How the AI assistant works',
+    flow: [
+      {
+        title: 'Understands trip context',
+        body: 'The Home surface keeps recent trips, lists, and gear summaries close to the conversation, so answers stay tied to the next departure.'
+      },
+      {
+        title: 'Turns questions into plans',
+        body: 'High-altitude gear gaps, safety reviews, and knot-practice reminders become lists, checks, and next-step suggestions.'
+      },
+      {
+        title: 'Routes changes after confirmation',
+        body: 'When a list, gear item, or trip detail needs to change, the assistant presents the plan first and hands it to the right module after confirmation.'
+      }
+    ]
+  },
   gear: {
     eyebrow: 'Personal gear',
-    title: 'Keep every item in a gear library you can track',
-    body: 'Record category, status, weight, and value for each item. Whether you organize on desktop or check on mobile, the available gear stays easy to scan.',
-    bullets: ['View item count, category count, total weight, and value', 'Search by name, brand, or model', 'Move from personal gear into atlas or packing lists']
+    title: 'The gear locker connects inventory, atlas, and packing lists',
+    body: 'The iOS Gear entry surfaces the departure gear locker, making gear assets, weight, storage, the gear atlas, and packing lists available from the same surface.',
+    bullets: ['View item count, category count, total weight, and value', 'Filter by name, brand, model, tag, and status', 'Move from personal gear into atlas or packing lists']
   },
   packing: {
     eyebrow: 'Packing lists',
-    title: 'Confirm every item before departure',
-    body: 'Packing lists break preparation into checkable items, helping you confirm gear by destination, day count, and scenario before you walk out the door.',
-    bullets: ['Create packing lists for a trip', 'Track total and packed weight', 'Keep list state close on mobile']
+    title: 'Packing lists support both personal prep and shared team supplies',
+    body: 'The iOS list view separates personal and shared lists, then adds filtering, sorting, day count, and tag controls so the last pre-departure pass stays on the phone.',
+    bullets: ['Create personal or shared lists', 'Track total weight, packed weight, and completion', 'Organize lists by day count, tags, and weight']
   },
   trips: {
     eyebrow: 'Trip prep',
-    title: 'Make trip details, members, and readiness easier to see',
-    body: 'Trip prep gathers dates, members, and readiness progress so you can quickly see what still needs attention before departure.',
-    bullets: ['Solo prep and group coordination support', 'Date, member, and day summaries', 'Pre-departure checks for gear, skills, weather, and safety']
+    title: 'Trips keeps tracks, team context, and prep modules together',
+    body: 'The iOS Trips entry starts from a trip track overview, then continues into the track library, trip detail, shared gear, and member coordination for one final preparation pass.',
+    bullets: ['Solo prep and group coordination support', 'Date, member, day, and module summaries', 'Track overview, map state, and external app import guidance']
   },
   skills: {
     eyebrow: 'Outdoor skills',
-    title: 'Start with knots that are useful in the field',
-    body: 'The current skill library focuses on knots for camping, fishing, connecting, and securing, making it useful for quick review before heading outdoors.',
-    bullets: ['Current capability: knot tutorials', 'Favorite common skills', 'Fast review before departure']
+    title: 'Start with knot skills that can be reviewed offline',
+    body: 'The iOS Skills entry currently focuses on knots, with favorites, search, category filters, detailed practice, and cache confirmation. Other skill categories remain visible as in-progress entries.',
+    bullets: ['Current capability: knot tutorials', 'Favorites, search, and category filters', 'Cache knot content for quick pre-departure review']
   },
   screenshots: {
     iosAppAlt: 'StellarTrail iOS app interface',
+    iosHomeAlt: 'StellarTrail iOS home interface',
+    iosAiChatAlt: 'iOS AI assistant chat interface',
+    iosGearAlt: 'iOS personal gear interface',
+    iosGearDetailAlt: 'iOS gear atlas detail interface',
+    iosGearAtlasAlt: 'iOS gear atlas interface',
+    iosPackingAlt: 'iOS packing list interface',
+    iosPackingDetailAlt: 'iOS packing list detail interface',
+    iosTripsAlt: 'iOS trip preparation interface',
+    iosTrailLibraryAlt: 'iOS trail library interface',
+    iosTripDetailAlt: 'iOS trip map detail interface',
+    iosSkillsAlt: 'iOS outdoor skills interface',
+    iosKnotListAlt: 'iOS knot list interface',
+    iosKnotDetailAlt: 'iOS knot detail interface',
     androidGearAlt: 'Android personal gear interface',
     androidGearDetailAlt: 'Android gear detail interface',
     androidGearNewAlt: 'Android add gear interface',
