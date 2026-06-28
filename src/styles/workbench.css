@@ -483,6 +483,99 @@ body {
   line-height: 1.58;
 }
 
+.assistant-section {
+  background:
+    linear-gradient(180deg, rgba(204, 251, 241, 0.34), rgba(255, 255, 255, 0));
+}
+
+.assistant-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.46fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+}
+
+.assistant-showcase__copy {
+  min-width: 0;
+}
+
+.assistant-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.assistant-pills span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 13px;
+  border: 1px solid rgba(11, 118, 107, 0.14);
+  border-radius: 999px;
+  color: #0b766b;
+  background: rgba(255, 255, 255, 0.78);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.assistant-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.assistant-flow-card {
+  min-height: 184px;
+  padding: 18px;
+  border: 1px solid rgba(216, 240, 234, 0.95);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 16px 42px rgba(15, 139, 126, 0.08);
+}
+
+.assistant-flow-card__index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  color: #ffffff;
+  background: #0f8b7e;
+  font-size: 14px;
+  font-weight: 950;
+}
+
+.assistant-flow-card h3 {
+  margin: 0 0 8px;
+  color: #0f172a;
+  font-size: 17px;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.assistant-flow-card p {
+  margin: 0;
+  color: #5d6b7d;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.65;
+}
+
+.assistant-showcase__media {
+  display: grid;
+  justify-items: center;
+}
+
+.assistant-phone {
+  width: min(310px, 100%);
+  max-width: 310px;
+  box-shadow: 0 30px 84px rgba(15, 118, 107, 0.18);
+}
+
 .task-panel {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(240px, 0.46fr);
@@ -731,16 +824,22 @@ body {
   .downloads-hero__grid,
   .privacy-hero__grid,
   .ios-overview,
+  .assistant-showcase,
   .task-panel {
     grid-template-columns: 1fr;
   }
 
-  .ios-overview__copy {
+  .ios-overview__copy,
+  .assistant-showcase__copy {
     order: -1;
   }
 
   .ios-tab-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .assistant-flow {
+    grid-template-columns: 1fr;
   }
 
   .task-panel .feature-panel {
@@ -833,6 +932,10 @@ body {
   }
 
   .ios-overview__phone {
+    width: min(292px, 88vw);
+  }
+
+  .assistant-phone {
     width: min(292px, 88vw);
   }
 

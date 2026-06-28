@@ -219,6 +219,7 @@ test('product intro floating breadcrumb stays collapsed on the hero and opens in
   const zhJumpLinks = [
     ['首页', '#top'],
     ['iOS 主入口', '#ios'],
+    ['AI助手', '#assistant'],
     ['产品介绍', '#product'],
     ['个人装备', '#gear'],
     ['装备清单', '#packing'],
@@ -256,6 +257,7 @@ test('product intro floating breadcrumb stays collapsed on the hero and opens in
   const enJumpLinks = [
     ['Home', '#top'],
     ['iOS entries', '#ios'],
+    ['AI assistant', '#assistant'],
     ['Product intro', '#product'],
     ['Personal gear', '#gear'],
     ['Packing lists', '#packing'],
@@ -609,7 +611,7 @@ test('mobile viewport has no horizontal overflow', async ({ page }) => {
 
 test('product intro page includes all core sections', async ({ page }) => {
   await page.goto('/product/?lang=en-US');
-  for (const id of ['ios', 'product', 'gear', 'packing', 'trips', 'skills', 'entry']) {
+  for (const id of ['ios', 'assistant', 'product', 'gear', 'packing', 'trips', 'skills', 'entry']) {
     await expect(page.locator(`#${id}`)).toBeVisible();
   }
   await expect(page.locator('#screenshots')).toHaveCount(0);
@@ -724,6 +726,11 @@ test('product intro copy stays user-facing and avoids duplicate screenshot galle
   for (const entry of ['首页', '装备', '行程', '技能', '我的']) {
     await expect(iosOverview.getByText(entry, { exact: true })).toBeVisible();
   }
+  const assistantSection = page.locator('#assistant');
+  await expect(assistantSection.getByRole('heading', { name: 'AI助手是出发前准备的主入口' })).toBeVisible();
+  await expect(assistantSection.getByText('确认后写入', { exact: true })).toBeVisible();
+  await expect(assistantSection.getByText('最近会话', { exact: true })).toHaveCount(0);
+  await expect(assistantSection.locator('img')).toHaveAttribute('src', /ios-ai-chat-signed-in-light\.png/);
   const imageSources = await page.locator('img').evaluateAll((images) => images.map((image) => image.getAttribute('src') ?? '').join(' '));
   await expect(page.locator('#gear .gear-screenshot-gallery img')).toHaveCount(3);
   await expect(page.locator('#packing .packing-screenshot-gallery img')).toHaveCount(2);
@@ -747,6 +754,7 @@ test('product intro copy stays user-facing and avoids duplicate screenshot galle
   expect(figmaIconNames).not.toContain('file-text');
   for (const expected of [
     'ios-home-signed-in-light.png',
+    'ios-ai-chat-signed-in-light.png',
     'ios-gear-signed-in-light.png',
     'ios-gear-atlas-detail-signed-in-light.png',
     'ios-gear-atlas-signed-in-light.png',
@@ -787,6 +795,9 @@ test('product intro copy stays user-facing and avoids duplicate screenshot galle
   expect(enBodyText).not.toContain('Available now');
   expect(enBodyText).not.toContain('Feature preview');
   expect(enBodyText).not.toContain('Keep solo prep and group coordination in one view.');
+  const enAssistantSection = page.locator('#assistant');
+  await expect(enAssistantSection.getByRole('heading', { name: 'The AI assistant is the starting point for pre-departure prep' })).toBeVisible();
+  await expect(enAssistantSection.getByText('Confirm before changes', { exact: true })).toBeVisible();
   await expect(page.locator('#product').getByRole('heading', { name: 'Outdoor skills' })).toBeVisible();
   const enIosOverview = page.locator('#ios');
   await expect(enIosOverview.getByRole('heading', { name: 'Five bottom entries cover the main preparation actions' })).toBeVisible();

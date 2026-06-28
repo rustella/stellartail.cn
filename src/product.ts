@@ -128,6 +128,38 @@ const renderIosOverview = (m: Messages): string => {
   </section>`;
 };
 
+const renderAssistantSection = (m: Messages): string => {
+  const source = assetPath(screenshotAssets.iosAiChat);
+  return `<section class="section assistant-section" id="assistant">
+    <div class="container assistant-showcase">
+      <div class="assistant-showcase__copy" data-reveal>
+        <p class="eyebrow">${m.assistant.eyebrow}</p>
+        <h2 class="section__title">${m.assistant.title}</h2>
+        <p class="section__body">${m.assistant.body}</p>
+        <div class="assistant-pills" aria-label="${m.assistant.pillsLabel}">
+          ${m.assistant.pills.map((pill) => `<span>${pill}</span>`).join('')}
+        </div>
+        <div class="assistant-flow" aria-label="${m.assistant.flowLabel}">
+          ${m.assistant.flow
+            .map(
+              (item, index) => `<article class="assistant-flow-card">
+                <span class="assistant-flow-card__index">${index + 1}</span>
+                <h3>${item.title}</h3>
+                <p>${item.body}</p>
+              </article>`
+            )
+            .join('')}
+        </div>
+      </div>
+      <div class="assistant-showcase__media" data-reveal>
+        <button class="feature-panel feature-panel--phone feature-panel--prototype assistant-phone screenshot-preview-trigger" type="button" data-screenshot-preview data-screenshot-src="${source}" data-screenshot-alt="${escapeHtml(m.screenshots.iosAiChatAlt)}" aria-label="${m.workbench.openScreenshot}: ${escapeHtml(m.screenshots.iosAiChatAlt)}">
+          <img src="${source}" alt="${escapeHtml(m.screenshots.iosAiChatAlt)}" />
+        </button>
+      </div>
+    </div>
+  </section>`;
+};
+
 const renderCapabilitySections = (m: Messages): string => {
   const sectionCopy = {
     gear: m.gear,
@@ -315,6 +347,7 @@ const render = (): void => {
   const jumpLinks = [
     { label: m.jump.home, href: '#top' },
     { label: m.product.ios.navLabel, href: '#ios' },
+    { label: m.assistant.navLabel, href: '#assistant' },
     { label: m.nav.product, href: '#product' },
     { label: m.nav.gear, href: '#gear' },
     { label: m.nav.packing, href: '#packing' },
@@ -325,6 +358,7 @@ const render = (): void => {
   const capabilityCards = renderCapabilityCards(m);
   const capabilitySections = renderCapabilitySections(m);
   const iosOverview = renderIosOverview(m);
+  const assistantSection = renderAssistantSection(m);
   const icpRecordLink = renderIcpRecordLink();
   document.title = m.seo.title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', m.seo.description);
@@ -411,6 +445,7 @@ const render = (): void => {
 
       <main>
         ${iosOverview}
+        ${assistantSection}
 
         <section class="section section--tight" id="product">
           <div class="container" data-reveal>

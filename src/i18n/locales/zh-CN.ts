@@ -141,6 +141,29 @@ export const zhCN = {
       }
     }
   },
+  assistant: {
+    navLabel: 'AI助手',
+    eyebrow: 'AI助手',
+    title: 'AI助手是出发前准备的主入口',
+    body: '首页里的 AI助手会把最近行程、装备摘要和清单状态放进同一个准备上下文里，先帮你拆解问题、生成检查计划，再把需要确认的动作带回装备、清单或行程模块处理。',
+    pillsLabel: 'AI助手重点能力',
+    pills: ['准备上下文', '生成计划', '确认后写入'],
+    flowLabel: 'AI助手工作方式',
+    flow: [
+      {
+        title: '理解准备上下文',
+        body: '进入首页后先围绕最近行程、清单和装备摘要回答问题，让对话直接贴着这次出发。'
+      },
+      {
+        title: '整理可执行计划',
+        body: '把高海拔装备补全、徒步安全复核、绳结复习等问题拆成清单、提醒和下一步建议。'
+      },
+      {
+        title: '确认后再进入模块',
+        body: '涉及新增清单、调整装备或补充行程的信息，先展示计划，由用户确认后再交给对应模块。'
+      }
+    ]
+  },
   gear: {
     eyebrow: '个人装备',
     title: '装备舱先把库存、图鉴和清单串起来',
@@ -168,6 +191,7 @@ export const zhCN = {
   screenshots: {
     iosAppAlt: 'iOS 端寻径星野 App 界面',
     iosHomeAlt: 'iOS 端寻径星野首页界面',
+    iosAiChatAlt: 'iOS 端 AI助手聊天界面',
     iosGearAlt: 'iOS 端个人装备界面',
     iosGearDetailAlt: 'iOS 端装备图鉴详情界面',
     iosGearAtlasAlt: 'iOS 端装备图鉴界面',

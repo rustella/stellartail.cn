@@ -141,6 +141,29 @@ export const enUS = {
       }
     }
   },
+  assistant: {
+    navLabel: 'AI assistant',
+    eyebrow: 'AI assistant',
+    title: 'The AI assistant is the starting point for pre-departure prep',
+    body: 'The Home AI assistant brings recent trips, gear summaries, and packing-list status into one preparation context. It helps break questions into a checkable plan, then routes confirmed actions back to gear, lists, or trips.',
+    pillsLabel: 'AI assistant focus areas',
+    pills: ['Preparation context', 'Plan generation', 'Confirm before changes'],
+    flowLabel: 'How the AI assistant works',
+    flow: [
+      {
+        title: 'Understands trip context',
+        body: 'The Home surface keeps recent trips, lists, and gear summaries close to the conversation, so answers stay tied to the next departure.'
+      },
+      {
+        title: 'Turns questions into plans',
+        body: 'High-altitude gear gaps, safety reviews, and knot-practice reminders become lists, checks, and next-step suggestions.'
+      },
+      {
+        title: 'Routes changes after confirmation',
+        body: 'When a list, gear item, or trip detail needs to change, the assistant presents the plan first and hands it to the right module after confirmation.'
+      }
+    ]
+  },
   gear: {
     eyebrow: 'Personal gear',
     title: 'The gear locker connects inventory, atlas, and packing lists',
@@ -168,6 +191,7 @@ export const enUS = {
   screenshots: {
     iosAppAlt: 'StellarTrail iOS app interface',
     iosHomeAlt: 'StellarTrail iOS home interface',
+    iosAiChatAlt: 'iOS AI assistant chat interface',
     iosGearAlt: 'iOS personal gear interface',
     iosGearDetailAlt: 'iOS gear atlas detail interface',
     iosGearAtlasAlt: 'iOS gear atlas interface',

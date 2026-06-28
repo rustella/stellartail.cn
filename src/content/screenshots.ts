@@ -1,5 +1,6 @@
 export const screenshotAssets = {
   iosHome: 'assets/screenshots/ios-home-signed-in-light.png',
+  iosAiChat: 'assets/screenshots/ios-ai-chat-signed-in-light.png',
   iosGear: 'assets/screenshots/ios-gear-signed-in-light.png',
   iosGearDetail: 'assets/screenshots/ios-gear-atlas-detail-signed-in-light.png',
   iosGearAtlas: 'assets/screenshots/ios-gear-atlas-signed-in-light.png',
