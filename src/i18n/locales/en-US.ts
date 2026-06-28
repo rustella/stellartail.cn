@@ -79,18 +79,18 @@ export const enUS = {
   product: {
     eyebrow: 'Product focus',
     title: 'Shape pre-departure work around the current iOS feature set',
-    body: 'StellarTrail focuses on the preparation phase before heading outdoors. This product page now follows the latest iOS app, highlighting the home assistant, gear locker, packing lists, trip tracks, knot skills, and account profile already represented in the interface.',
+    body: 'StellarTrail focuses on the preparation phase before heading outdoors. This product page now follows the latest iOS app, highlighting the home assistant, gear locker, packing lists, trip tracks, knot skills, and outdoor profile already represented in the interface.',
     ios: {
       navLabel: 'iOS entries',
       eyebrow: 'Current iOS structure',
       title: 'Five bottom entries cover the main preparation actions',
-      body: 'The iOS app separates the lightweight home surface, gear management, trip tracks, skill review, and personal settings into stable entries. After sign-in, those expand into the AI assistant, recent trips, gear atlas, track library, offline cache, and profile tools.',
+      body: 'The iOS app separates the lightweight home surface, gear management, trip tracks, skill review, and outdoor profile into stable entries, then expands into the AI assistant, recent trips, gear atlas, track library, offline cache, and outdoor profile context.',
       tabsLabel: 'Five iOS primary entries',
       tabs: [
         {
           id: 'home',
           title: 'Home',
-          body: 'The assistant, recent trip preview, and AI quota entry sit up front for context before preparation starts.'
+          body: 'The assistant, recent trip preview, and AI assistant entry sit up front for context before preparation starts.'
         },
         {
           id: 'gear',
@@ -110,7 +110,7 @@ export const enUS = {
         {
           id: 'profile',
           title: 'Profile',
-          body: 'Profile manages the account, outdoor profile, messages, theme, cache, feedback, and version information.'
+          body: 'Profile manages the account and outdoor profile.'
         }
       ]
     },
@@ -144,7 +144,7 @@ export const enUS = {
   gear: {
     eyebrow: 'Personal gear',
     title: 'The gear locker connects inventory, atlas, and packing lists',
-    body: 'After sign-in, the iOS Gear entry surfaces the departure gear locker, making gear assets, weight, storage, the gear atlas, and packing lists available from the same surface.',
+    body: 'The iOS Gear entry surfaces the departure gear locker, making gear assets, weight, storage, the gear atlas, and packing lists available from the same surface.',
     bullets: ['View item count, category count, total weight, and value', 'Filter by name, brand, model, tag, and status', 'Move from personal gear into atlas or packing lists']
   },
   packing: {
