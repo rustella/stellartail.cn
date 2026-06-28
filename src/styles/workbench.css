@@ -52,7 +52,7 @@ body {
 
 .hero {
   min-height: auto;
-  padding: 72px 0 42px;
+  padding: 44px 0 24px;
 }
 
 .hero__grid--workbench {
@@ -69,7 +69,7 @@ body {
 }
 
 .hero__title {
-  font-size: clamp(40px, 6vw, 70px);
+  font-size: clamp(38px, 5.5vw, 64px);
   line-height: 1.02;
 }
 
@@ -142,7 +142,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  min-height: 640px;
+  min-height: 500px;
   padding: 28px 0;
   border-radius: 42px;
   background:
@@ -422,6 +422,67 @@ body {
   transform: translateX(2px);
 }
 
+.section--ios-overview {
+  padding-bottom: 56px;
+}
+
+.ios-overview {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.56fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 68px);
+  align-items: center;
+}
+
+.ios-overview__media {
+  display: flex;
+  justify-content: center;
+}
+
+.ios-overview__phone {
+  width: min(360px, 100%);
+  max-width: 360px;
+  box-shadow: 0 30px 84px rgba(15, 118, 107, 0.20);
+}
+
+.ios-overview__copy {
+  min-width: 0;
+}
+
+.ios-tab-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.ios-tab-card {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 12px;
+  min-height: 116px;
+  padding: 16px;
+  border: 1px solid rgba(216, 240, 234, 0.95);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 16px 38px rgba(15, 139, 126, 0.08);
+}
+
+.ios-tab-card h3 {
+  margin: 0 0 6px;
+  color: #0f172a;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.ios-tab-card p {
+  margin: 0;
+  color: #5d6b7d;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.58;
+}
+
 .task-panel {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(240px, 0.46fr);
@@ -669,8 +730,17 @@ body {
   .hero__grid--workbench,
   .downloads-hero__grid,
   .privacy-hero__grid,
+  .ios-overview,
   .task-panel {
     grid-template-columns: 1fr;
+  }
+
+  .ios-overview__copy {
+    order: -1;
+  }
+
+  .ios-tab-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .task-panel .feature-panel {
@@ -720,7 +790,21 @@ body {
   }
 
   .hero {
-    padding: 42px 0 28px;
+    padding: 30px 0 22px;
+  }
+
+  .hero__title {
+    font-size: 38px;
+  }
+
+  .hero-phone-stage {
+    min-height: 300px;
+    padding: 14px 0;
+    border-radius: 28px;
+  }
+
+  .iphone-device {
+    width: min(190px, 64%);
   }
 
   .task-panel,
@@ -729,6 +813,27 @@ body {
   .privacy-summary {
     padding: 20px;
     border-radius: 24px;
+  }
+
+  .section--ios-overview {
+    padding-bottom: 34px;
+  }
+
+  .ios-overview {
+    gap: 24px;
+  }
+
+  .ios-tab-list {
+    grid-template-columns: 1fr;
+  }
+
+  .ios-tab-card {
+    min-height: auto;
+    border-radius: 18px;
+  }
+
+  .ios-overview__phone {
+    width: min(292px, 88vw);
   }
 
   .download-card__footer {
